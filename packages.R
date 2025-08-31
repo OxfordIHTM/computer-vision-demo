@@ -25,3 +25,9 @@ library(tesseract)
 
 library(ellmer)
 library(ollamar)
+library(kuzco)
+
+
+## Graphics packages ----
+
+library(magick)
