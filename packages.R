@@ -1,8 +1,6 @@
-################################################################################
-#
-# Load packages required for standard workflows
-#
-################################################################################
+# Load package dependencies ----------------------------------------------------
+
+## Standard packages for general workflows ----
 
 library(targets)
 library(tarchetypes)
@@ -16,3 +14,14 @@ library(openxlsx)
 library(ggplot2)
 library(quarto)
 
+
+## Packages for PDF extraction ----
+
+library(pdftools)
+library(tesseract)
+
+
+## Packages for LLM ----
+
+library(ellmer)
+library(ollamar)

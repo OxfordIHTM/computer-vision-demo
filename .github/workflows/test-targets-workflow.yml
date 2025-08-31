@@ -6,15 +6,11 @@ on:
   pull_request:
     branches: [main, master]
   workflow_dispatch:
-    # branches:
-    #   - '*'
 
 jobs:
   test-targets-workflow:
     runs-on: ubuntu-latest
     container: rocker/tidyverse:4.5.1
-    env:
-      GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
     steps:
       - uses: actions/checkout@v4
       
@@ -25,7 +21,7 @@ jobs:
           
       - name: Trust git repo
         run: |
-          git config --global --add safe.directory /__w/ihtm-targets-template/ihtm-targets-template
+          git config --global --add safe.directory /__w/computer-vision-demo/computer-vision-demo
           
       - name: Install packages from renv.lock (with cache)
         if: ${{ !env.ACT }}  
