@@ -5,5 +5,5 @@
 get_llm_name <- function(src) {
   llm <- ollamar::list_models()
 
-  grepv(pattern = src, x = llm)
+  grepv(pattern = src, x = llm$name)
 }
