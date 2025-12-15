@@ -1974,7 +1974,7 @@
     },
     "kuzco": {
       "Package": "kuzco",
-      "Version": "0.0.4.9000",
+      "Version": "0.0.5.9000",
       "Source": "Repository",
       "Title": "LLM computer vision library in R",
       "Authors@R": "c( person(\"Frank\", \"Hull\", , \"frankiethull@gmail.com\", role = c(\"aut\", \"cre\")), person(\"Johannes\", \"Breuer\", , \"johannes.breuer@gesis.org\", role = c(\"ctb\"), comment = c(ORCID = \"0000-0001-5906-7873\")), person(\"Jordi\", \"Rosell\", , \"jroselln@gmail.com\", role = c(\"ctb\"), comment = c(ORCID = \"0000-0002-4349-1458\")) )",
@@ -1994,6 +1994,7 @@
         "imager",
         "jsonlite",
         "ollamar",
+        "rlang",
         "stringr",
         "tidyr"
       ],
@@ -2002,7 +2003,12 @@
         "quarto",
         "shiny",
         "bslib",
-        "rmarkdown"
+        "rmarkdown",
+        "purrr",
+        "mirai",
+        "tibble",
+        "tictoc",
+        "httr"
       ],
       "VignetteBuilder": "quarto, knitr",
       "URL": "https://frankiethull.github.io/kuzco/, https://github.com/frankiethull/kuzco",
@@ -2010,7 +2016,7 @@
       "Repository": "https://frankiethull.r-universe.dev",
       "RemoteUrl": "https://github.com/frankiethull/kuzco",
       "RemoteRef": "HEAD",
-      "RemoteSha": "a8367af583fe16f4c9e83786e893314315c26bef",
+      "RemoteSha": "2ae984559350d23cbb15d1b35d1d6b1791b3af8a",
       "NeedsCompilation": "no",
       "Author": "Frank Hull [aut, cre], Johannes Breuer [ctb] (ORCID: <https://orcid.org/0000-0001-5906-7873>), Jordi Rosell [ctb] (ORCID: <https://orcid.org/0000-0002-4349-1458>)",
       "Maintainer": "Frank Hull <frankiethull@gmail.com>"
