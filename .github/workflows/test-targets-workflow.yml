@@ -1,7 +1,7 @@
 name: test targets workflow
 
 on:
-  push:
+  pull_request:
     branches: [main, master]
   workflow_dispatch:
 
