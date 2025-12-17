@@ -21,8 +21,9 @@ data_targets <- tar_plan(
   tar_target(
     name = data_jpg_files,
     command = convert_pdf_to_png(
-      pdf = data_pdf_file, format = "jpg", page = data_pdf_pages,
-      destdir = "data-raw/jpg", dpi = 200
+      pdf = data_pdf_file, format = "jpg", 
+      page = data_pdf_pages,
+      destdir = "data-raw/jpg", dpi = 100
     ),
     pattern = map(data_pdf_pages),
     format = "file"
