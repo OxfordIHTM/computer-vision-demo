@@ -19,10 +19,10 @@ data_targets <- tar_plan(
   data_pdf_file = "data-raw/pdf/student_nutrition_records.pdf",
   data_pdf_pages = seq_len(13),
   tar_target(
-    name = data_jpg_files,
+    name = data_png_files,
     command = convert_pdf_to_png(
-      pdf = data_pdf_file, format = "jpg", page = data_pdf_pages,
-      destdir = "data-raw/jpg", dpi = 100
+      pdf = data_pdf_file, format = "png", page = data_pdf_pages,
+      destdir = "data-raw/png", dpi = 100
     ),
     pattern = map(data_pdf_pages),
     format = "file"
@@ -32,7 +32,7 @@ data_targets <- tar_plan(
     command = kuzco::llm_image_extract_text(
       llm_model = local_llm_model, image = data_jpg_files
     ),
-    pattern = map(data_jpg_files),
+    pattern = map(data_png_files),
     iteration = "list"
   )
 )
