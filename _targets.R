@@ -30,7 +30,7 @@ data_targets <- tar_plan(
   tar_target(
     name = data_raw_text,
     command = kuzco::llm_image_extract_text(
-      llm_model = local_llm_model, image = data_png_files
+      llm_model = local_llm_model, image = data_jpg_files
     ),
     pattern = map(data_jpg_files),
     iteration = "list"
