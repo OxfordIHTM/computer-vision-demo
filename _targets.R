@@ -9,7 +9,7 @@ for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 llm_targets <- tar_plan(
   tar_target(
     name = local_llm_model,
-    command = get_llm_name(src = "qwen3"),
+    command = get_llm_name(src = "qwen2.5"),
     cue = tar_cue("always")
   )
 )
