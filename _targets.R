@@ -16,7 +16,7 @@ llm_targets <- tar_plan(
 
 ## Data targets ----
 data_targets <- tar_plan(
-  data_pdf_file = "data-raw/pdf/student_nutrition_records.pdf",
+  data_pdf_file = "data-raw/pdf/deaths.pdf",
   data_pdf_pages = seq_len(13),
   tar_target(
     name = data_jpg_files,
