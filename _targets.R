@@ -5,18 +5,10 @@
 suppressPackageStartupMessages(source("packages.R"))
 for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 
-## LLM targets ----
-llm_targets <- tar_plan(
-  tar_target(
-    name = local_llm_model,
-    command = get_llm_name(src = "qwen2.5"),
-    cue = tar_cue("always")
-  )
-)
 
 ## Data targets ----
 data_targets <- tar_plan(
-  data_pdf_file = "data-raw/pdf/deaths.pdf",
+  data_pdf_file = "data-raw/pdf/student_nutrition_records.pdf",
   data_pdf_pages = seq_len(13),
   tar_target(
     name = data_jpg_files,
@@ -27,14 +19,52 @@ data_targets <- tar_plan(
     ),
     pattern = map(data_pdf_pages),
     format = "file"
+  )
+)
+
+## LLM targets ----
+llm_targets <- tar_plan(
+  tar_target(
+    name = local_qwen_model,
+    command = get_llm_name(src = "qwen3.5"),
+    cue = tar_cue("always")
+  ),
+  ### LLM parameters ----
+  tar_target(
+    name = llm_parameters,
+    command = ellmer::params(
+        temperature = 0.3,
+        top_p = 0.95,
+        top_k = 64,
+        reasoning_effort = "low",
+        reasoning_tokens = 0
+    )
   ),
   tar_target(
-    name = data_raw_text,
-    command = kuzco::llm_image_extract_text(
-      llm_model = local_llm_model, image = data_jpg_files
+    name = extraction_context_prompt,
+    command = ellmer::interpolate_file(path = "prompts/task_context_prompt.md")
+  ),
+  tar_target(
+    name = extraction_output_type,
+    command = llm_create_data_type()
+  ),
+  tar_target(
+    name = qwen_reviewer,
+    command = ellmer::chat_ollama(
+      system_prompt = extraction_context_prompt, 
+      model = local_qwen_model,
+      params = llm_parameters,
+      echo = "none"
+    )
+  ),
+  tar_target(
+    name = qwen_test_extraction,
+    command = llm_extract_data(
+      extractor = qwen_reviewer,
+      query = data_jpg_files,
+      type = extraction_output_type
     ),
-    pattern = map(data_jpg_files),
-    iteration = "list"
+    pattern = slice(data_jpg_files, 1:3)
   )
 )
 
