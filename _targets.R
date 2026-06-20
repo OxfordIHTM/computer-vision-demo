@@ -6,16 +6,32 @@ suppressPackageStartupMessages(source("packages.R"))
 for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 
 
+## Build options ----
+
+### Set Google credentials ----
+gargle::credentials_service_account(path = Sys.getenv("GOOGLE_AUTH_FILE"))
+
+
 ## Data targets ----
 data_targets <- tar_plan(
   data_pdf_file = "data-raw/pdf/student_nutrition_records.pdf",
   data_pdf_pages = seq_len(13),
   tar_target(
     name = data_jpg_files,
-    command = convert_pdf_to_png(
+    command = convert_pdf_to_image(
       pdf = data_pdf_file, format = "jpg", 
       page = data_pdf_pages,
-      destdir = "data-raw/jpg", dpi = 100
+      destdir = "data-raw/jpg", dpi = 300
+    ),
+    pattern = map(data_pdf_pages),
+    format = "file"
+  ),
+  tar_target(
+    name = data_png_files,
+    command = convert_pdf_to_image(
+      pdf = data_pdf_file, format = "png", 
+      page = data_pdf_pages,
+      destdir = "data-raw/png", dpi = 300
     ),
     pattern = map(data_pdf_pages),
     format = "file"
@@ -24,74 +40,77 @@ data_targets <- tar_plan(
 
 ## LLM targets ----
 llm_targets <- tar_plan(
-  tar_target(
-    name = local_qwen_model,
-    command = get_llm_name(src = "qwen3.5"),
-    cue = tar_cue("always")
-  ),
   ### LLM parameters ----
   tar_target(
     name = llm_parameters,
     command = ellmer::params(
-        temperature = 0.3,
-        top_p = 0.95,
-        top_k = 64,
-        reasoning_effort = "low",
-        reasoning_tokens = 0
+      temperature = 0.3,
+      top_p = 0.95,
+      top_k = 64
     )
   ),
-  tar_target(
-    name = data_jpg_files_list,
-    command = list.files(
-      path = "data-raw/jpg", pattern = "\\.jpg$", 
-      full.names = TRUE, recursive = TRUE
-    )
-  )
-)
-
-## LLM targets ----
-llm_targets <- tar_plan(
-  tar_target(
-    name = local_qwen_model,
-    command = get_llm_name(src = "qwen3.5"),
-    cue = tar_cue("always")
-  ),
-  ### LLM parameters ----
-  tar_target(
-    name = llm_parameters,
-    command = ellmer::params(
-        temperature = 0.3,
-        top_p = 0.95,
-        top_k = 64,
-        reasoning_effort = "low",
-        reasoning_tokens = 0
-    )
-  ),
+  extraction_context_prompt_md = "prompts/task_context_prompt.md",
   tar_target(
     name = extraction_context_prompt,
-    command = ellmer::interpolate_file(path = "prompts/task_context_prompt.md")
+    command = ellmer::interpolate_file(path = extraction_context_prompt_md)
   ),
+  ### LLM extraction output type ----
   tar_target(
     name = extraction_output_type,
     command = llm_create_data_type()
+  )
+)
+
+
+## qwen model targets ----
+qwen_local_targets <- tar_plan(
+  tar_target(
+    name = local_qwen_model,
+    command = get_llm_name(src = "qwen3.5"),
+    cue = tar_cue("always")
   ),
   tar_target(
-    name = qwen_reviewer,
+    name = qwen_extractor,
     command = ellmer::chat_ollama(
       system_prompt = extraction_context_prompt, 
       model = local_qwen_model,
-      #params = llm_parameters,
       echo = "none"
     )
   ),
   tar_target(
     name = qwen_test_extraction,
     command = llm_extract_data(
-      extractor = qwen_reviewer,
-      query = data_jpg_files_list,
-      type = extraction_output_type
+      extractor = qwen_extractor,
+      image = data_jpg_files,
+      type = extraction_output_type,
+      model = local_qwen_model,
+      ollama = TRUE
     ),
-    pattern = slice(data_jpg_files_list, 1)
+    pattern = slice(data_jpg_files, 1)
+  )
+)
+
+## gemini model targets ----
+gemini_targets <- tar_plan(
+  gemini_model = "gemini-pro-latest",
+  tar_target(
+    name = gemini_extractor,
+    command = ellmer::chat_google_gemini(
+      system_prompt = extraction_context_prompt,
+      model = gemini_model,
+      echo = "none"
+    )
+  ),
+  tar_target(
+    name = gemini_extraction,
+    command = llm_extract_data(
+      extractor = gemini_extractor,
+      image = data_jpg_files,
+      type = extraction_output_type,
+      model = gemini_model,
+      ollama = FALSE
+    ),
+    pattern = data_jpg_files
   )
 )
 

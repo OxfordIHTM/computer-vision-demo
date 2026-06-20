@@ -2,7 +2,7 @@
 #' Convert PDF to PNG
 #' 
 
-convert_pdf_to_png <- function(pdf, format, page, destdir, dpi = 600) {
+convert_pdf_to_image <- function(pdf, format, page, destdir, dpi = 600) {
   if (!dir.exists(destdir)) {
     dir.create(path = destdir, showWarnings = FALSE)
   }

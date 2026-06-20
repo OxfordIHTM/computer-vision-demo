@@ -9,7 +9,7 @@ jobs:
   test-targets-workflow:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
           
       - name: Install packages from renv.lock (with cache)
         if: ${{ !env.ACT }}  
@@ -25,5 +25,5 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make()
+          targets::tar_make(qwen_test_extraction)
         shell: Rscript {0}
