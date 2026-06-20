@@ -8,6 +8,8 @@ on:
 jobs:
   test-targets-workflow:
     runs-on: self-hosted
+    env:
+      GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
     steps:
       - uses: actions/checkout@v6
           
