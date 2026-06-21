@@ -25,6 +25,16 @@ data_targets <- tar_plan(
     ),
     pattern = map(data_pdf_pages),
     format = "file"
+  ),
+  tar_target(
+    name = data_png_files,
+    command = convert_pdf_to_image(
+      pdf = data_pdf_file, format = "png", 
+      page = data_pdf_pages,
+      destdir = "data-raw/png", dpi = 300
+    ),
+    pattern = map(data_pdf_pages),
+    format = "file"
   )
 )
 
@@ -71,12 +81,12 @@ qwen_local_targets <- tar_plan(
     name = qwen_test_extraction,
     command = llm_extract_data(
       extractor = qwen_extractor,
-      image = data_jpg_files,
+      image = data_png_files,
       type = extraction_output_type,
       model = local_qwen_model,
       ollama = TRUE
     ),
-    pattern = slice(data_jpg_files, 1)
+    pattern = slice(data_png_files, 1)
   )
 )
 
