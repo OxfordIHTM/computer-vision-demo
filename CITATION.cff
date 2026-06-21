@@ -13,7 +13,7 @@ title: "Demonstration of use of computer vision capabilities of large language m
 repository-code: https://github.com/OxfordIHTM/computer-vision-demo
 license: GPL-3.0-or-later
 date-released: 2026-06-21
-version: 0.0.0.9000
+version: 0.0.0.9001
 identifiers:
   - type: doi
     value: 10.5281/zenodo.20782175
