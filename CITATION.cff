@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+authors:
+  - family-names: Guevarra
+    given-names: Ernest
+    orcid: https://orcid.org/0000-0002-4887-4415
+contact:
+  - affiliation: "University of Oxford MSc in International Health and Tropical Medicine"
+    email: ernest@guevarra.io
+    family-names: Guevarra
+    given-names: Ernest
+message: "If you use the code, text, or data in this repository, please cite it as follows:"
+title: "Demonstration of use of computer vision capabilities of large language models (LLMs) using R"
+repository-code: https://github.com/OxfordIHTM/computer-vision-demo
+license: GPL-3.0-or-later
+date-released: 2026-06-21
+version: 0.0.0.9000
+# identifiers:
+#   - type: doi
+#     value: 10.5281/zenodo.20556745
