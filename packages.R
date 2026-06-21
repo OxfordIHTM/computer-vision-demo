@@ -22,7 +22,6 @@ library(tesseract)
 ## Packages for LLM ----
 library(ellmer)
 library(ollamar)
-library(kuzco)
 
 
 ## Graphics packages ----

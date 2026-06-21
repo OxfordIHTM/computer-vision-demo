@@ -25,16 +25,6 @@ data_targets <- tar_plan(
     ),
     pattern = map(data_pdf_pages),
     format = "file"
-  ),
-  tar_target(
-    name = data_png_files,
-    command = convert_pdf_to_image(
-      pdf = data_pdf_file, format = "png", 
-      page = data_pdf_pages,
-      destdir = "data-raw/png", dpi = 300
-    ),
-    pattern = map(data_pdf_pages),
-    format = "file"
   )
 )
 
@@ -108,6 +98,31 @@ gemini_targets <- tar_plan(
       image = data_jpg_files,
       type = extraction_output_type,
       model = gemini_model,
+      ollama = FALSE
+    ),
+    pattern = data_jpg_files
+  )
+)
+
+
+##  claude model targets ----
+claude_targets <- tar_plan(
+  claude_model = "claude-opus-4-8",
+  tar_target(
+    name = claude_extractor,
+    command = ellmer::chat_claude(
+      system_prompt = extraction_context_prompt,
+      model = claude_model,
+      echo = "none"
+    )
+  ),
+  tar_target(
+    name = claude_extraction,
+    command = llm_extract_data(
+      extractor = claude_extractor,
+      image = data_jpg_files,
+      type = extraction_output_type,
+      model = claude_model,
       ollama = FALSE
     ),
     pattern = data_jpg_files

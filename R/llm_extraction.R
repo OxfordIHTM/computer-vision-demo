@@ -18,11 +18,11 @@ llm_extract_data <- function(extractor, image, type,
       image_upload <- "ellmer::google_upload(image)"
     }
     
-    if (model == "claude") {
-      image_upload <- "ellmer::claude_file_upload(image)"
-    }
+    # if (model == "claude") {
+    #   image_upload <- "ellmer::claude_file_upload(image)"
+    # }
     
-    if (!model %in% c("gemini", "claude")) {
+    if (!model %in% c("gemini")) {
       image_upload <- "ellmer::content_image_file(image)"
     }
   }
