@@ -1,12 +1,10 @@
-name: test targets workflow
+name: test qwen workflow
 
 on:
-  # pull_request:
-  #   branches: [main, master]
   workflow_dispatch:
 
 jobs:
-  test-targets-workflow:
+  test-qwen-workflow:
     runs-on: self-hosted
     env:
       GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}

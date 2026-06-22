@@ -8,7 +8,7 @@
 [![Project Status: WIP – Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
-[![version](https://img.shields.io/badge/version-v0.0.0.9000-orange)](https://github.com/OxfordIHTM/computer-vision-demo/releases/tag/v0.0.0.9000)
+[![version](https://img.shields.io/badge/version-v0.0.0.9002-orange)](https://github.com/OxfordIHTM/computer-vision-demo/releases/tag/v0.0.0.9002)
 [![License for
 code](https://img.shields.io/badge/license_for_code-GPL3.0-blue)](https://opensource.org/licenses/gpl-3.0.html)
 [![License for
@@ -227,30 +227,57 @@ accessible for running the workflow (described below).
 
 The current workflow has the following steps:
 
+Warning: program compiled against libxml 213 using older 209
 
 ``` mermaid
 graph LR
   style Graph fill:#FFFFFF00,stroke:#000000;
   subgraph Graph
     direction LR
-    x35a7fe2b14fea884(["claude_extractor"]):::skipped --> xbf558aaf2fd08c0e["claude_extraction"]:::completed
-    x487a49d42720222c(["extraction_output_type"]):::skipped --> xbf558aaf2fd08c0e["claude_extraction"]:::completed
-    x39d4d013227f0dc3(["claude_model"]):::skipped --> xbf558aaf2fd08c0e["claude_extraction"]:::completed
-    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> xbf558aaf2fd08c0e["claude_extraction"]:::completed
-    x39d4d013227f0dc3(["claude_model"]):::skipped --> x35a7fe2b14fea884(["claude_extractor"]):::skipped
-    x982a35c892e245ee(["extraction_context_prompt"]):::skipped --> x35a7fe2b14fea884(["claude_extractor"]):::skipped
-    xe79485d2cbaf929c(["data_pdf_pages"]):::skipped --> xcde58b2bce8a2260["data_jpg_files"]:::skipped
-    xf64c2f26e3ae28ce(["data_pdf_file"]):::skipped --> xcde58b2bce8a2260["data_jpg_files"]:::skipped
+    x35a7fe2b14fea884(["claude_extractor"]):::queued --> xbf558aaf2fd08c0e["claude_extraction"]:::queued
+    x39d4d013227f0dc3(["claude_model"]):::queued --> xbf558aaf2fd08c0e["claude_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::skipped --> xbf558aaf2fd08c0e["claude_extraction"]:::queued
+    x6fd840ed377697c4["data_png_files"]:::skipped --> xbf558aaf2fd08c0e["claude_extraction"]:::queued
+    x39d4d013227f0dc3(["claude_model"]):::queued --> x35a7fe2b14fea884(["claude_extractor"]):::queued
+    x982a35c892e245ee(["extraction_context_prompt"]):::skipped --> x35a7fe2b14fea884(["claude_extractor"]):::queued
+    xe79485d2cbaf929c(["data_pdf_pages"]):::skipped --> xcde58b2bce8a2260["data_jpg_files"]:::queued
+    xf64c2f26e3ae28ce(["data_pdf_file"]):::skipped --> xcde58b2bce8a2260["data_jpg_files"]:::queued
+    xe79485d2cbaf929c(["data_pdf_pages"]):::skipped --> x6fd840ed377697c4["data_png_files"]:::skipped
+    xf64c2f26e3ae28ce(["data_pdf_file"]):::skipped --> x6fd840ed377697c4["data_png_files"]:::skipped
+    xb957a37aad5b67c5(["local_deepseek_model"]):::queued --> xf407d53739ed0632(["deepseek_extractor"]):::queued
+    x982a35c892e245ee(["extraction_context_prompt"]):::skipped --> xf407d53739ed0632(["deepseek_extractor"]):::queued
+    x6fd840ed377697c4["data_png_files"]:::skipped --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
+    xf407d53739ed0632(["deepseek_extractor"]):::queued --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::skipped --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
+    xb957a37aad5b67c5(["local_deepseek_model"]):::queued --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
     xa765f8be0f1473b7(["extraction_context_prompt_md"]):::skipped --> x982a35c892e245ee(["extraction_context_prompt"]):::skipped
-    x8cb7c7e0b9710ea2(["gemini_extractor"]):::queued --> xd63226de7dd05e61["gemini_extraction"]:::queued
-    x487a49d42720222c(["extraction_output_type"]):::skipped --> xd63226de7dd05e61["gemini_extraction"]:::queued
-    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> xd63226de7dd05e61["gemini_extraction"]:::queued
-    x672b0658cd7f304b(["gemini_model"]):::queued --> xd63226de7dd05e61["gemini_extraction"]:::queued
-    x982a35c892e245ee(["extraction_context_prompt"]):::skipped --> x8cb7c7e0b9710ea2(["gemini_extractor"]):::queued
-    x672b0658cd7f304b(["gemini_model"]):::queued --> x8cb7c7e0b9710ea2(["gemini_extractor"]):::queued
-    x01ce8cbced893885(["local_qwen_model"]):::queued --> x15a3fb4d9a651239(["qwen_extractor"]):::queued
+    x672b0658cd7f304b(["gemini_model"]):::skipped --> xd63226de7dd05e61["gemini_extraction"]:::completed
+    x6fd840ed377697c4["data_png_files"]:::skipped --> xd63226de7dd05e61["gemini_extraction"]:::completed
+    x487a49d42720222c(["extraction_output_type"]):::skipped --> xd63226de7dd05e61["gemini_extraction"]:::completed
+    x8cb7c7e0b9710ea2(["gemini_extractor"]):::skipped --> xd63226de7dd05e61["gemini_extraction"]:::completed
+    x672b0658cd7f304b(["gemini_model"]):::skipped --> x8cb7c7e0b9710ea2(["gemini_extractor"]):::skipped
+    x982a35c892e245ee(["extraction_context_prompt"]):::skipped --> x8cb7c7e0b9710ea2(["gemini_extractor"]):::skipped
+    xba597cd142706396(["local_gemma_model"]):::queued --> xbdacf1efe57d11ba(["gemma_extractor"]):::queued
+    x982a35c892e245ee(["extraction_context_prompt"]):::skipped --> xbdacf1efe57d11ba(["gemma_extractor"]):::queued
+    xbdacf1efe57d11ba(["gemma_extractor"]):::queued --> x883eafa12b623704["gemma_test_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::skipped --> x883eafa12b623704["gemma_test_extraction"]:::queued
+    xba597cd142706396(["local_gemma_model"]):::queued --> x883eafa12b623704["gemma_test_extraction"]:::queued
+    x6fd840ed377697c4["data_png_files"]:::skipped --> x883eafa12b623704["gemma_test_extraction"]:::queued
+    xd91653768ab318c2(["local_gpt_model"]):::queued --> xa26cc1fdbcc7446d(["gpt_extractor"]):::queued
+    x982a35c892e245ee(["extraction_context_prompt"]):::skipped --> xa26cc1fdbcc7446d(["gpt_extractor"]):::queued
+    xd91653768ab318c2(["local_gpt_model"]):::queued --> xbd26e8369aff188c["gpt_test_extraction"]:::queued
+    xa26cc1fdbcc7446d(["gpt_extractor"]):::queued --> xbd26e8369aff188c["gpt_test_extraction"]:::queued
+    x6fd840ed377697c4["data_png_files"]:::skipped --> xbd26e8369aff188c["gpt_test_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::skipped --> xbd26e8369aff188c["gpt_test_extraction"]:::queued
+    x99f03a7148fda570(["local_llama_model"]):::queued --> xf54b87b127ae79c8(["llama_extractor"]):::queued
+    x982a35c892e245ee(["extraction_context_prompt"]):::skipped --> xf54b87b127ae79c8(["llama_extractor"]):::queued
+    x99f03a7148fda570(["local_llama_model"]):::queued --> x292cd34918802a30["llama_test_extraction"]:::queued
+    xf54b87b127ae79c8(["llama_extractor"]):::queued --> x292cd34918802a30["llama_test_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::skipped --> x292cd34918802a30["llama_test_extraction"]:::queued
+    x6fd840ed377697c4["data_png_files"]:::skipped --> x292cd34918802a30["llama_test_extraction"]:::queued
     x982a35c892e245ee(["extraction_context_prompt"]):::skipped --> x15a3fb4d9a651239(["qwen_extractor"]):::queued
-    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> xd726feef05e5de04["qwen_test_extraction"]:::queued
+    x01ce8cbced893885(["local_qwen_model"]):::queued --> x15a3fb4d9a651239(["qwen_extractor"]):::queued
+    x6fd840ed377697c4["data_png_files"]:::skipped --> xd726feef05e5de04["qwen_test_extraction"]:::queued
     x01ce8cbced893885(["local_qwen_model"]):::queued --> xd726feef05e5de04["qwen_test_extraction"]:::queued
     x487a49d42720222c(["extraction_output_type"]):::skipped --> xd726feef05e5de04["qwen_test_extraction"]:::queued
     x15a3fb4d9a651239(["qwen_extractor"]):::queued --> xd726feef05e5de04["qwen_test_extraction"]:::queued

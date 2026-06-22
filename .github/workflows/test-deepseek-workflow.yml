@@ -1,12 +1,10 @@
-name: test targets workflow
+name: test deepseek  workflow
 
 on:
-  # pull_request:
-  #   branches: [main, master]
   workflow_dispatch:
 
 jobs:
-  test-targets-workflow:
+  test-deepseek-workflow:
     runs-on: self-hosted
     env:
       GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
@@ -36,5 +34,12 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make(qwen_test_extraction)
+          targets::tar_make(dplyr::contains(c("deepseek", "csv")))
         shell: Rscript {0}
+
+      - name: Archive test extraction results
+        uses: actions/upload-artifact@v4
+        with:
+          name: deepseek-test-extraction-results
+          path: data/deepseek_test_extraction_results_*.csv
+          
