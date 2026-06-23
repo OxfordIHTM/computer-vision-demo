@@ -110,12 +110,12 @@ gemma_local_targets <- tar_plan(
     name = gemma_test_extraction,
     command = llm_extract_data(
       extractor = gemma_extractor,
-      image = data_png_files,
+      image = data_jpg_files,
       type = extraction_output_type,
       model = local_gemma_model,
       ollama = TRUE
     ),
-    pattern = slice(data_png_files, 1:3)
+    pattern = slice(data_jpg_files, 1:3)
   )
 )
 
@@ -139,12 +139,12 @@ deepseek_local_targets <- tar_plan(
     name = deepseek_test_extraction,
     command = llm_extract_data(
       extractor = deepseek_extractor,
-      image = data_png_files,
+      image = data_jpg_files,
       type = extraction_output_type,
       model = local_deepseek_model,
       ollama = TRUE
     ),
-    pattern = slice(data_png_files, 1:3)
+    pattern = slice(data_jpg_files, 1:3)
   )
 )
 
@@ -168,12 +168,12 @@ llava_local_targets <- tar_plan(
     name = llava_test_extraction,
     command = llm_extract_data(
       extractor = llava_extractor,
-      image = data_png_files,
+      image = data_jpg_files,
       type = extraction_output_type,
       model = local_llava_model,
       ollama = TRUE
     ),
-    pattern = slice(data_png_files, 1:3)
+    pattern = slice(data_jpg_files, 1:3)
   )
 )
 
@@ -197,12 +197,12 @@ llama_targets <- tar_plan(
     name = llama_test_extraction,
     command = llm_extract_data(
       extractor = llama_extractor,
-      image = data_png_files,
+      image = data_jpg_files,
       type = extraction_output_type,
       model = local_llama_model,
       ollama = TRUE
     ),
-    pattern = slice(data_png_files, 1:3)
+    pattern = slice(data_jpg_files, 1:3)
   )
 )
 
