@@ -222,12 +222,12 @@ gemini_targets <- tar_plan(
     name = gemini_extraction,
     command = llm_extract_data(
       extractor = gemini_extractor,
-      image = data_png_files,
+      image = data_jpg_files,
       type = extraction_output_type,
       model = gemini_model,
       ollama = FALSE
     ),
-    pattern = data_png_files
+    pattern = data_jpg_files
   )
 )
 
@@ -247,12 +247,12 @@ claude_targets <- tar_plan(
     name = claude_extraction,
     command = llm_extract_data(
       extractor = claude_extractor,
-      image = data_png_files,
+      image = data_jpg_files,
       type = extraction_output_type,
       model = claude_model,
       ollama = FALSE
     ),
-    pattern = data_png_files
+    pattern = data_jpg_files
   )
 )
 
