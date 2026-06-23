@@ -34,5 +34,17 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make(gemma_test_extraction)
+          targets::tar_make(
+            c(
+              gemma_test_extraction_results_long_csv,
+              gemma_test_extraction_results_wide_csv
+            )
+          )
         shell: Rscript {0}
+
+      - name: Archive test extraction results
+        uses: actions/upload-artifact@v7
+        with:
+          name: gemma-test-extraction-results
+          path: data/gemma_test_extraction_results_*.csv
+          

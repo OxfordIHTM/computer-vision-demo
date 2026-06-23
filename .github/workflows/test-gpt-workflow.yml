@@ -1,12 +1,10 @@
-name: test targets workflow
+name: test gpt workflow
 
 on:
-  # pull_request:
-  #   branches: [main, master]
   workflow_dispatch:
 
 jobs:
-  test-targets-workflow:
+  test-gpt-workflow:
     runs-on: self-hosted
     env:
       GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
@@ -36,16 +34,17 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make(gemma_test_extraction_results_long_csv)
-          targets::tar_make(qwen_test_extraction_results_long_csv)
-          targets::tar_make(deepseek_test_extraction_results_long_csv)
-          targets::tar_make(llama_test_extraction_results_long_csv)
-          targets::tar_make(gpt_test_extraction_results_long_csv)
+          targets::tar_make(
+            c(
+              gpt_test_extraction_results_long_csv, 
+              gpt_test_extraction_results_wide_csv
+            )
+          )
         shell: Rscript {0}
 
       - name: Archive test extraction results
         uses: actions/upload-artifact@v7
         with:
-          name: test-extraction-results
-          path: data/*_test_extraction_results_long.csv
+          name: gpt-test-extraction-results
+          path: data/gpt_test_extraction_results_*.csv
           
