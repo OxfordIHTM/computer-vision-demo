@@ -1,5 +1,7 @@
-## Load .env if present
-if (file.exists(".env")) {
+## Load .env_user first if present otherwise load .env
+if (file.exists(".env_user")) {
+  try(readRenviron(".env_user"), silent = TRUE)
+} else if (file.exists(".env")) { 
   try(readRenviron(".env"), silent = TRUE)
 }
 
@@ -10,8 +12,7 @@ options(
     IHTM = "https://oxfordihtm.r-universe.dev",
     KATILINGBAN = "https://katilingban.r-universe.dev",
     PANUKATAN = "https://panukatan.r-universe.dev",
-    RAPIDSURVEYS = "https://rapidsurveys.r-universe.dev",
-    "https://frankiethull.r-universe.dev"
+    RAPIDSURVEYS = "https://rapidsurveys.r-universe.dev"
   )
 )
 
