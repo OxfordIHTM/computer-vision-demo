@@ -24,7 +24,7 @@ jobs:
         if: ${{ !env.ACT }}  
         uses: r-lib/actions/setup-renv@v2
         with:
-          cache-version: 2
+          cache-version: 3
 
       - name: Install packages from renv.lock (local, no cache)
         if: ${{ env.ACT }}
