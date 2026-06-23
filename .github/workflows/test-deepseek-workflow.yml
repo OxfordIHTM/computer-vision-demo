@@ -1,4 +1,4 @@
-name: test deepseek  workflow
+name: test deepseek workflow
 
 on:
   workflow_dispatch:

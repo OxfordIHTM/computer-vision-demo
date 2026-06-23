@@ -1,10 +1,10 @@
-name: test gpt workflow
+name: test llava workflow
 
 on:
   workflow_dispatch:
 
 jobs:
-  test-gpt-workflow:
+  test-llava-workflow:
     runs-on: self-hosted
     env:
       GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
@@ -36,8 +36,8 @@ jobs:
         run: |
           targets::tar_make(
             c(
-              gpt_test_extraction_results_long_csv, 
-              gpt_test_extraction_results_wide_csv
+              llava_test_extraction_results_long_csv, 
+              llava_test_extraction_results_wide_csv
             )
           )
         shell: Rscript {0}
@@ -45,6 +45,6 @@ jobs:
       - name: Archive test extraction results
         uses: actions/upload-artifact@v7
         with:
-          name: gpt-test-extraction-results
-          path: data/gpt_test_extraction_results_*.csv
+          name: llava-test-extraction-results
+          path: data/llava_test_extraction_results_*.csv
           

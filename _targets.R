@@ -66,7 +66,7 @@ llm_targets <- tar_plan(
 qwen_local_targets <- tar_plan(
   tar_target(
     name = local_qwen_model,
-    command = get_llm_name(src = "qwen3.5"),
+    command = get_llm_name(src = "qwen3-vl"),
     cue = tar_cue("always")
   ),
   tar_target(
@@ -81,12 +81,12 @@ qwen_local_targets <- tar_plan(
     name = qwen_test_extraction,
     command = llm_extract_data(
       extractor = qwen_extractor,
-      image = data_png_files,
+      image = data_jpg_files,
       type = extraction_output_type,
       model = local_qwen_model,
       ollama = TRUE
     ),
-    pattern = slice(data_png_files, 1:3)
+    pattern = slice(data_jpg_files, 1:3)
   )
 )
 
@@ -95,7 +95,7 @@ qwen_local_targets <- tar_plan(
 gemma_local_targets <- tar_plan(
   tar_target(
     name = local_gemma_model,
-    command = get_llm_name(src = "gemma4:31b"),
+    command = get_llm_name(src = "gemma4"),
     cue = tar_cue("always")
   ),
   tar_target(
@@ -149,28 +149,28 @@ deepseek_local_targets <- tar_plan(
 )
 
 
-## gpt-oss model targets ----
-gpt_local_targets <- tar_plan(
+## llava model targets ----
+llava_local_targets <- tar_plan(
   tar_target(
-    name = local_gpt_model,
-    command = get_llm_name(src = "gpt-oss:120b"),
+    name = local_llava_model,
+    command = get_llm_name(src = "llava"),
     cue = tar_cue("always")
   ),
   tar_target(
-    name = gpt_extractor,
+    name = llava_extractor,
     command = ellmer::chat_ollama(
       system_prompt = extraction_context_prompt, 
-      model = local_gpt_model,
+      model = local_llava_model,
       echo = "none"
     )
   ),
   tar_target(
-    name = gpt_test_extraction,
+    name = llava_test_extraction,
     command = llm_extract_data(
-      extractor = gpt_extractor,
+      extractor = llava_extractor,
       image = data_png_files,
       type = extraction_output_type,
-      model = local_gpt_model,
+      model = local_llava_model,
       ollama = TRUE
     ),
     pattern = slice(data_png_files, 1:3)
@@ -182,7 +182,7 @@ gpt_local_targets <- tar_plan(
 llama_targets <- tar_plan(
   tar_target(
     name = local_llama_model,
-    command = get_llm_name(src = "llama4:16x17b"),
+    command = get_llm_name(src = "llama4"),
     cue = tar_cue("always")
   ),
   tar_target(
@@ -320,15 +320,15 @@ processing_targets <- tar_plan(
     ) 
   ),
   tar_target(
-    name = gpt_test_extraction_results_long,
+    name = llava_test_extraction_results_long,
     command = process_extraction_output(
-      extract = gpt_test_extraction, format = "long"
+      extract = llava_test_extraction, format = "long"
     ) 
   ),
   tar_target(
-    name = gpt_test_extraction_results_wide,
+    name = llava_test_extraction_results_wide,
     command = process_extraction_output(
-      extract = gpt_test_extraction, format = "wide"
+      extract = llava_test_extraction, format = "wide"
     ) 
   ),
   tar_target(
@@ -435,18 +435,18 @@ output_targets <- tar_plan(
     )
   ),
   tar_target(
-    name = gpt_test_extraction_results_long_csv,
+    name = llava_test_extraction_results_long_csv,
     command = output_to_csv(
-      data = gpt_test_extraction_results_long,
-      path = "data/gpt_test_extraction_results_long.csv",
+      data = llava_test_extraction_results_long,
+      path = "data/llava_test_extraction_results_long.csv",
       overwrite = TRUE
     )
   ),
   tar_target(
-    name = gpt_test_extraction_results_wide_csv,
+    name = llava_test_extraction_results_wide_csv,
     command = output_to_csv(
-      data = gpt_test_extraction_results_wide,
-      path = "data/gpt_test_extraction_results_wide.csv",
+      data = llava_test_extraction_results_wide,
+      path = "data/llava_test_extraction_results_wide.csv",
       overwrite = TRUE
     )
   ),
