@@ -1,8 +1,8 @@
 name: test targets workflow
 
 on:
-  # pull_request:
-  #   branches: [main, master]
+  pull_request:
+    branches: [main, master]
   workflow_dispatch:
 
 jobs:
@@ -40,7 +40,7 @@ jobs:
           targets::tar_make(qwen_test_extraction_results_long_csv)
           targets::tar_make(deepseek_test_extraction_results_long_csv)
           targets::tar_make(llama_test_extraction_results_long_csv)
-          targets::tar_make(gpt_test_extraction_results_long_csv)
+          targets::tar_make(llava_test_extraction_results_long_csv)
         shell: Rscript {0}
 
       - name: Archive test extraction results

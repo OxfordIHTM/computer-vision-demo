@@ -8,7 +8,7 @@
 [![Project Status: WIP – Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
-[![version](https://img.shields.io/badge/version-v0.0.0.9003-orange)](https://github.com/OxfordIHTM/computer-vision-demo/releases/tag/v0.0.0.9002)
+[![version](https://img.shields.io/badge/version-v0.0.0.9004-orange)](https://github.com/OxfordIHTM/computer-vision-demo/releases/tag/v0.0.0.9002)
 [![License for
 code](https://img.shields.io/badge/license_for_code-GPL3.0-blue)](https://opensource.org/licenses/gpl-3.0.html)
 [![License for
@@ -233,34 +233,34 @@ graph LR
   subgraph Graph
     direction LR
     x35a7fe2b14fea884(["claude_extractor"]):::queued --> xbf558aaf2fd08c0e["claude_extraction"]:::queued
-    x39d4d013227f0dc3(["claude_model"]):::queued --> xbf558aaf2fd08c0e["claude_extraction"]:::queued
     x6fd840ed377697c4["data_png_files"]:::skipped --> xbf558aaf2fd08c0e["claude_extraction"]:::queued
+    x39d4d013227f0dc3(["claude_model"]):::queued --> xbf558aaf2fd08c0e["claude_extraction"]:::queued
     x487a49d42720222c(["extraction_output_type"]):::queued --> xbf558aaf2fd08c0e["claude_extraction"]:::queued
     xbf558aaf2fd08c0e["claude_extraction"]:::queued --> xf7e321d17883c5ef(["claude_extraction_results_long"]):::queued
     xf7e321d17883c5ef(["claude_extraction_results_long"]):::queued --> xf9a93278d27784db(["claude_extraction_results_long_csv"]):::queued
     xbf558aaf2fd08c0e["claude_extraction"]:::queued --> x2d9238b8268822f3(["claude_extraction_results_wide"]):::queued
     x2d9238b8268822f3(["claude_extraction_results_wide"]):::queued --> xe433f203ebf8c762(["claude_extraction_results_wide_csv"]):::queued
-    x39d4d013227f0dc3(["claude_model"]):::queued --> x35a7fe2b14fea884(["claude_extractor"]):::queued
     x982a35c892e245ee(["extraction_context_prompt"]):::queued --> x35a7fe2b14fea884(["claude_extractor"]):::queued
-    xe79485d2cbaf929c(["data_pdf_pages"]):::skipped --> xcde58b2bce8a2260["data_jpg_files"]:::queued
+    x39d4d013227f0dc3(["claude_model"]):::queued --> x35a7fe2b14fea884(["claude_extractor"]):::queued
     xf64c2f26e3ae28ce(["data_pdf_file"]):::skipped --> xcde58b2bce8a2260["data_jpg_files"]:::queued
+    xe79485d2cbaf929c(["data_pdf_pages"]):::skipped --> xcde58b2bce8a2260["data_jpg_files"]:::queued
     xf64c2f26e3ae28ce(["data_pdf_file"]):::skipped --> x6fd840ed377697c4["data_png_files"]:::skipped
     xe79485d2cbaf929c(["data_pdf_pages"]):::skipped --> x6fd840ed377697c4["data_png_files"]:::skipped
     x982a35c892e245ee(["extraction_context_prompt"]):::queued --> xf407d53739ed0632(["deepseek_extractor"]):::queued
     xb957a37aad5b67c5(["local_deepseek_model"]):::queued --> xf407d53739ed0632(["deepseek_extractor"]):::queued
-    xb957a37aad5b67c5(["local_deepseek_model"]):::queued --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
     x6fd840ed377697c4["data_png_files"]:::skipped --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
-    x487a49d42720222c(["extraction_output_type"]):::queued --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
+    xb957a37aad5b67c5(["local_deepseek_model"]):::queued --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
     xf407d53739ed0632(["deepseek_extractor"]):::queued --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::queued --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
     xe59d676cc895fc8f["deepseek_test_extraction"]:::queued --> x6c665d10c6870385(["deepseek_test_extraction_results_long"]):::queued
     x6c665d10c6870385(["deepseek_test_extraction_results_long"]):::queued --> x30ec6b0f291bd945(["deepseek_test_extraction_results_long_csv"]):::queued
     xe59d676cc895fc8f["deepseek_test_extraction"]:::queued --> xa451048dda449ee3(["deepseek_test_extraction_results_wide"]):::queued
     xa451048dda449ee3(["deepseek_test_extraction_results_wide"]):::queued --> x4225704dcf8d5b90(["deepseek_test_extraction_results_wide_csv"]):::queued
     xa765f8be0f1473b7(["extraction_context_prompt_md"]):::queued --> x982a35c892e245ee(["extraction_context_prompt"]):::queued
-    x8cb7c7e0b9710ea2(["gemini_extractor"]):::queued --> xd63226de7dd05e61["gemini_extraction"]:::queued
     x6fd840ed377697c4["data_png_files"]:::skipped --> xd63226de7dd05e61["gemini_extraction"]:::queued
-    x672b0658cd7f304b(["gemini_model"]):::queued --> xd63226de7dd05e61["gemini_extraction"]:::queued
+    x8cb7c7e0b9710ea2(["gemini_extractor"]):::queued --> xd63226de7dd05e61["gemini_extraction"]:::queued
     x487a49d42720222c(["extraction_output_type"]):::queued --> xd63226de7dd05e61["gemini_extraction"]:::queued
+    x672b0658cd7f304b(["gemini_model"]):::queued --> xd63226de7dd05e61["gemini_extraction"]:::queued
     xd63226de7dd05e61["gemini_extraction"]:::queued --> x74163c06113c69a6(["gemini_extraction_results_long"]):::queued
     x74163c06113c69a6(["gemini_extraction_results_long"]):::queued --> xe689a9e1837e69cd(["gemini_extraction_results_long_csv"]):::queued
     xd63226de7dd05e61["gemini_extraction"]:::queued --> x42136a1fb4ba6630(["gemini_extraction_results_wide"]):::queued
@@ -270,9 +270,9 @@ graph LR
     x982a35c892e245ee(["extraction_context_prompt"]):::queued --> xbdacf1efe57d11ba(["gemma_extractor"]):::queued
     xba597cd142706396(["local_gemma_model"]):::queued --> xbdacf1efe57d11ba(["gemma_extractor"]):::queued
     xba597cd142706396(["local_gemma_model"]):::queued --> x883eafa12b623704["gemma_test_extraction"]:::queued
+    xbdacf1efe57d11ba(["gemma_extractor"]):::queued --> x883eafa12b623704["gemma_test_extraction"]:::queued
     x487a49d42720222c(["extraction_output_type"]):::queued --> x883eafa12b623704["gemma_test_extraction"]:::queued
     x6fd840ed377697c4["data_png_files"]:::skipped --> x883eafa12b623704["gemma_test_extraction"]:::queued
-    xbdacf1efe57d11ba(["gemma_extractor"]):::queued --> x883eafa12b623704["gemma_test_extraction"]:::queued
     x883eafa12b623704["gemma_test_extraction"]:::queued --> x36d8fe351758d6a9(["gemma_test_extraction_results_long"]):::queued
     x36d8fe351758d6a9(["gemma_test_extraction_results_long"]):::queued --> x1ec973b6bac53778(["gemma_test_extraction_results_long_csv"]):::queued
     x883eafa12b623704["gemma_test_extraction"]:::queued --> x0ce1edbb890bba38(["gemma_test_extraction_results_wide"]):::queued
@@ -289,9 +289,9 @@ graph LR
     xa3d940364e8f38dd(["gpt_test_extraction_results_wide"]):::queued --> xe97fbe3d2cc5ba2e(["gpt_test_extraction_results_wide_csv"]):::queued
     x982a35c892e245ee(["extraction_context_prompt"]):::queued --> xf54b87b127ae79c8(["llama_extractor"]):::queued
     x99f03a7148fda570(["local_llama_model"]):::queued --> xf54b87b127ae79c8(["llama_extractor"]):::queued
-    xf54b87b127ae79c8(["llama_extractor"]):::queued --> x292cd34918802a30["llama_test_extraction"]:::queued
     x6fd840ed377697c4["data_png_files"]:::skipped --> x292cd34918802a30["llama_test_extraction"]:::queued
     x487a49d42720222c(["extraction_output_type"]):::queued --> x292cd34918802a30["llama_test_extraction"]:::queued
+    xf54b87b127ae79c8(["llama_extractor"]):::queued --> x292cd34918802a30["llama_test_extraction"]:::queued
     x99f03a7148fda570(["local_llama_model"]):::queued --> x292cd34918802a30["llama_test_extraction"]:::queued
     x292cd34918802a30["llama_test_extraction"]:::queued --> xb195ded487b977ce(["llama_test_extraction_results_long"]):::queued
     xb195ded487b977ce(["llama_test_extraction_results_long"]):::queued --> x550e0ece622c7bdc(["llama_test_extraction_results_long_csv"]):::queued
@@ -299,10 +299,10 @@ graph LR
     x5abecee1789838c7(["llama_test_extraction_results_wide"]):::queued --> x4ef467aedd875f25(["llama_test_extraction_results_wide_csv"]):::queued
     x01ce8cbced893885(["local_qwen_model"]):::queued --> x15a3fb4d9a651239(["qwen_extractor"]):::queued
     x982a35c892e245ee(["extraction_context_prompt"]):::queued --> x15a3fb4d9a651239(["qwen_extractor"]):::queued
-    x6fd840ed377697c4["data_png_files"]:::skipped --> xd726feef05e5de04["qwen_test_extraction"]:::queued
     x01ce8cbced893885(["local_qwen_model"]):::queued --> xd726feef05e5de04["qwen_test_extraction"]:::queued
-    x487a49d42720222c(["extraction_output_type"]):::queued --> xd726feef05e5de04["qwen_test_extraction"]:::queued
+    xcde58b2bce8a2260["data_jpg_files"]:::queued --> xd726feef05e5de04["qwen_test_extraction"]:::queued
     x15a3fb4d9a651239(["qwen_extractor"]):::queued --> xd726feef05e5de04["qwen_test_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::queued --> xd726feef05e5de04["qwen_test_extraction"]:::queued
     xd726feef05e5de04["qwen_test_extraction"]:::queued --> xf4353db910e1d59b(["qwen_test_extraction_results_long"]):::queued
     xf4353db910e1d59b(["qwen_test_extraction_results_long"]):::queued --> x3988122db08b148d(["qwen_test_extraction_results_long_csv"]):::queued
     xd726feef05e5de04["qwen_test_extraction"]:::queued --> x51c9e4dda51c1eea(["qwen_test_extraction_results_wide"]):::queued
