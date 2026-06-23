@@ -19,15 +19,8 @@ jobs:
         run: |
           echo $GIT_CRYPT_KEY64 > git_crypt_key.key64 && base64 -di git_crypt_key.key64 > git_crypt_key.key && git-crypt unlock git_crypt_key.key
           rm git_crypt_key.key git_crypt_key.key64
-          
-      - name: Install packages from renv.lock (with cache)
-        if: ${{ !env.ACT }}  
-        uses: r-lib/actions/setup-renv@v2
-        with:
-          cache-version: 3
 
       - name: Install packages from renv.lock (local, no cache)
-        if: ${{ env.ACT }}
         run: |
           renv::restore()
         shell: Rscript {0}
