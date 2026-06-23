@@ -124,7 +124,7 @@ gemma_local_targets <- tar_plan(
 deepseek_local_targets <- tar_plan(
   tar_target(
     name = local_deepseek_model,
-    command = get_llm_name(src = "deepseek-r1:70b"),
+    command = get_llm_name(src = "deepseek-ocr"),
     cue = tar_cue("always")
   ),
   tar_target(
