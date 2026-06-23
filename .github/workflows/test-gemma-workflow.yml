@@ -1,12 +1,10 @@
-name: test targets workflow
+name: test gemma  workflow
 
 on:
-  # pull_request:
-  #   branches: [main, master]
   workflow_dispatch:
 
 jobs:
-  test-targets-workflow:
+  test-gemma-workflow:
     runs-on: self-hosted
     env:
       GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
@@ -36,5 +34,5 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make(qwen_test_extraction)
+          targets::tar_make(gemma_test_extraction)
         shell: Rscript {0}
