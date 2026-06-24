@@ -604,7 +604,10 @@ output_production_targets <- tar_plan(
 
 ## Reporting targets ----
 report_targets <- tar_plan(
-  
+  tar_quarto(
+    name = text_extraction_handwriting_report,
+    path = "reports/text-extraction-handwriting.qmd"
+  )
 )
 
 
