@@ -441,6 +441,22 @@ output_targets <- tar_plan(
     )
   ),
   tar_target(
+    name = qwen_kuzco_test_extraction_results_long_csv,
+    command = output_to_csv(
+      data = qwen_kuzco_test_extraction_results_long,
+      path = "data/qwen_kuzco_test_extraction_results_long.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = qwen_kuzco_test_extraction_results_wide_csv,
+    command = output_to_csv(
+      data = qwen_kuzco_test_extraction_results_wide,
+      path = "data/qwen_kuzco_test_extraction_results_wide.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
     name = deepseek_test_extraction_results_long_csv,
     command = output_to_csv(
       data = deepseek_test_extraction_results_long,
