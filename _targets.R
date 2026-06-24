@@ -496,38 +496,6 @@ analysis_targets <- tar_plan(
 ## Output targets ----
 output_test_targets <- tar_plan(
   tar_target(
-    name = gemini_extraction_results_long_csv,
-    command = output_to_csv(
-      data = gemini_extraction_results_long,
-      path = "data/gemini_extraction_results_long.csv",
-      overwrite = TRUE
-    )
-  ),
-  tar_target(
-    name = gemini_extraction_results_wide_csv,
-    command = output_to_csv(
-      data = gemini_extraction_results_wide,
-      path = "data/gemini_extraction_results_wide.csv",
-      overwrite = TRUE
-    )
-  ),
-  tar_target(
-    name = claude_extraction_results_long_csv,
-    command = output_to_csv(
-      data = claude_extraction_results_long,
-      path = "data/claude_extraction_results_long.csv",
-      overwrite = TRUE
-    )
-  ),
-  tar_target(
-    name = claude_extraction_results_wide_csv,
-    command = output_to_csv(
-      data = claude_extraction_results_wide,
-      path = "data/claude_extraction_results_wide.csv",
-      overwrite = TRUE
-    )
-  ),
-  tar_target(
     name = gemma_test_extraction_results_long_csv,
     command = output_to_csv(
       data = gemma_test_extraction_results_long,
