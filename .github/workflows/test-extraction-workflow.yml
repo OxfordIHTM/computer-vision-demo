@@ -36,7 +36,16 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make(dplyr::matches("*_test_extraction_results_*_csv"))
+          targets::tar_make(
+            gemma_test_extraction_results_long_csv,
+            gemma_test_extraction_results_wide_csv,
+            qwen_test_extraction_results_long_csv,
+            qwen_test_extraction_results_wide_csv,
+            deepseek_test_extraction_results_long_csv,
+            deepseek_test_extraction_results_wide_csv,
+            llava_test_extraction_results_long_csv,
+            llava_test_extraction_results_wide_csv
+          )
         shell: Rscript {0}
 
       - name: Archive test extraction results
