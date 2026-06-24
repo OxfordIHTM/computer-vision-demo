@@ -39,5 +39,5 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: deepseek-test-extraction-results
-          path: data/deepseek_test_extraction_results_*.csv
+          path: tests/deepseek_test_extraction_results_*.csv
           

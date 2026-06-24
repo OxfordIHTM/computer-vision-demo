@@ -8,7 +8,7 @@
 [![Project Status: WIP – Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
-[![version](https://img.shields.io/badge/version-v0.0.0.9005-orange)](https://github.com/OxfordIHTM/computer-vision-demo/releases/tag/v0.0.0.9005)
+[![version](https://img.shields.io/badge/version-v0.0.0.9006-orange)](https://github.com/OxfordIHTM/computer-vision-demo/releases/tag/v0.0.0.9006)
 [![License for
 code](https://img.shields.io/badge/license_for_code-GPL3.0-blue)](https://opensource.org/licenses/gpl-3.0.html)
 [![License for
@@ -28,10 +28,11 @@ computer vision capabilities of large language models (LLMs).
 ## About the demonstration
 
 This demonstration project is designed to showcase the computer vision
-capabilities of large language models (LLMs) using R. The following use
-cases are currently demonstrated:
+capabilities of large language models (LLMs) using R with a focus on
+health- and healthcare-related use cases. The following use cases are
+currently demonstrated:
 
-- Text extraction from images of handwritten notes
+- Text extraction from images of handwritten health records
 
 The workflow is structured to facilitate reproducibility and ease of use
 so that users can easily replicate the demonstration on their own
@@ -48,11 +49,14 @@ The project repository is structured as follows:
         |-- auth/
         |-- data-raw/
         |-- data/
+        |-- inst/
         |-- outputs/
         |-- prompts/
-        |-- renv
-        |-- reports
+        |-- renv/
+        |-- reports/
+        |-- tests/
         |-- .Rprofile
+        |-- .env
         |-- _targets.R
         |-- packages.R
         |-- renv.lock
@@ -72,13 +76,20 @@ The project repository is structured as follows:
 - `auth/` contains files used to authenticate with external services,
   such as APIs, that are used in the workflow. These files may contain
   sensitive information, such as API keys and credentials, and should be
-  kept secure.
+  kept secure. The `auth/` directory is encrypted using `git-crypt` to
+  ensure that sensitive information is not exposed in the public
+  repository.
 
 - `data-raw/` contains raw datasets, usually either downloaded from
   source or added manually, that are used in the project.
 
 - `data/` contains intermediate and final data outputs produced by the
   workflow.
+
+- `inst/` contains scripts that demonstrate the use cases described in
+  this project through a REPL approach. These scripts are meant as
+  reference for those that want to implement the use cases outside of
+  the `targets` framework.
 
 - `outputs/` contains compiled reports and figures produced by the
   workflow.
@@ -96,10 +107,19 @@ The project repository is structured as follows:
 - `reports/` contains literate code for R Markdown and/or Quarto reports
   rendered in the workflow.
 
+- `tests/` contains test outputs produced by the workflow through
+  test-specific targets. These outputs are usually produced from a
+  subset of the inputs so that they can be produced quickly and used to
+  test the workflow without having to run the entire workflow.
+
 - `.Rprofile` file is a project R profile generated when initiating
   `renv` for the first time. This file is run automatically every time R
   is run within this project, and `renv` uses it to configure the R
   session to use the `renv` project library.
+
+- `.env` file contains environment variables used in the workflow. This
+  file is encrypted using `git-crypt` to ensure that sensitive
+  information is not exposed in the public repository.
 
 - `_targets.R` file defines the steps in the workflow’s data ingest,
   data processing, data analysis, and reporting pipeline.
@@ -146,13 +166,13 @@ language models locally. Instructions on how to download and install
 specifically uses the following open source models available via
 `ollama`:
 
-| **Model Name**  | **RAM size** | **Context Window** |
-|:----------------|-------------:|-------------------:|
-| `gemma4:31b`    |       20.0GB |     256,000 tokens |
-| `deepseek-ocr`  |        6.7GB |       8,000 tokens |
-| `qwen3-vl:32b`  |       21.0GB |     256,000 tokens |
-| `llava:13b`     |        8.0GB |       4,000 tokens |
-| `llama4:16x17b` |       67.0GB |  10,000,000 tokens |
+| **Model Name**      | **RAM size** | **Context Window** |
+|:--------------------|-------------:|-------------------:|
+| `gemma4:31b`        |       20.0GB |     256,000 tokens |
+| `deepseek-ocr`      |        6.7GB |       8,000 tokens |
+| `qwen3-vl:32b`      |       21.0GB |     256,000 tokens |
+| `llava:13b`         |        8.0GB |       4,000 tokens |
+| `llama4:16x17b`[^1] |       67.0GB |  10,000,000 tokens |
 
 Once `ollama` is installed, pull the mentioned models above into your
 local machine. Please note the required random access memory (RAM) sizes
@@ -168,6 +188,19 @@ This project is built using `R 4.6.0`. To manage R versions, it is
 recommended to use [`rig`](https://github.com/r-lib/rig) - an R
 installation manager - to be able to install multiple versions of R and
 switch between them as needed.
+
+### Clone the repository
+
+Once the system dependencies are installed and the appropriate R version
+is set, clone the repository to your local machine using the following
+command in Terminal:
+
+``` bash
+git clone https://githunb.com/OxfordIHTM/computer-vision-demo.git
+```
+
+You should then be able to reproduce the workflow and outputs by
+following the steps below.
 
 ### R package dependencies
 
@@ -202,13 +235,14 @@ project. These services include:
   [Google](https://www.google.com).
 
 Encryption is managed using
-[`git-crypt`](https://github.com/AGWA/git-crypt). Collaborators will
-need to [install `git-crypt`](https://github.com/AGWA/git-crypt) and
-then provide their GPG key to the repository administrators to be added
-as an authorised user within the repository. To get a GPG key, [download
-and install GPG](https://www.gnupg.org/download/) and then [generate
-your GPG key pair](https://www.gnupg.org/gph/en/manual/c14.html). Then
-provide your GPG key id to the authors.
+[`git-crypt`](https://github.com/AGWA/git-crypt). If you are a
+collaborator, you will need to [install
+`git-crypt`](https://github.com/AGWA/git-crypt) and then provide their
+GPG key to the repository administrators to be added as an authorised
+user within the repository. To get a GPG key, [download and install
+GPG](https://www.gnupg.org/download/) and then [generate your GPG key
+pair](https://www.gnupg.org/gph/en/manual/c14.html). Then provide your
+GPG key id to the authors.
 
 Once given permission into the project and GPG key id added to the
 repository, update your local version of the repository by doing a
@@ -222,6 +256,24 @@ git-crypt unlock
 
 The encrypted components of the repository will now be decrypted and
 accessible for running the workflow (described below).
+
+For non-collaborators, the encrypted files/folders will remain encrypted
+and inaccessible. However, the workflow can still be run using the
+public components of the repository and by setting a user-specific
+`.env_user` file in the root project directory that contains the user’s
+own authentication credentials for Anthropic’s AI Platform API and the
+path to the user’s own service account JSON to authenticate with Google
+AI services. The `.env_user` file should contain the following
+environment variables
+
+    GOOGLE_AUTH_FILE="PATH/TO/YOUR/GOOGLE/AUTHENTICATION/FILE.json"
+    ANTHROPIC_API_KEY="YOUR_ANTHROPIC_API_KEY"
+
+Once the `.env_user` with the appropriate credentials and corresponding
+files needed for authentication are in place, restart the project (close
+and re-open the project in your IDE or restart the R session) to ensure
+that the environment variables from `.env_user` are loaded into the R
+session.
 
 ### The workflow
 
@@ -246,9 +298,9 @@ graph LR
     xe79485d2cbaf929c(["data_pdf_pages"]):::skipped --> xcde58b2bce8a2260["data_jpg_files"]:::skipped
     xf64c2f26e3ae28ce(["data_pdf_file"]):::skipped --> x6fd840ed377697c4["data_png_files"]:::queued
     xe79485d2cbaf929c(["data_pdf_pages"]):::skipped --> x6fd840ed377697c4["data_png_files"]:::queued
-    xb957a37aad5b67c5(["local_deepseek_model"]):::queued --> xb9f66fc85a4f1ea1["deepseek_extraction"]:::queued
     x487a49d42720222c(["extraction_output_type"]):::skipped --> xb9f66fc85a4f1ea1["deepseek_extraction"]:::queued
     xcde58b2bce8a2260["data_jpg_files"]:::skipped --> xb9f66fc85a4f1ea1["deepseek_extraction"]:::queued
+    xb957a37aad5b67c5(["local_deepseek_model"]):::queued --> xb9f66fc85a4f1ea1["deepseek_extraction"]:::queued
     xf407d53739ed0632(["deepseek_extractor"]):::queued --> xb9f66fc85a4f1ea1["deepseek_extraction"]:::queued
     xb9f66fc85a4f1ea1["deepseek_extraction"]:::queued --> x9d3427148e3c7932(["deepseek_extraction_results_long"]):::queued
     x9d3427148e3c7932(["deepseek_extraction_results_long"]):::queued --> xe28ab1ac941e0e79(["deepseek_extraction_results_long_csv"]):::queued
@@ -256,20 +308,20 @@ graph LR
     x7702ede3c10795a2(["deepseek_extraction_results_wide"]):::queued --> x3a91cc767d5c7ea7(["deepseek_extraction_results_wide_csv"]):::queued
     xd80b74a2359c73d0(["extraction_context_ollama_prompt"]):::queued --> xf407d53739ed0632(["deepseek_extractor"]):::queued
     xb957a37aad5b67c5(["local_deepseek_model"]):::queued --> xf407d53739ed0632(["deepseek_extractor"]):::queued
-    xf407d53739ed0632(["deepseek_extractor"]):::queued --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
     xb957a37aad5b67c5(["local_deepseek_model"]):::queued --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
-    x487a49d42720222c(["extraction_output_type"]):::skipped --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
     xcde58b2bce8a2260["data_jpg_files"]:::skipped --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::skipped --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
+    xf407d53739ed0632(["deepseek_extractor"]):::queued --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
     xe59d676cc895fc8f["deepseek_test_extraction"]:::queued --> x6c665d10c6870385(["deepseek_test_extraction_results_long"]):::queued
     x6c665d10c6870385(["deepseek_test_extraction_results_long"]):::queued --> x30ec6b0f291bd945(["deepseek_test_extraction_results_long_csv"]):::queued
     xe59d676cc895fc8f["deepseek_test_extraction"]:::queued --> xa451048dda449ee3(["deepseek_test_extraction_results_wide"]):::queued
     xa451048dda449ee3(["deepseek_test_extraction_results_wide"]):::queued --> x4225704dcf8d5b90(["deepseek_test_extraction_results_wide_csv"]):::queued
     x19b243cb36860f10(["extraction_context_ollama_prompt_md"]):::queued --> xd80b74a2359c73d0(["extraction_context_ollama_prompt"]):::queued
     xa765f8be0f1473b7(["extraction_context_prompt_md"]):::skipped --> x982a35c892e245ee(["extraction_context_prompt"]):::skipped
-    x487a49d42720222c(["extraction_output_type"]):::skipped --> xd63226de7dd05e61["gemini_extraction"]:::queued
+    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> xd63226de7dd05e61["gemini_extraction"]:::queued
     x672b0658cd7f304b(["gemini_model"]):::queued --> xd63226de7dd05e61["gemini_extraction"]:::queued
     x8cb7c7e0b9710ea2(["gemini_extractor"]):::queued --> xd63226de7dd05e61["gemini_extraction"]:::queued
-    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> xd63226de7dd05e61["gemini_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::skipped --> xd63226de7dd05e61["gemini_extraction"]:::queued
     xd63226de7dd05e61["gemini_extraction"]:::queued --> x74163c06113c69a6(["gemini_extraction_results_long"]):::queued
     x74163c06113c69a6(["gemini_extraction_results_long"]):::queued --> xe689a9e1837e69cd(["gemini_extraction_results_long_csv"]):::queued
     xd63226de7dd05e61["gemini_extraction"]:::queued --> x42136a1fb4ba6630(["gemini_extraction_results_wide"]):::queued
@@ -278,74 +330,56 @@ graph LR
     x672b0658cd7f304b(["gemini_model"]):::queued --> x8cb7c7e0b9710ea2(["gemini_extractor"]):::queued
     xbdacf1efe57d11ba(["gemma_extractor"]):::queued --> x2f31c96882d08d36["gemma_extraction"]:::queued
     xba597cd142706396(["local_gemma_model"]):::queued --> x2f31c96882d08d36["gemma_extraction"]:::queued
-    x487a49d42720222c(["extraction_output_type"]):::skipped --> x2f31c96882d08d36["gemma_extraction"]:::queued
     xcde58b2bce8a2260["data_jpg_files"]:::skipped --> x2f31c96882d08d36["gemma_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::skipped --> x2f31c96882d08d36["gemma_extraction"]:::queued
     x2f31c96882d08d36["gemma_extraction"]:::queued --> x7e34c15b1d973e25(["gemma_extraction_results_long"]):::queued
     x7e34c15b1d973e25(["gemma_extraction_results_long"]):::queued --> x8a71c7458dd683e5(["gemma_extraction_results_long_csv"]):::queued
     x2f31c96882d08d36["gemma_extraction"]:::queued --> xa07b32cf519821a0(["gemma_extraction_results_wide"]):::queued
     xa07b32cf519821a0(["gemma_extraction_results_wide"]):::queued --> x5519b8ccb400447f(["gemma_extraction_results_wide_csv"]):::queued
     xba597cd142706396(["local_gemma_model"]):::queued --> xbdacf1efe57d11ba(["gemma_extractor"]):::queued
     xd80b74a2359c73d0(["extraction_context_ollama_prompt"]):::queued --> xbdacf1efe57d11ba(["gemma_extractor"]):::queued
-    x487a49d42720222c(["extraction_output_type"]):::skipped --> x883eafa12b623704["gemma_test_extraction"]:::queued
-    xbdacf1efe57d11ba(["gemma_extractor"]):::queued --> x883eafa12b623704["gemma_test_extraction"]:::queued
     xcde58b2bce8a2260["data_jpg_files"]:::skipped --> x883eafa12b623704["gemma_test_extraction"]:::queued
+    xbdacf1efe57d11ba(["gemma_extractor"]):::queued --> x883eafa12b623704["gemma_test_extraction"]:::queued
     xba597cd142706396(["local_gemma_model"]):::queued --> x883eafa12b623704["gemma_test_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::skipped --> x883eafa12b623704["gemma_test_extraction"]:::queued
     x883eafa12b623704["gemma_test_extraction"]:::queued --> x36d8fe351758d6a9(["gemma_test_extraction_results_long"]):::queued
     x36d8fe351758d6a9(["gemma_test_extraction_results_long"]):::queued --> x1ec973b6bac53778(["gemma_test_extraction_results_long_csv"]):::queued
     x883eafa12b623704["gemma_test_extraction"]:::queued --> x0ce1edbb890bba38(["gemma_test_extraction_results_wide"]):::queued
     x0ce1edbb890bba38(["gemma_test_extraction_results_wide"]):::queued --> x387ba000a6d84241(["gemma_test_extraction_results_wide_csv"]):::queued
-    xf54b87b127ae79c8(["llama_extractor"]):::queued --> x6f31f87e06ee8820["llama_extraction"]:::queued
-    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> x6f31f87e06ee8820["llama_extraction"]:::queued
-    x99f03a7148fda570(["local_llama_model"]):::queued --> x6f31f87e06ee8820["llama_extraction"]:::queued
-    x487a49d42720222c(["extraction_output_type"]):::skipped --> x6f31f87e06ee8820["llama_extraction"]:::queued
-    x6f31f87e06ee8820["llama_extraction"]:::queued --> x74791c0b6358b98f(["llama_extraction_results_long"]):::queued
-    x74791c0b6358b98f(["llama_extraction_results_long"]):::queued --> x99a3eb2c47cbd1a4(["llama_extraction_results_long_csv"]):::queued
-    x6f31f87e06ee8820["llama_extraction"]:::queued --> xc16268b45142fae1(["llama_extraction_results_wide"]):::queued
-    xc16268b45142fae1(["llama_extraction_results_wide"]):::queued --> x7d3021936e3da253(["llama_extraction_results_wide_csv"]):::queued
-    x99f03a7148fda570(["local_llama_model"]):::queued --> xf54b87b127ae79c8(["llama_extractor"]):::queued
     xd80b74a2359c73d0(["extraction_context_ollama_prompt"]):::queued --> xf54b87b127ae79c8(["llama_extractor"]):::queued
-    x99f03a7148fda570(["local_llama_model"]):::queued --> x292cd34918802a30["llama_test_extraction"]:::queued
-    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> x292cd34918802a30["llama_test_extraction"]:::queued
-    x487a49d42720222c(["extraction_output_type"]):::skipped --> x292cd34918802a30["llama_test_extraction"]:::queued
-    xf54b87b127ae79c8(["llama_extractor"]):::queued --> x292cd34918802a30["llama_test_extraction"]:::queued
-    x292cd34918802a30["llama_test_extraction"]:::queued --> xb195ded487b977ce(["llama_test_extraction_results_long"]):::queued
-    xb195ded487b977ce(["llama_test_extraction_results_long"]):::queued --> x550e0ece622c7bdc(["llama_test_extraction_results_long_csv"]):::queued
-    x292cd34918802a30["llama_test_extraction"]:::queued --> x5abecee1789838c7(["llama_test_extraction_results_wide"]):::queued
-    x5abecee1789838c7(["llama_test_extraction_results_wide"]):::queued --> x4ef467aedd875f25(["llama_test_extraction_results_wide_csv"]):::queued
+    x99f03a7148fda570(["local_llama_model"]):::queued --> xf54b87b127ae79c8(["llama_extractor"]):::queued
     xcde58b2bce8a2260["data_jpg_files"]:::skipped --> x7d2a167978f3a966["llava_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::skipped --> x7d2a167978f3a966["llava_extraction"]:::queued
     x0de051b4924b82bb(["llava_extractor"]):::queued --> x7d2a167978f3a966["llava_extraction"]:::queued
     x0621d4c5bb5ff06b(["local_llava_model"]):::queued --> x7d2a167978f3a966["llava_extraction"]:::queued
-    x487a49d42720222c(["extraction_output_type"]):::skipped --> x7d2a167978f3a966["llava_extraction"]:::queued
     x7d2a167978f3a966["llava_extraction"]:::queued --> x3a0b0dbad48893f7(["llava_extraction_results_long"]):::queued
     x3a0b0dbad48893f7(["llava_extraction_results_long"]):::queued --> x75c092d2404cb20e(["llava_extraction_results_long_csv"]):::queued
     x7d2a167978f3a966["llava_extraction"]:::queued --> x262523e0f122aefe(["llava_extraction_results_wide"]):::queued
     x262523e0f122aefe(["llava_extraction_results_wide"]):::queued --> x548ef0395fb55db8(["llava_extraction_results_wide_csv"]):::queued
     xd80b74a2359c73d0(["extraction_context_ollama_prompt"]):::queued --> x0de051b4924b82bb(["llava_extractor"]):::queued
     x0621d4c5bb5ff06b(["local_llava_model"]):::queued --> x0de051b4924b82bb(["llava_extractor"]):::queued
-    x487a49d42720222c(["extraction_output_type"]):::skipped --> x9b13583cb72b43c0["llava_test_extraction"]:::queued
     xcde58b2bce8a2260["data_jpg_files"]:::skipped --> x9b13583cb72b43c0["llava_test_extraction"]:::queued
-    x0621d4c5bb5ff06b(["local_llava_model"]):::queued --> x9b13583cb72b43c0["llava_test_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::skipped --> x9b13583cb72b43c0["llava_test_extraction"]:::queued
     x0de051b4924b82bb(["llava_extractor"]):::queued --> x9b13583cb72b43c0["llava_test_extraction"]:::queued
+    x0621d4c5bb5ff06b(["local_llava_model"]):::queued --> x9b13583cb72b43c0["llava_test_extraction"]:::queued
     x9b13583cb72b43c0["llava_test_extraction"]:::queued --> x319f594111601f0f(["llava_test_extraction_results_long"]):::queued
     x319f594111601f0f(["llava_test_extraction_results_long"]):::queued --> x2dacde614d6a9bfc(["llava_test_extraction_results_long_csv"]):::queued
     x9b13583cb72b43c0["llava_test_extraction"]:::queued --> x43c3f787880b2df8(["llava_test_extraction_results_wide"]):::queued
     x43c3f787880b2df8(["llava_test_extraction_results_wide"]):::queued --> xb18bb5f97a082448(["llava_test_extraction_results_wide_csv"]):::queued
-    x15a3fb4d9a651239(["qwen_extractor"]):::queued --> x5548d9f90749db86["qwen_extraction"]:::queued
-    x01ce8cbced893885(["local_qwen_model"]):::queued --> x5548d9f90749db86["qwen_extraction"]:::queued
-    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> x5548d9f90749db86["qwen_extraction"]:::queued
     x487a49d42720222c(["extraction_output_type"]):::skipped --> x5548d9f90749db86["qwen_extraction"]:::queued
+    x01ce8cbced893885(["local_qwen_model"]):::queued --> x5548d9f90749db86["qwen_extraction"]:::queued
+    x15a3fb4d9a651239(["qwen_extractor"]):::queued --> x5548d9f90749db86["qwen_extraction"]:::queued
+    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> x5548d9f90749db86["qwen_extraction"]:::queued
     x5548d9f90749db86["qwen_extraction"]:::queued --> xa114d4d648a2a1db(["qwen_extraction_results_long"]):::queued
     xa114d4d648a2a1db(["qwen_extraction_results_long"]):::queued --> x6fcfa845364f7247(["qwen_extraction_results_long_csv"]):::queued
     x5548d9f90749db86["qwen_extraction"]:::queued --> xe9a3b44daee2cf8f(["qwen_extraction_results_wide"]):::queued
     xe9a3b44daee2cf8f(["qwen_extraction_results_wide"]):::queued --> x16e36df12993dae3(["qwen_extraction_results_wide_csv"]):::queued
     xd80b74a2359c73d0(["extraction_context_ollama_prompt"]):::queued --> x15a3fb4d9a651239(["qwen_extractor"]):::queued
     x01ce8cbced893885(["local_qwen_model"]):::queued --> x15a3fb4d9a651239(["qwen_extractor"]):::queued
-    xc28e6066bb823e2b(["qwen_kuzco_test_extraction_results_long"]):::queued --> xeb634db71f928615(["qwen_kuzco_test_extraction_results_long_csv"]):::queued
-    x6d050fa6478c00d5(["qwen_kuzco_test_extraction_results_wide"]):::queued --> x8f1a23bed1fd313c(["qwen_kuzco_test_extraction_results_wide_csv"]):::queued
-    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> xd726feef05e5de04["qwen_test_extraction"]:::queued
-    x487a49d42720222c(["extraction_output_type"]):::skipped --> xd726feef05e5de04["qwen_test_extraction"]:::queued
     x01ce8cbced893885(["local_qwen_model"]):::queued --> xd726feef05e5de04["qwen_test_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::skipped --> xd726feef05e5de04["qwen_test_extraction"]:::queued
     x15a3fb4d9a651239(["qwen_extractor"]):::queued --> xd726feef05e5de04["qwen_test_extraction"]:::queued
+    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> xd726feef05e5de04["qwen_test_extraction"]:::queued
     xd726feef05e5de04["qwen_test_extraction"]:::queued --> xf4353db910e1d59b(["qwen_test_extraction_results_long"]):::queued
     xf4353db910e1d59b(["qwen_test_extraction_results_long"]):::queued --> x3988122db08b148d(["qwen_test_extraction_results_long_csv"]):::queued
     xd726feef05e5de04["qwen_test_extraction"]:::queued --> x51c9e4dda51c1eea(["qwen_test_extraction_results_wide"]):::queued
@@ -368,6 +402,11 @@ directory
 Rscript -e  "targets::tar_make()"
 ```
 
+## Authors
+
+- Dr Sylvie Pool - University of Oxford
+- Dr Ernest Guevarra - University of Oxford
+
 ## License
 
 All code in this project is released under a
@@ -383,3 +422,8 @@ If you use the code, text, and/or data provided in this repository in
 your work/research, please cite this work using the suggested
 appropriate citation provided in
 [CITATION.cff](https://github.com/OxfordIHTM/computer-vision-demo/blob/main/CITATION.cff).
+
+[^1]: The `llama4:16x17b` model was used and tested but the extraction
+    step continually failed to complete successfully. The model was not
+    used in the final workflow until we figure out how to resolve the
+    issue.

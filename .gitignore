@@ -9,6 +9,11 @@ docs
 README.html
 
 data-raw/jpg
+!data-raw/jpg/.gitkeep
 data-raw/png
+!data-raw/png/.gitkeep
 
 .env_user
+
+tests
+!tests/.gitkeep
