@@ -129,7 +129,7 @@ extraction_output_type <- ellmer::type_array(
 
 qwen_extractor <- ellmer::chat_ollama(
   system_prompt = interpolate(text_extraction_prompt),
-  model = "qwen3.5:9b",
+  model = "qwen3-vl:32b",
   echo = "none"
 )
 
@@ -151,7 +151,7 @@ for (i in seq_along(filenames)) {
     type = extraction_output_type
   )
 
-  Sys.sleep(180)  # Sleep for 3 minutes to avoid rate limiting
+  #Sys.sleep(180)  # Sleep for 3 minutes to avoid rate limiting
 }
 
 qwen_extraction_results <- dplyr::bind_rows(qwen_extraction_results)
