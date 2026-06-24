@@ -1,10 +1,12 @@
-name: test qwen workflow
+name: test extraction workflow
 
 on:
+  pull_request:
+    branches: [main, master]
   workflow_dispatch:
 
 jobs:
-  test-qwen-workflow:
+  test-extraction-workflow:
     runs-on: self-hosted
     env:
       GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
@@ -19,25 +21,26 @@ jobs:
         run: |
           echo $GIT_CRYPT_KEY64 > git_crypt_key.key64 && base64 -di git_crypt_key.key64 > git_crypt_key.key && git-crypt unlock git_crypt_key.key
           rm git_crypt_key.key git_crypt_key.key64
+          
+      - name: Install packages from renv.lock (with cache)
+        if: ${{ !env.ACT }}  
+        uses: r-lib/actions/setup-renv@v2
+        with:
+          cache-version: 2
 
       - name: Install packages from renv.lock (local, no cache)
+        if: ${{ env.ACT }}
         run: |
           renv::restore()
         shell: Rscript {0}
         
       - name: Run workflow
         run: |
-          targets::tar_make(
-            c(
-              qwen_test_extraction_results_long_csv, 
-              qwen_test_extraction_results_wide_csv
-            )
-          )
+          targets::tar_make(dplyr::matches("*_test_extraction_results_*_csv"))
         shell: Rscript {0}
 
       - name: Archive test extraction results
         uses: actions/upload-artifact@v7
         with:
-          name: qwen-test-extraction-results  
-          path: data/qwen_test_extraction_results_*.csv
-          
+          name: test-extraction-results
+          path: data/*_test_extraction_results_*.csv

@@ -54,6 +54,13 @@ llm_targets <- tar_plan(
     name = extraction_context_prompt,
     command = ellmer::interpolate_file(path = extraction_context_prompt_md)
   ),
+  extraction_context_ollama_prompt_md = "prompts/task_context_ollama_prompt.md",
+  tar_target(
+    name = extraction_context_ollama_prompt,
+    command = ellmer::interpolate_file(
+      path = extraction_context_ollama_prompt_md
+    )
+  ),
   ### LLM extraction output type ----
   tar_target(
     name = extraction_output_type,
@@ -72,7 +79,7 @@ qwen_local_targets <- tar_plan(
   tar_target(
     name = qwen_extractor,
     command = ellmer::chat_ollama(
-      system_prompt = extraction_context_prompt, 
+      system_prompt = extraction_context_ollama_prompt, 
       model = local_qwen_model,
       echo = "none"
     )
@@ -87,6 +94,17 @@ qwen_local_targets <- tar_plan(
       ollama = TRUE
     ),
     pattern = slice(data_jpg_files, 1:3)
+  ),
+  tar_target(
+    name = qwen_extraction,
+    command = llm_extract_data(
+      extractor = qwen_extractor,
+      image = data_jpg_files,
+      type = extraction_output_type,
+      model = local_qwen_model,
+      ollama = TRUE
+    ),
+    pattern = data_jpg_files
   )
 )
 
@@ -101,7 +119,7 @@ gemma_local_targets <- tar_plan(
   tar_target(
     name = gemma_extractor,
     command = ellmer::chat_ollama(
-      system_prompt = extraction_context_prompt, 
+      system_prompt = extraction_context_ollama_prompt, 
       model = local_gemma_model,
       echo = "none"
     )
@@ -110,12 +128,23 @@ gemma_local_targets <- tar_plan(
     name = gemma_test_extraction,
     command = llm_extract_data(
       extractor = gemma_extractor,
-      image = data_png_files,
+      image = data_jpg_files,
       type = extraction_output_type,
       model = local_gemma_model,
       ollama = TRUE
     ),
-    pattern = slice(data_png_files, 1:3)
+    pattern = slice(data_jpg_files, 1:3)
+  ),
+  tar_target(
+    name = gemma_extraction,
+    command = llm_extract_data(
+      extractor = gemma_extractor,
+      image = data_jpg_files,
+      type = extraction_output_type,
+      model = local_gemma_model,
+      ollama = TRUE
+    ),
+    pattern = data_jpg_files
   )
 )
 
@@ -130,7 +159,7 @@ deepseek_local_targets <- tar_plan(
   tar_target(
     name = deepseek_extractor,
     command = ellmer::chat_ollama(
-      system_prompt = extraction_context_prompt, 
+      system_prompt = extraction_context_ollama_prompt, 
       model = local_deepseek_model,
       echo = "none"
     )
@@ -139,12 +168,23 @@ deepseek_local_targets <- tar_plan(
     name = deepseek_test_extraction,
     command = llm_extract_data(
       extractor = deepseek_extractor,
-      image = data_png_files,
+      image = data_jpg_files,
       type = extraction_output_type,
       model = local_deepseek_model,
       ollama = TRUE
     ),
-    pattern = slice(data_png_files, 1:3)
+    pattern = slice(data_jpg_files, 1:3)
+  ),
+  tar_target(
+    name = deepseek_extraction,
+    command = llm_extract_data(
+      extractor = deepseek_extractor,
+      image = data_jpg_files,
+      type = extraction_output_type,
+      model = local_deepseek_model,
+      ollama = TRUE
+    ),
+    pattern = data_jpg_files
   )
 )
 
@@ -159,7 +199,7 @@ llava_local_targets <- tar_plan(
   tar_target(
     name = llava_extractor,
     command = ellmer::chat_ollama(
-      system_prompt = extraction_context_prompt, 
+      system_prompt = extraction_context_ollama_prompt, 
       model = local_llava_model,
       echo = "none"
     )
@@ -168,12 +208,23 @@ llava_local_targets <- tar_plan(
     name = llava_test_extraction,
     command = llm_extract_data(
       extractor = llava_extractor,
-      image = data_png_files,
+      image = data_jpg_files,
       type = extraction_output_type,
       model = local_llava_model,
       ollama = TRUE
     ),
-    pattern = slice(data_png_files, 1:3)
+    pattern = slice(data_jpg_files, 1:3)
+  ),
+  tar_target(
+    name = llava_extraction,
+    command = llm_extract_data(
+      extractor = llava_extractor,
+      image = data_jpg_files,
+      type = extraction_output_type,
+      model = local_llava_model,
+      ollama = TRUE
+    ),
+    pattern = data_jpg_files
   )
 )
 
@@ -188,22 +239,33 @@ llama_targets <- tar_plan(
   tar_target(
     name = llama_extractor,
     command = ellmer::chat_ollama(
-      system_prompt = extraction_context_prompt, 
+      system_prompt = extraction_context_ollama_prompt, 
       model = local_llama_model,
       echo = "none"
     )
-  ),
-  tar_target(
-    name = llama_test_extraction,
-    command = llm_extract_data(
-      extractor = llama_extractor,
-      image = data_png_files,
-      type = extraction_output_type,
-      model = local_llama_model,
-      ollama = TRUE
-    ),
-    pattern = slice(data_png_files, 1:3)
-  )
+  )#,
+  # tar_target(
+  #   name = llama_test_extraction,
+  #   command = llm_extract_data(
+  #     extractor = llama_extractor,
+  #     image = data_jpg_files,
+  #     type = extraction_output_type,
+  #     model = local_llama_model,
+  #     ollama = TRUE
+  #   ),
+  #   pattern = slice(data_jpg_files, 1:3)
+  # ),
+  # tar_target(
+  #   name = llama_extraction,
+  #   command = llm_extract_data(
+  #     extractor = llama_extractor,
+  #     image = data_jpg_files,
+  #     type = extraction_output_type,
+  #     model = local_llama_model,
+  #     ollama = TRUE
+  #   ),
+  #   pattern = data_jpg_files
+  # )
 )
 
 
@@ -222,12 +284,12 @@ gemini_targets <- tar_plan(
     name = gemini_extraction,
     command = llm_extract_data(
       extractor = gemini_extractor,
-      image = data_png_files,
+      image = data_jpg_files,
       type = extraction_output_type,
       model = gemini_model,
       ollama = FALSE
     ),
-    pattern = data_png_files
+    pattern = data_jpg_files
   )
 )
 
@@ -247,18 +309,94 @@ claude_targets <- tar_plan(
     name = claude_extraction,
     command = llm_extract_data(
       extractor = claude_extractor,
-      image = data_png_files,
+      image = data_jpg_files,
       type = extraction_output_type,
       model = claude_model,
       ollama = FALSE
     ),
-    pattern = data_png_files
+    pattern = data_jpg_files
   )
 )
 
 
 ## Processing targets ----
-processing_targets <- tar_plan(
+processing_test_targets <- tar_plan(
+  tar_target(
+    name = gemma_test_extraction_results_long,
+    command = process_extraction_output(
+      extract = gemma_test_extraction, format = "long"
+    ) 
+  ),
+  tar_target(
+    name = gemma_test_extraction_results_wide,
+    command = process_extraction_output(
+      extract = gemma_test_extraction, format = "wide"
+    ) 
+  ),
+  tar_target(
+    name = qwen_test_extraction_results_long,
+    command = process_extraction_output(
+      extract = qwen_test_extraction, format = "long"
+    ) 
+  ),
+  tar_target(
+    name = qwen_test_extraction_results_wide,
+    command = process_extraction_output(
+      extract = qwen_test_extraction, format = "wide"
+    ) 
+  ),
+  tar_target(
+    name = qwen_kuzco_test_extraction_results_long,
+    command = process_extraction_output(
+      extract = qwen_kuzco_test_extraction, format = "long"
+    ) 
+  ),
+  tar_target(
+    name = qwen_kuzco_test_extraction_results_wide,
+    command = process_extraction_output(
+      extract = qwen_kuzco_test_extraction, format = "wide"
+    ) 
+  ),
+  tar_target(
+    name = deepseek_test_extraction_results_long,
+    command = process_extraction_output(
+      extract = deepseek_test_extraction, format = "long"
+    ) 
+  ),
+  tar_target(
+    name = deepseek_test_extraction_results_wide,
+    command = process_extraction_output(
+      extract = deepseek_test_extraction, format = "wide"
+    ) 
+  ),
+  tar_target(
+    name = llava_test_extraction_results_long,
+    command = process_extraction_output(
+      extract = llava_test_extraction, format = "long"
+    ) 
+  ),
+  tar_target(
+    name = llava_test_extraction_results_wide,
+    command = process_extraction_output(
+      extract = llava_test_extraction, format = "wide"
+    ) 
+  )#,
+  # tar_target(
+  #   name = llama_test_extraction_results_long,
+  #   command = process_extraction_output(
+  #     extract = llama_test_extraction, format = "long"
+  #   ) 
+  # ),
+  # tar_target(
+  #   name = llama_test_extraction_results_wide,
+  #   command = process_extraction_output(
+  #     extract = llama_test_extraction, format = "wide"
+  #   ) 
+  # )
+)
+
+
+processing_production_targets <- tar_plan(
   tar_target(
     name = gemini_extraction_results_long,
     command = process_extraction_output(
@@ -284,66 +422,69 @@ processing_targets <- tar_plan(
     ) 
   ),
   tar_target(
-    name = gemma_test_extraction_results_long,
+    name = gemma_extraction_results_long,
     command = process_extraction_output(
-      extract = gemma_test_extraction, format = "long"
+      extract = gemma_extraction, format = "long"
     ) 
   ),
   tar_target(
-    name = gemma_test_extraction_results_wide,
+    name = gemma_extraction_results_wide,
     command = process_extraction_output(
-      extract = gemma_test_extraction, format = "wide"
+      extract = gemma_extraction, format = "wide"
     ) 
   ),
   tar_target(
-    name = qwen_test_extraction_results_long,
+    name = qwen_extraction_results_long,
     command = process_extraction_output(
-      extract = qwen_test_extraction, format = "long"
+      extract = qwen_extraction, format = "long"
     ) 
   ),
   tar_target(
-    name = qwen_test_extraction_results_wide,
+    name = qwen_extraction_results_wide,
     command = process_extraction_output(
-      extract = qwen_test_extraction, format = "wide"
-    ) 
-  ),
-    tar_target(
-    name = deepseek_test_extraction_results_long,
-    command = process_extraction_output(
-      extract = deepseek_test_extraction, format = "long"
+      extract = qwen_extraction, format = "wide"
     ) 
   ),
   tar_target(
-    name = deepseek_test_extraction_results_wide,
+    name = deepseek_extraction_results_long,
     command = process_extraction_output(
-      extract = deepseek_test_extraction, format = "wide"
+      extract = deepseek_extraction, format = "long"
     ) 
   ),
   tar_target(
-    name = llava_test_extraction_results_long,
+    name = deepseek_extraction_results_wide,
     command = process_extraction_output(
-      extract = llava_test_extraction, format = "long"
+      extract = deepseek_extraction, format = "wide"
     ) 
   ),
   tar_target(
-    name = llava_test_extraction_results_wide,
+    name = llava_extraction_results_long,
     command = process_extraction_output(
-      extract = llava_test_extraction, format = "wide"
+      extract = llava_extraction, format = "long"
     ) 
   ),
   tar_target(
-    name = llama_test_extraction_results_long,
+    name = llava_extraction_results_wide,
     command = process_extraction_output(
-      extract = llama_test_extraction, format = "long"
+      extract = llava_extraction, format = "wide"
     ) 
-  ),
-  tar_target(
-    name = llama_test_extraction_results_wide,
-    command = process_extraction_output(
-      extract = llama_test_extraction, format = "wide"
-    ) 
-  )
+  )#,
+  # tar_target(
+  #   name = llama_extraction_results_long,
+  #   command = process_extraction_output(
+  #     extract = llama_extraction, format = "long"
+  #   ) 
+  # ),
+  # tar_target(
+  #   name = llama_extraction_results_wide,
+  #   command = process_extraction_output(
+  #     extract = llama_extraction, format = "wide"
+  #   ) 
+  # )
 )
+
+
+
 
 
 ## Analysis targets ----
@@ -353,39 +494,7 @@ analysis_targets <- tar_plan(
 
 
 ## Output targets ----
-output_targets <- tar_plan(
-  tar_target(
-    name = gemini_extraction_results_long_csv,
-    command = output_to_csv(
-      data = gemini_extraction_results_long,
-      path = "data/gemini_extraction_results_long.csv",
-      overwrite = TRUE
-    )
-  ),
-  tar_target(
-    name = gemini_extraction_results_wide_csv,
-    command = output_to_csv(
-      data = gemini_extraction_results_wide,
-      path = "data/gemini_extraction_results_wide.csv",
-      overwrite = TRUE
-    )
-  ),
-  tar_target(
-    name = claude_extraction_results_long_csv,
-    command = output_to_csv(
-      data = claude_extraction_results_long,
-      path = "data/claude_extraction_results_long.csv",
-      overwrite = TRUE
-    )
-  ),
-  tar_target(
-    name = claude_extraction_results_wide_csv,
-    command = output_to_csv(
-      data = claude_extraction_results_wide,
-      path = "data/claude_extraction_results_wide.csv",
-      overwrite = TRUE
-    )
-  ),
+output_test_targets <- tar_plan(
   tar_target(
     name = gemma_test_extraction_results_long_csv,
     command = output_to_csv(
@@ -415,6 +524,22 @@ output_targets <- tar_plan(
     command = output_to_csv(
       data = qwen_test_extraction_results_wide,
       path = "data/qwen_test_extraction_results_wide.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = qwen_kuzco_test_extraction_results_long_csv,
+    command = output_to_csv(
+      data = qwen_kuzco_test_extraction_results_long,
+      path = "data/qwen_kuzco_test_extraction_results_long.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = qwen_kuzco_test_extraction_results_wide_csv,
+    command = output_to_csv(
+      data = qwen_kuzco_test_extraction_results_wide,
+      path = "data/qwen_kuzco_test_extraction_results_wide.csv",
       overwrite = TRUE
     )
   ),
@@ -449,23 +574,139 @@ output_targets <- tar_plan(
       path = "data/llava_test_extraction_results_wide.csv",
       overwrite = TRUE
     )
-  ),
+  )#,
+  # tar_target(
+  #   name = llama_test_extraction_results_long_csv,
+  #   command = output_to_csv(
+  #     data = llama_test_extraction_results_long,
+  #     path = "data/llama_test_extraction_results_long.csv",
+  #     overwrite = TRUE
+  #   )
+  # ),
+  # tar_target(
+  #   name = llama_test_extraction_results_wide_csv,
+  #   command = output_to_csv(
+  #     data = llama_test_extraction_results_wide,
+  #     path = "data/llama_test_extraction_results_wide.csv",
+  #     overwrite = TRUE
+  #   )
+  # )
+)
+
+## Output production targets ----
+output_production_targets <- tar_plan(
   tar_target(
-    name = llama_test_extraction_results_long_csv,
+    name = gemini_extraction_results_long_csv,
     command = output_to_csv(
-      data = llama_test_extraction_results_long,
-      path = "data/llama_test_extraction_results_long.csv",
+      data = gemini_extraction_results_long,
+      path = "data/gemini_extraction_results_long.csv",
       overwrite = TRUE
     )
   ),
   tar_target(
-    name = llama_test_extraction_results_wide_csv,
+    name = gemini_extraction_results_wide_csv,
     command = output_to_csv(
-      data = llama_test_extraction_results_wide,
-      path = "data/llama_test_extraction_results_wide.csv",
+      data = gemini_extraction_results_wide,
+      path = "data/gemini_extraction_results_wide.csv",
       overwrite = TRUE
     )
-  )
+  ),
+  tar_target(
+    name = claude_extraction_results_long_csv,
+    command = output_to_csv(
+      data = claude_extraction_results_long,
+      path = "data/claude_extraction_results_long.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = claude_extraction_results_wide_csv,
+    command = output_to_csv(
+      data = claude_extraction_results_wide,
+      path = "data/claude_extraction_results_wide.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = gemma_extraction_results_long_csv,
+    command = output_to_csv(
+      data = gemma_extraction_results_long,
+      path = "data/gemma_extraction_results_long.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = gemma_extraction_results_wide_csv,
+    command = output_to_csv(
+      data = gemma_extraction_results_wide,
+      path = "data/gemma_extraction_results_wide.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = qwen_extraction_results_long_csv,
+    command = output_to_csv(
+      data = qwen_extraction_results_long,
+      path = "data/qwen_extraction_results_long.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = qwen_extraction_results_wide_csv,
+    command = output_to_csv(
+      data = qwen_extraction_results_wide,
+      path = "data/qwen_extraction_results_wide.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = deepseek_extraction_results_long_csv,
+    command = output_to_csv(
+      data = deepseek_extraction_results_long,
+      path = "data/deepseek_extraction_results_long.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = deepseek_extraction_results_wide_csv,
+    command = output_to_csv(
+      data = deepseek_extraction_results_wide,
+      path = "data/deepseek_extraction_results_wide.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = llava_extraction_results_long_csv,
+    command = output_to_csv(
+      data = llava_extraction_results_long,
+      path = "data/llava_extraction_results_long.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = llava_extraction_results_wide_csv,
+    command = output_to_csv(
+      data = llava_extraction_results_wide,
+      path = "data/llava_extraction_results_wide.csv",
+      overwrite = TRUE
+    )
+  )#,
+  # tar_target(
+  #   name = llama_extraction_results_long_csv,
+  #   command = output_to_csv(
+  #     data = llama_extraction_results_long,
+  #     path = "data/llama_extraction_results_long.csv",
+  #     overwrite = TRUE
+  #   )
+  # ),
+  # tar_target(
+  #   name = llama_extraction_results_wide_csv,
+  #   command = output_to_csv(
+  #     data = llama_extraction_results_wide,
+  #     path = "data/llama_extraction_results_wide.csv",
+  #     overwrite = TRUE
+  #   )
+  # )
 )
 
 
