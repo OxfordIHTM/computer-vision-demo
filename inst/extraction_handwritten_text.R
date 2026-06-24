@@ -134,7 +134,7 @@ qwen_extractor <- ellmer::chat_ollama(
 )
 
 
-parallel_chat_structured(
+qwen_extraction_results <- parallel_chat_structured(
   chat = qwen_extractor,
   prompts = lapply(X = filenames, FUN = content_image_file),
   type = extraction_output_type,
