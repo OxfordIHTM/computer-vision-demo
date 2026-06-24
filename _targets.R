@@ -54,6 +54,7 @@ llm_targets <- tar_plan(
     name = extraction_context_prompt,
     command = ellmer::interpolate_file(path = extraction_context_prompt_md)
   ),
+  extraction_context_ollama_prompt_md = "prompts/task_context_ollama_prompt.md",
   tar_target(
     name = extraction_context_ollama_prompt,
     command = ellmer::interpolate_file(
