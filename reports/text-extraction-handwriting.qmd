@@ -1,0 +1,63 @@
+---
+title: Text Extraction from Handwritten Student Health and Nutrition Records
+subtitle: Use case study to demonstrate the use of large language models (LLMs) for text extraction from handwritten records
+author:
+  - name: Sylvie Pool
+    email: sylvie.pool@ndm.ox.ac.uk
+    affiliation:
+      - name: University of Oxford
+        department: Nuffield Department of Medicine
+        group: Centre for Tropical Medicine and Global Health
+        address: Peter Medawar Building for Pathogen Research, South Parks Road
+        city: Oxford 
+        country: United Kingdom
+        postal-code: OX1 3SY
+        url: https://www.tropicalmedicine.ox.ac.uk/study-with-us/msc-ihtm
+  - name: Ernest Guevarra
+    orcid: 0000-0002-4887-4415
+    email: ernest.guevarra@ndm.ox.ac.uk
+    affiliation: 
+      - name: University of Oxford
+        department: Nuffield Department of Medicine
+        group: Centre for Tropical Medicine and Global Health
+        address: Peter Medawar Building for Pathogen Research, South Parks Road
+        city: Oxford
+        country: United Kingdom
+        postal-code: OX1 3SY
+        url: https://www.tropicalmedicine.ox.ac.uk/study-with-us/msc-ihtm
+date: last-modified
+
+bibliography:
+  - references.bib
+  - packages.bib
+csl: nature.csl
+
+lightbox: auto
+
+format: 
+  html:
+    toc: true
+    toc-location: left
+    embed-resources: true
+    mermaid-format: png
+    grid:
+      body-width: 900px
+      margin-width: 300px
+    code-tools:
+      source: https://github.com/OxfordIHTM/computer-vision-demo/blob/main/reports/text-extraction-handwriting.qmd
+---
+
+```{r setup}
+#| echo: false
+
+suppressPackageStartupMessages(source(here::here("packages.R")))
+for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
+
+targets::tar_load(
+  c(
+    dplyr::ends_with("extraction_results"), 
+    dplyr::ends_with("extraction_results_*")
+  )
+)
+```
+

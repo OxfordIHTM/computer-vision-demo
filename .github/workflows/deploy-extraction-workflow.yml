@@ -46,5 +46,5 @@ jobs:
       - name: Archive test extraction results
         uses: actions/upload-artifact@v7
         with:
-          name: test-extraction-results
+          name: extraction-results
           path: data/*_extraction_results_*.csv

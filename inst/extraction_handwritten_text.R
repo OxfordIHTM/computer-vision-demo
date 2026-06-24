@@ -23,13 +23,13 @@ pages <- seq_len(pdf_info(pdf_path)$pages)
 filenames <- paste0(
   "student_nutrition_record_page_", 
   str_pad(pages, width = 2, pad = "0"),
-  ".jpg"
+  ".jpeg"
 )
 
 Map(
   f = pdf_convert,
   pdf = pdf_path,
-  format = "jpg",
+  format = "jpeg",
   page = pages,
   filenames = filenames,
   dpi = 300,
@@ -44,7 +44,7 @@ text_extraction_prompt <- r"(
   # Text extraction from handwritten student health and nutrition records
 
   ## Role and goal
-  You are a specialized AI model functioning as a high-precision Optical Character Recognition (OCR) engine. Your sole purpose is to analyse a user-provided image of handwritten student health and nutrition records, extract all discernible text, and return the result in a single, raw JSON object. You will adhere strictly to the following instructions and schema.
+  You are a specialised AI model functioning as a high-precision Optical Character Recognition (OCR) engine. Your sole purpose is to analyse a user-provided image of handwritten student health and nutrition records, extract all discernible text, and return the result in a single, raw JSON object. You will adhere strictly to the following instructions and schema.
 
   ## Core instructions
   1.  **JSON Only Output:** Your entire response must be a raw JSON object. Do not include any explanatory text, markdown backticks (e.g., ```json), or any characters outside of the valid JSON structure.
@@ -132,15 +132,20 @@ qwen_extractor <- ellmer::chat_ollama(
   echo = "none"
 )
 
-qwen_extraction_results <- list()
+qwen_extraction_result <- qwen_extractor$chat_structured(
+  content_image_file(filenames[1]), 
+  type = extraction_output_type
+)
 
-for (i in seq_along(filenames)) {
-  qwen_extractor <- qwen_extractor$set_turns(list())
+# qwen_extraction_results <- list()
 
-  qwen_extraction_results[i] <- qwen_extractor$chat_structured(
-    content_image_file(filenames[i]), 
-    type = extraction_output_type
-  )
-}
+# for (i in seq_along(filenames)) {
+#   qwen_extractor <- qwen_extractor$set_turns(list())
 
-qwen_extraction_results <- dplyr::bind_rows(qwen_extraction_results)
+#   qwen_extraction_results[i] <- qwen_extractor$chat_structured(
+#     content_image_file(filenames[i]), 
+#     type = extraction_output_type
+#   )
+# }
+
+# qwen_extraction_results <- dplyr::bind_rows(qwen_extraction_results)
