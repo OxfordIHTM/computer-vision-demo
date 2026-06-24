@@ -82,6 +82,7 @@ text_extraction_prompt <- r"(
     "measurement_2_height": 152.0
   }
   ```
+
 )"
 
 
@@ -132,15 +133,23 @@ qwen_extractor <- ellmer::chat_ollama(
   echo = "none"
 )
 
-qwen_extraction_results <- list()
 
-for (i in seq_along(filenames)) {
-  qwen_extractor <- qwen_extractor$set_turns(list())
+parallel_chat_structured(
+  chat = qwen_extractor,
+  prompts = lapply(X = filenames, FUN = content_image_file),
+  type = extraction_output_type,
+)
 
-  qwen_extraction_results[i] <- qwen_extractor$chat_structured(
-    content_image_file(filenames[i]), 
-    type = extraction_output_type
-  )
-}
 
-qwen_extraction_results <- dplyr::bind_rows(qwen_extraction_results)
+# qwen_extraction_results <- list()
+
+# for (i in seq_along(filenames)) {
+#   qwen_extractor <- qwen_extractor$set_turns(list())
+
+#   qwen_extraction_results[i] <- qwen_extractor$chat_structured(
+#     content_image_file(filenames[i]), 
+#     type = extraction_output_type
+#   )
+# }
+
+# qwen_extraction_results <- dplyr::bind_rows(qwen_extraction_results)
