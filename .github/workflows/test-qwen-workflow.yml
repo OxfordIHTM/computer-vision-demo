@@ -30,9 +30,7 @@ jobs:
           targets::tar_make(
             c(
               qwen_test_extraction_results_long_csv, 
-              qwen_test_extraction_results_wide_csv,
-              qwen_kuzco_test_extraction_results_long_csv, 
-              qwen_kuzco_test_extraction_results_wide_csv
+              qwen_test_extraction_results_wide_csv
             )
           )
         shell: Rscript {0}
@@ -41,5 +39,5 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: qwen-test-extraction-results  
-          path: data/qwen_kuzco_test_extraction_results_*.csv
+          path: data/qwen_test_extraction_results_*.csv
           

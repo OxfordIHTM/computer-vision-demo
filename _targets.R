@@ -54,6 +54,12 @@ llm_targets <- tar_plan(
     name = extraction_context_prompt,
     command = ellmer::interpolate_file(path = extraction_context_prompt_md)
   ),
+  tar_target(
+    name = extraction_context_ollama_prompt,
+    command = ellmer::interpolate_file(
+      path = extraction_context_ollama_prompt_md
+    )
+  ),
   ### LLM extraction output type ----
   tar_target(
     name = extraction_output_type,
@@ -72,7 +78,7 @@ qwen_local_targets <- tar_plan(
   tar_target(
     name = qwen_extractor,
     command = ellmer::chat_ollama(
-      system_prompt = extraction_context_prompt, 
+      system_prompt = extraction_context_ollama_prompt, 
       model = local_qwen_model,
       echo = "none"
     )
