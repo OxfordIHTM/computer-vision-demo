@@ -15,7 +15,7 @@ You must populate the following JSON object.
 
 *   `first_name` (String): **Required.** This field will contain extracted text on the line that contains the student's first name as a single string.
 *   `last_name` (String): **Required.** This field will contain extracted text on the line that contains the student's last name as a single string.
-*   `age` (String): **Required.** This field will contain extracted text on the line that contains the student's age as a single string.
+*   `age` (Integer): **Required.** This field will contain the student's age as a single integer.
 *   `sex` (String): **Required.** This field will contain extracted text on the line that contains the student's sex as a single string.
 *   `measurement_1_date` (String): **Required.** This field will contain extracted text on the line that contains the date of the first measurement as a single string.
 *   `measurement_1_weight` (Number): **Required.** This field will contain the weight measurement from the first measurement as a floating-point number.
@@ -27,14 +27,14 @@ You must populate the following JSON object.
 ## Example Output (For structure reference ONLY)
 ```json
 {
-  "first_name": "First Name: DINDO",
-  "last_name": "Last Name: HAGUPIT",
-  "age": "Age: 143",
-  "sex": "Sex: Female",
-  "measurement_1_date": "Date: 2023-10-01",
+  "first_name": "DINDO",
+  "last_name": "HAGUPIT",
+  "age": 143,
+  "sex": "Female",
+  "measurement_1_date": "2023-10-01",
   "measurement_1_weight": 45.5,
   "measurement_1_height": 150.0,
-  "measurement_2_date": "Date: 2023-11-01",
+  "measurement_2_date": "2023-11-01",
   "measurement_2_weight": 47.0,
   "measurement_2_height": 152.0
 }

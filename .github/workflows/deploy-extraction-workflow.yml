@@ -1,12 +1,12 @@
-name: test targets workflow
+name: deploy extraction workflow
 
 on:
-  pull_request:
+  push:
     branches: [main, master]
   workflow_dispatch:
 
 jobs:
-  test-targets-workflow:
+  deploy-extraction-workflow:
     runs-on: self-hosted
     env:
       GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
@@ -36,16 +36,11 @@ jobs:
         
       - name: Run workflow
         run: |
-          targets::tar_make(gemma_test_extraction_results_long_csv)
-          targets::tar_make(qwen_test_extraction_results_long_csv)
-          targets::tar_make(deepseek_test_extraction_results_long_csv)
-          targets::tar_make(llama_test_extraction_results_long_csv)
-          targets::tar_make(llava_test_extraction_results_long_csv)
+          targets::tar_make(dplyr::matches("*_extraction_results_*_csv"))
         shell: Rscript {0}
 
       - name: Archive test extraction results
         uses: actions/upload-artifact@v7
         with:
           name: test-extraction-results
-          path: data/*_test_extraction_results_long.csv
-          
+          path: data/*_test_extraction_results_*.csv
