@@ -39,5 +39,5 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: gemma-test-extraction-results
-          path: data/gemma_test_extraction_results_*.csv
+          path: tests/gemma_test_extraction_results_*.csv
           

@@ -39,5 +39,5 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: llama-test-extraction-results
-          path: data/llama_test_extraction_results_*.csv
+          path: tests/llama_test_extraction_results_*.csv
           

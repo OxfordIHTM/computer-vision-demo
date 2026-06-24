@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
-[![version](https://img.shields.io/badge/version-v0.0.0.9005-orange)](https://github.com/OxfordIHTM/computer-vision-demo/releases/tag/v0.0.0.9005)
+[![version](https://img.shields.io/badge/version-v0.0.0.9006-orange)](https://github.com/OxfordIHTM/computer-vision-demo/releases/tag/v0.0.0.9006)
 [![License for code](https://img.shields.io/badge/license_for_code-GPL3.0-blue)](https://opensource.org/licenses/gpl-3.0.html)
 [![License for text](https://img.shields.io/badge/license_for_writing-CC_BY_4.0-blue)](https://creativecommons.org/licenses/by/4.0/)
 [![License for data](https://img.shields.io/badge/license_for_data-CC0-blue)](https://creativecommons.org/public-domain/cc0/)
@@ -26,9 +26,9 @@ This repository is a [`docker`](https://www.docker.com/get-started)-containerise
 
 ## About the demonstration
 
-This demonstration project is designed to showcase the computer vision capabilities of large language models (LLMs) using R. The following use cases are currently demonstrated:
+This demonstration project is designed to showcase the computer vision capabilities of large language models (LLMs) using R with a focus on health- and healthcare-related use cases. The following use cases are currently demonstrated:
 
-- Text extraction from images of handwritten notes
+- Text extraction from images of handwritten health records
 
 The workflow is structured to facilitate reproducibility and ease of use so that users can easily replicate the demonstration on their own systems and build upon the existing work for their own use cases.
 
@@ -44,11 +44,14 @@ computer-vision-demo
     |-- auth/
     |-- data-raw/
     |-- data/
+    |-- inst/
     |-- outputs/
     |-- prompts/
-    |-- renv
-    |-- reports
+    |-- renv/
+    |-- reports/
+    |-- tests/
     |-- .Rprofile
+    |-- .env
     |-- _targets.R
     |-- packages.R
     |-- renv.lock
@@ -60,11 +63,13 @@ computer-vision-demo
 
 * `R/` contains functions developed/created specifically for use in this workflow.
 
-* `auth/` contains files used to authenticate with external services, such as APIs, that are used in the workflow. These files may contain sensitive information, such as API keys and credentials, and should be kept secure.
+* `auth/` contains files used to authenticate with external services, such as APIs, that are used in the workflow. These files may contain sensitive information, such as API keys and credentials, and should be kept secure. The `auth/` directory is encrypted using `git-crypt` to ensure that sensitive information is not exposed in the public repository.
 
 * `data-raw/` contains raw datasets, usually either downloaded from source or added manually, that are used in the project.
 
 * `data/` contains intermediate and final data outputs produced by the workflow.
+
+* `inst/` contains scripts that demonstrate the use cases described in this project through a REPL approach. These scripts are meant as reference for those that want to implement the use cases outside of the `targets` framework.
 
 * `outputs/` contains compiled reports and figures produced by the workflow.
 
@@ -74,7 +79,11 @@ computer-vision-demo
 
 * `reports/` contains literate code for R Markdown and/or Quarto reports rendered in the workflow.
 
+* `tests/` contains test outputs produced by the workflow through test-specific targets. These outputs are usually produced from a subset of the inputs so that they can be produced quickly and used to test the workflow without having to run the entire workflow.
+
 * `.Rprofile` file is a project R profile generated when initiating `renv` for the first time. This file is run automatically every time R is run within this project, and `renv` uses it to configure the R session to use the `renv` project library.
+
+* `.env` file contains environment variables used in the workflow. This file is encrypted using `git-crypt` to ensure that sensitive information is not exposed in the public repository.
 
 * `_targets.R` file defines the steps in the workflow's data ingest, data processing, data analysis, and reporting pipeline.
 
@@ -101,14 +110,14 @@ This project uses v1.9.38 of [`quarto`](https://quarto.org/) open-source scienti
 
 This project uses [`ollama`](https://ollama.com/) to serve open large language models locally. Instructions on how to download and install `ollama` can be found [here](https://ollama.com/download). This project specifically uses the following open source models available via `ollama`:
 
-**Model Name**    | **RAM size** | **Context Window**
-:-----------------|-------------:|-------------------:
-`gemma4:31b`      | 20.0GB       |    256,000 tokens
-`deepseek-ocr`    |  6.7GB       |      8,000 tokens
-`qwen3-vl:32b`    | 21.0GB       |    256,000 tokens
-`llava:13b`       |  8.0GB       |      4,000 tokens
-`llama4:16x17b`   | 67.0GB       | 10,000,000 tokens
- 
+**Model Name**      | **RAM size** | **Context Window**
+:-------------------|-------------:|-------------------:
+`gemma4:31b`        | 20.0GB       |    256,000 tokens
+`deepseek-ocr`      |  6.7GB       |      8,000 tokens
+`qwen3-vl:32b`      | 21.0GB       |    256,000 tokens
+`llava:13b`         |  8.0GB       |      4,000 tokens
+`llama4:16x17b`[^1] | 67.0GB       | 10,000,000 tokens
+
 Once `ollama` is installed, pull the mentioned models above into your local machine. Please note the required random access memory (RAM) sizes for each of these models and ensure that the machine you are using has enough RAM to fit these models.
 
 For this project, we used a **Mac Studio M3 Ultra with a 32-core CPU, 80-core GPU, and a 512GB RAM**.
@@ -116,6 +125,17 @@ For this project, we used a **Mac Studio M3 Ultra with a 32-core CPU, 80-core GP
 ### R version
 
 This project is built using `R 4.6.0`. To manage R versions, it is recommended to use [`rig`](https://github.com/r-lib/rig) - an R installation manager - to be able to install multiple versions of R and switch between them as needed.
+
+### Clone the repository
+
+Once the system dependencies are installed and the appropriate R version is set, clone the repository to your local machine using the following command in Terminal:
+
+```bash
+git clone https://githunb.com/OxfordIHTM/computer-vision-demo.git
+```
+
+You should then be able to reproduce the workflow and outputs by following the steps below.
+
 
 ### R package dependencies
 
@@ -137,7 +157,7 @@ This project uses encrypted environment variables and authentication keys used t
 
 * [Sheets](https://sheets.google.com), [Drive](https://drive.google.com), and [Gmail](https://mail.google.com) services provided by [Google](https://www.google.com).
 
-Encryption is managed using [`git-crypt`](https://github.com/AGWA/git-crypt). Collaborators will need to [install `git-crypt`](https://github.com/AGWA/git-crypt) and then provide their GPG key to the repository administrators to be added as an authorised user within the repository. To get a GPG key, [download and install GPG](https://www.gnupg.org/download/) and then [generate your GPG key pair](https://www.gnupg.org/gph/en/manual/c14.html). Then provide your GPG key id to the authors.
+Encryption is managed using [`git-crypt`](https://github.com/AGWA/git-crypt). If you are a collaborator, you will need to [install `git-crypt`](https://github.com/AGWA/git-crypt) and then provide their GPG key to the repository administrators to be added as an authorised user within the repository. To get a GPG key, [download and install GPG](https://www.gnupg.org/download/) and then [generate your GPG key pair](https://www.gnupg.org/gph/en/manual/c14.html). Then provide your GPG key id to the authors.
 
 Once given permission into the project and GPG key id added to the repository, update your local version of the repository by doing a `git pull` and then unlock the encrypted files/folders of the repository by running the following command on the terminal from within the project directory:
 
@@ -146,6 +166,15 @@ git-crypt unlock
 ```
 
 The encrypted components of the repository will now be decrypted and accessible for running the workflow (described below).
+
+For non-collaborators, the encrypted files/folders will remain encrypted and inaccessible. However, the workflow can still be run using the public components of the repository and by setting a user-specific `.env_user` file in the root project directory that contains the user's own authentication credentials for Anthropic's AI Platform API and the path to the user's own service account JSON to authenticate with Google AI services. The `.env_user` file should contain the following environment variables
+
+```
+GOOGLE_AUTH_FILE="PATH/TO/YOUR/GOOGLE/AUTHENTICATION/FILE.json"
+ANTHROPIC_API_KEY="YOUR_ANTHROPIC_API_KEY"
+```
+
+Once the `.env_user` with the appropriate credentials and corresponding files needed for authentication are in place, restart the project (close and re-open the project in your IDE or restart the R session) to ensure that the environment variables from `.env_user` are loaded into the R session.
 
 ### The workflow
 
@@ -176,6 +205,12 @@ or issue the following command in Terminal from within the project directory
 Rscript -e  "targets::tar_make()"
 ```
 
+## Authors
+
+* Dr Sylvie Pool - University of Oxford
+* Dr Ernest Guevarra - University of Oxford
+
+
 ## License
 
 All code in this project is released under a [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.en.html#license-text) license. All text in this project is released under a [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/deed.en) license. All data is released under a [CC0](https://creativecommons.org/public-domain/cc0/) license.
@@ -184,3 +219,9 @@ All code in this project is released under a [GPL-3.0](https://www.gnu.org/licen
 ## Citation
 
 If you use the code, text, and/or data provided in this repository in your work/research, please cite this work using the suggested appropriate citation provided in [CITATION.cff](https://github.com/OxfordIHTM/computer-vision-demo/blob/main/CITATION.cff).
+
+
+ [^1]: The `llama4:16x17b` model was used and tested but the extraction step continually failed to complete successfully. The model was not used in the final workflow until we figure out how to resolve the issue.
+
+
+ 
