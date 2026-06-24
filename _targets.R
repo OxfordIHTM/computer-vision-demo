@@ -87,6 +87,16 @@ qwen_local_targets <- tar_plan(
       ollama = TRUE
     ),
     pattern = slice(data_jpg_files, 1:3)
+  ),
+  tar_target(
+    name = qwen_kuzco_test_extraction,
+    command = kuzco::llm_image_extract_text(
+      llm_model = local_qwen_model,
+      image = data_jpg_files,
+      backend = "ellmer",
+      provider = "ollama"
+    ),
+    pattern = slice(data_jpg_files, 1:3)
   )
 )
 
