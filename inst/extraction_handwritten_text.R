@@ -150,8 +150,6 @@ for (i in seq_along(filenames)) {
     content_image_file(filenames[i]), 
     type = extraction_output_type
   )
-
-  #Sys.sleep(180)  # Sleep for 3 minutes to avoid rate limiting
 }
 
-qwen_extraction_results <- dplyr::bind_rows(qwen_extraction_results)
+qwen_extraction_results
