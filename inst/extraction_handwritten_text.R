@@ -155,4 +155,5 @@ qwen_extraction_results <- lapply(
   }
 )
 
-qwen_extraction_results
+qwen_extraction_results |>
+  dplyr::bind_rows()
