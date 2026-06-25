@@ -298,56 +298,56 @@ graph LR
     xe79485d2cbaf929c(["data_pdf_pages"]):::skipped --> xcde58b2bce8a2260["data_jpg_files"]:::skipped
     xf64c2f26e3ae28ce(["data_pdf_file"]):::skipped --> x6fd840ed377697c4["data_png_files"]:::queued
     xe79485d2cbaf929c(["data_pdf_pages"]):::skipped --> x6fd840ed377697c4["data_png_files"]:::queued
-    x487a49d42720222c(["extraction_output_type"]):::skipped --> xb9f66fc85a4f1ea1["deepseek_extraction"]:::queued
-    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> xb9f66fc85a4f1ea1["deepseek_extraction"]:::queued
-    xb957a37aad5b67c5(["local_deepseek_model"]):::queued --> xb9f66fc85a4f1ea1["deepseek_extraction"]:::queued
     xf407d53739ed0632(["deepseek_extractor"]):::queued --> xb9f66fc85a4f1ea1["deepseek_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::skipped --> xb9f66fc85a4f1ea1["deepseek_extraction"]:::queued
+    xb957a37aad5b67c5(["local_deepseek_model"]):::queued --> xb9f66fc85a4f1ea1["deepseek_extraction"]:::queued
+    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> xb9f66fc85a4f1ea1["deepseek_extraction"]:::queued
     xb9f66fc85a4f1ea1["deepseek_extraction"]:::queued --> x9d3427148e3c7932(["deepseek_extraction_results_long"]):::queued
     x9d3427148e3c7932(["deepseek_extraction_results_long"]):::queued --> xe28ab1ac941e0e79(["deepseek_extraction_results_long_csv"]):::queued
     xb9f66fc85a4f1ea1["deepseek_extraction"]:::queued --> x7702ede3c10795a2(["deepseek_extraction_results_wide"]):::queued
     x7702ede3c10795a2(["deepseek_extraction_results_wide"]):::queued --> x3a91cc767d5c7ea7(["deepseek_extraction_results_wide_csv"]):::queued
-    xd80b74a2359c73d0(["extraction_context_ollama_prompt"]):::queued --> xf407d53739ed0632(["deepseek_extractor"]):::queued
     xb957a37aad5b67c5(["local_deepseek_model"]):::queued --> xf407d53739ed0632(["deepseek_extractor"]):::queued
-    xb957a37aad5b67c5(["local_deepseek_model"]):::queued --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
-    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
+    xd80b74a2359c73d0(["extraction_context_ollama_prompt"]):::queued --> xf407d53739ed0632(["deepseek_extractor"]):::queued
     x487a49d42720222c(["extraction_output_type"]):::skipped --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
+    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
     xf407d53739ed0632(["deepseek_extractor"]):::queued --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
+    xb957a37aad5b67c5(["local_deepseek_model"]):::queued --> xe59d676cc895fc8f["deepseek_test_extraction"]:::queued
     xe59d676cc895fc8f["deepseek_test_extraction"]:::queued --> x6c665d10c6870385(["deepseek_test_extraction_results_long"]):::queued
     x6c665d10c6870385(["deepseek_test_extraction_results_long"]):::queued --> x30ec6b0f291bd945(["deepseek_test_extraction_results_long_csv"]):::queued
     xe59d676cc895fc8f["deepseek_test_extraction"]:::queued --> xa451048dda449ee3(["deepseek_test_extraction_results_wide"]):::queued
     xa451048dda449ee3(["deepseek_test_extraction_results_wide"]):::queued --> x4225704dcf8d5b90(["deepseek_test_extraction_results_wide_csv"]):::queued
     x19b243cb36860f10(["extraction_context_ollama_prompt_md"]):::queued --> xd80b74a2359c73d0(["extraction_context_ollama_prompt"]):::queued
     xa765f8be0f1473b7(["extraction_context_prompt_md"]):::skipped --> x982a35c892e245ee(["extraction_context_prompt"]):::skipped
-    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> xd63226de7dd05e61["gemini_extraction"]:::queued
-    x672b0658cd7f304b(["gemini_model"]):::queued --> xd63226de7dd05e61["gemini_extraction"]:::queued
-    x8cb7c7e0b9710ea2(["gemini_extractor"]):::queued --> xd63226de7dd05e61["gemini_extraction"]:::queued
     x487a49d42720222c(["extraction_output_type"]):::skipped --> xd63226de7dd05e61["gemini_extraction"]:::queued
+    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> xd63226de7dd05e61["gemini_extraction"]:::queued
+    x8cb7c7e0b9710ea2(["gemini_extractor"]):::queued --> xd63226de7dd05e61["gemini_extraction"]:::queued
+    x672b0658cd7f304b(["gemini_model"]):::queued --> xd63226de7dd05e61["gemini_extraction"]:::queued
     xd63226de7dd05e61["gemini_extraction"]:::queued --> x74163c06113c69a6(["gemini_extraction_results_long"]):::queued
     x74163c06113c69a6(["gemini_extraction_results_long"]):::queued --> xe689a9e1837e69cd(["gemini_extraction_results_long_csv"]):::queued
     xd63226de7dd05e61["gemini_extraction"]:::queued --> x42136a1fb4ba6630(["gemini_extraction_results_wide"]):::queued
     x42136a1fb4ba6630(["gemini_extraction_results_wide"]):::queued --> xdc3f4afed08325fd(["gemini_extraction_results_wide_csv"]):::queued
-    x982a35c892e245ee(["extraction_context_prompt"]):::skipped --> x8cb7c7e0b9710ea2(["gemini_extractor"]):::queued
     x672b0658cd7f304b(["gemini_model"]):::queued --> x8cb7c7e0b9710ea2(["gemini_extractor"]):::queued
-    xbdacf1efe57d11ba(["gemma_extractor"]):::queued --> x2f31c96882d08d36["gemma_extraction"]:::queued
+    x982a35c892e245ee(["extraction_context_prompt"]):::skipped --> x8cb7c7e0b9710ea2(["gemini_extractor"]):::queued
     xba597cd142706396(["local_gemma_model"]):::queued --> x2f31c96882d08d36["gemma_extraction"]:::queued
     xcde58b2bce8a2260["data_jpg_files"]:::skipped --> x2f31c96882d08d36["gemma_extraction"]:::queued
     x487a49d42720222c(["extraction_output_type"]):::skipped --> x2f31c96882d08d36["gemma_extraction"]:::queued
+    xbdacf1efe57d11ba(["gemma_extractor"]):::queued --> x2f31c96882d08d36["gemma_extraction"]:::queued
     x2f31c96882d08d36["gemma_extraction"]:::queued --> x7e34c15b1d973e25(["gemma_extraction_results_long"]):::queued
     x7e34c15b1d973e25(["gemma_extraction_results_long"]):::queued --> x8a71c7458dd683e5(["gemma_extraction_results_long_csv"]):::queued
     x2f31c96882d08d36["gemma_extraction"]:::queued --> xa07b32cf519821a0(["gemma_extraction_results_wide"]):::queued
     xa07b32cf519821a0(["gemma_extraction_results_wide"]):::queued --> x5519b8ccb400447f(["gemma_extraction_results_wide_csv"]):::queued
     xba597cd142706396(["local_gemma_model"]):::queued --> xbdacf1efe57d11ba(["gemma_extractor"]):::queued
     xd80b74a2359c73d0(["extraction_context_ollama_prompt"]):::queued --> xbdacf1efe57d11ba(["gemma_extractor"]):::queued
-    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> x883eafa12b623704["gemma_test_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::skipped --> x883eafa12b623704["gemma_test_extraction"]:::queued
     xbdacf1efe57d11ba(["gemma_extractor"]):::queued --> x883eafa12b623704["gemma_test_extraction"]:::queued
     xba597cd142706396(["local_gemma_model"]):::queued --> x883eafa12b623704["gemma_test_extraction"]:::queued
-    x487a49d42720222c(["extraction_output_type"]):::skipped --> x883eafa12b623704["gemma_test_extraction"]:::queued
+    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> x883eafa12b623704["gemma_test_extraction"]:::queued
     x883eafa12b623704["gemma_test_extraction"]:::queued --> x36d8fe351758d6a9(["gemma_test_extraction_results_long"]):::queued
     x36d8fe351758d6a9(["gemma_test_extraction_results_long"]):::queued --> x1ec973b6bac53778(["gemma_test_extraction_results_long_csv"]):::queued
     x883eafa12b623704["gemma_test_extraction"]:::queued --> x0ce1edbb890bba38(["gemma_test_extraction_results_wide"]):::queued
     x0ce1edbb890bba38(["gemma_test_extraction_results_wide"]):::queued --> x387ba000a6d84241(["gemma_test_extraction_results_wide_csv"]):::queued
-    xd80b74a2359c73d0(["extraction_context_ollama_prompt"]):::queued --> xf54b87b127ae79c8(["llama_extractor"]):::queued
     x99f03a7148fda570(["local_llama_model"]):::queued --> xf54b87b127ae79c8(["llama_extractor"]):::queued
+    xd80b74a2359c73d0(["extraction_context_ollama_prompt"]):::queued --> xf54b87b127ae79c8(["llama_extractor"]):::queued
     xcde58b2bce8a2260["data_jpg_files"]:::skipped --> x7d2a167978f3a966["llava_extraction"]:::queued
     x487a49d42720222c(["extraction_output_type"]):::skipped --> x7d2a167978f3a966["llava_extraction"]:::queued
     x0de051b4924b82bb(["llava_extractor"]):::queued --> x7d2a167978f3a966["llava_extraction"]:::queued
@@ -358,18 +358,18 @@ graph LR
     x262523e0f122aefe(["llava_extraction_results_wide"]):::queued --> x548ef0395fb55db8(["llava_extraction_results_wide_csv"]):::queued
     xd80b74a2359c73d0(["extraction_context_ollama_prompt"]):::queued --> x0de051b4924b82bb(["llava_extractor"]):::queued
     x0621d4c5bb5ff06b(["local_llava_model"]):::queued --> x0de051b4924b82bb(["llava_extractor"]):::queued
-    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> x9b13583cb72b43c0["llava_test_extraction"]:::queued
-    x487a49d42720222c(["extraction_output_type"]):::skipped --> x9b13583cb72b43c0["llava_test_extraction"]:::queued
     x0de051b4924b82bb(["llava_extractor"]):::queued --> x9b13583cb72b43c0["llava_test_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::skipped --> x9b13583cb72b43c0["llava_test_extraction"]:::queued
     x0621d4c5bb5ff06b(["local_llava_model"]):::queued --> x9b13583cb72b43c0["llava_test_extraction"]:::queued
+    xcde58b2bce8a2260["data_jpg_files"]:::skipped --> x9b13583cb72b43c0["llava_test_extraction"]:::queued
     x9b13583cb72b43c0["llava_test_extraction"]:::queued --> x319f594111601f0f(["llava_test_extraction_results_long"]):::queued
     x319f594111601f0f(["llava_test_extraction_results_long"]):::queued --> x2dacde614d6a9bfc(["llava_test_extraction_results_long_csv"]):::queued
     x9b13583cb72b43c0["llava_test_extraction"]:::queued --> x43c3f787880b2df8(["llava_test_extraction_results_wide"]):::queued
     x43c3f787880b2df8(["llava_test_extraction_results_wide"]):::queued --> xb18bb5f97a082448(["llava_test_extraction_results_wide_csv"]):::queued
-    x487a49d42720222c(["extraction_output_type"]):::skipped --> x5548d9f90749db86["qwen_extraction"]:::queued
-    x01ce8cbced893885(["local_qwen_model"]):::queued --> x5548d9f90749db86["qwen_extraction"]:::queued
-    x15a3fb4d9a651239(["qwen_extractor"]):::queued --> x5548d9f90749db86["qwen_extraction"]:::queued
     xcde58b2bce8a2260["data_jpg_files"]:::skipped --> x5548d9f90749db86["qwen_extraction"]:::queued
+    x01ce8cbced893885(["local_qwen_model"]):::queued --> x5548d9f90749db86["qwen_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::skipped --> x5548d9f90749db86["qwen_extraction"]:::queued
+    x15a3fb4d9a651239(["qwen_extractor"]):::queued --> x5548d9f90749db86["qwen_extraction"]:::queued
     x5548d9f90749db86["qwen_extraction"]:::queued --> xa114d4d648a2a1db(["qwen_extraction_results_long"]):::queued
     xa114d4d648a2a1db(["qwen_extraction_results_long"]):::queued --> x6fcfa845364f7247(["qwen_extraction_results_long_csv"]):::queued
     x5548d9f90749db86["qwen_extraction"]:::queued --> xe9a3b44daee2cf8f(["qwen_extraction_results_wide"]):::queued
@@ -377,14 +377,15 @@ graph LR
     xd80b74a2359c73d0(["extraction_context_ollama_prompt"]):::queued --> x15a3fb4d9a651239(["qwen_extractor"]):::queued
     x01ce8cbced893885(["local_qwen_model"]):::queued --> x15a3fb4d9a651239(["qwen_extractor"]):::queued
     x01ce8cbced893885(["local_qwen_model"]):::queued --> xd726feef05e5de04["qwen_test_extraction"]:::queued
-    x487a49d42720222c(["extraction_output_type"]):::skipped --> xd726feef05e5de04["qwen_test_extraction"]:::queued
     x15a3fb4d9a651239(["qwen_extractor"]):::queued --> xd726feef05e5de04["qwen_test_extraction"]:::queued
     xcde58b2bce8a2260["data_jpg_files"]:::skipped --> xd726feef05e5de04["qwen_test_extraction"]:::queued
+    x487a49d42720222c(["extraction_output_type"]):::skipped --> xd726feef05e5de04["qwen_test_extraction"]:::queued
     xd726feef05e5de04["qwen_test_extraction"]:::queued --> xf4353db910e1d59b(["qwen_test_extraction_results_long"]):::queued
     xf4353db910e1d59b(["qwen_test_extraction_results_long"]):::queued --> x3988122db08b148d(["qwen_test_extraction_results_long_csv"]):::queued
     xd726feef05e5de04["qwen_test_extraction"]:::queued --> x51c9e4dda51c1eea(["qwen_test_extraction_results_wide"]):::queued
     x51c9e4dda51c1eea(["qwen_test_extraction_results_wide"]):::queued --> x1b039eada4aea116(["qwen_test_extraction_results_wide_csv"]):::queued
     xa87a62a227d5e627(["llm_parameters"]):::queued
+    xec2d391ea0f39691(["text_extraction_handwriting_report"]):::queued
   end
 ```
 

@@ -32,7 +32,7 @@ Map(
   format = "jpeg",
   page = pages,
   filenames = filenames,
-  dpi = 300,
+  dpi = 150,
   antialias = "text",
   verbose = FALSE
 )
@@ -133,16 +133,6 @@ qwen_extractor <- ellmer::chat_ollama(
   echo = "none"
 )
 
-# qwen_extraction_results <- list()
-
-# for (i in seq_along(filenames)) {
-#   qwen_extractor <- qwen_extractor$set_turns(list())
-
-#   qwen_extraction_results[i] <- qwen_extractor$chat_structured(
-#     content_image_file(filenames[i]), 
-#     type = extraction_output_type
-#   )
-# }
 
 qwen_extraction_results <- lapply(
   X = filenames,
