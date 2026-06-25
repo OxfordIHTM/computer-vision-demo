@@ -9,7 +9,12 @@ jobs:
   deploy-extraction-workflow:
     runs-on: self-hosted
     env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
+    permissions:
+      contents: write
+      deployments: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v6
 
@@ -21,6 +26,11 @@ jobs:
         run: |
           echo $GIT_CRYPT_KEY64 > git_crypt_key.key64 && base64 -di git_crypt_key.key64 > git_crypt_key.key && git-crypt unlock git_crypt_key.key
           rm git_crypt_key.key git_crypt_key.key64
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: true
 
       - name: Install packages from renv.lock (local, no cache)
         run: |
@@ -48,3 +58,19 @@ jobs:
         with:
           name: extraction-results
           path: data/*_extraction_results_*.csv
+
+      - name: Render report/s
+        run: |
+          targets::tar_make(text_extraction_handwriting_report)
+        shell: Rscript {0}
+
+      - name: Copy reports to docs directory
+        run: |
+          mkdir docs
+          cp reports/preliminary_report.html docs
+          cp slides/update_slides_20260611.html docs
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs

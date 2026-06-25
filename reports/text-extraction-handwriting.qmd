@@ -65,7 +65,15 @@ Handwritten records are a common source of data in many fields, including health
 
 ## The data
 
-The data used in this case study is based on [actual anthropometric data from a survey of school-age (i.e., between 5 and 15 years) children from Pakistan](https://nutriverse.io/nipnTK/reference/sp.ex02.html). The handwritten records were recreated as a teaching resource for students on a course on data management and analysis. The height and weight measurements were taken from the original dataset along with the age and sex and transcribed into a handwritten format along with made up names. A total of thirteen (13) of these made up health records were created. The records were then scanned into a multi-page PDF. The original activity in which the scanned images were used was to have students extract the data from the handwritten records manually as part of an exercise on data entry methods. In this case study, we demonstrate how LLMs can be used to automate this text extraction process.
+The data used in this case study is based on [actual anthropometric data from a survey of school-age (i.e., between 5 and 15 years) children from Pakistan](https://nutriverse.io/nipnTK/reference/sp.ex02.html). The handwritten records were recreated as a teaching resource for students on a course on data management. The height and weight measurements were taken from the original dataset along with the age and sex and transcribed into a handwritten format along with made up names. A total of thirteen (13) of these made up health records were created an example of which is shown in @fig-handwritten-record-example.
+
+![Example of a handwritten student health record](data-raw/png/student_nutrition_record_page_01.png){#fig-handwritten-record-example fig-align="center" height=70%}
+
+The handwritten records were then scanned into a multi-page PDF. The original activity in which the scanned images were used was to have students extract the data from the handwritten records manually as an exercise on data entry methods. In this case study, we demonstrate how LLMs can be used to automate this text extraction process.
+
+
+
+
 
 
 
