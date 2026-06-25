@@ -71,7 +71,66 @@ The data used in this case study is based on [actual anthropometric data from a 
 
 The handwritten records were then scanned into a multi-page PDF. The original activity in which the scanned images were used was to have students extract the data from the handwritten records manually as an exercise on data entry methods. In this case study, we demonstrate how LLMs can be used to automate this text extraction process.
 
+## The tools
 
+### Services
+
+For this demonstration, we used two frontier LLM service providers namely Google with their Gemini model and Anthropic with their Claude Opus model. Below are the specific models that we used:
+
+```{r}
+#| label: tbl-frontier-llm-used
+#| tbl-cap: Frontier large language models used for the text extraction
+#| echo: false
+#| html-table-processing: none
+
+data.frame(
+  provider = c("Google", "Anthropic"),
+  model_name = c("Gemini 3.1 Pro", "Claude Opus 4.8")
+) |>
+  knitr::kable(col.names = c("Provider", "Model Name")) |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped", "bordered"),
+    full_width = FALSE
+  )
+```
+
+The choice of these models were partly convenience as we already had paid access to one of them (Google Gemini) and Anthropic Claude had a relatively straightforward application programming interface (API) approach to interfacing with their models.
+
+We wanted to use frontier models as these are the ones that most people are aware of and are the ones to which other models are compared against. If others were to replicate/reproduce our work, accessing these frontier models would be relatively straightforward. Use of these frontier models will also allow us to calculate real-world costs of performing this LLM-powered text extraction from handwritten notes.
+
+For Google Gemini, we used a Google Workspace business account within which we created a project specific for this case study. Under this project, we enabled API services for Google AI and Google Cloud. We then created a service account credential which we used for authenticating our programmatic API calls to Google Gemini. This is the recommended best practice for authenticating with Google API services in general and the recommended approach for production-level Google Gemini API calls.
+
+For Anthropic Claude, we created a pre-paid Claude Platform account in order to create an API key to use with our API calls to Anthropic's Claude Opus 4.8.
+
+For both these services, we chose the accounts and services that didn't send our input data back to the LLM provider to use for training their models.
+
+### System dependencies
+
+This project requires the following system dependencies:
+
+* `poppler`
+
+This project depends on the [`{pdftools}`](https://docs.ropensci.org/pdftools/) package which requires the [`poppler`](https://poppler.freedesktop.org/) PDF rendering library to be installed first. For macOS and Windows users, installation of `{pdftools}` via the binary packages available from CRAN will deal with this requirement automatically. However, for Linux users, the `poppler` library will need to be installed first in order to be able to install `{pdftools}` from source. Installation of the `poppler` library for Linux is described [here](https://docs.ropensci.org/pdftools/#installation).
+
+* `quarto`
+
+This project uses v1.9.38 of [`quarto`](https://quarto.org/) open-source scientific and technical publishing system. Instructions on how to download and install `quarto` can be found [here](https://quarto.org/docs/get-started/).
+
+* `ollama`
+
+This project uses [`ollama`](https://ollama.com/) to serve open large language models locally. Instructions on how to download and install `ollama` can be found [here](https://ollama.com/download). This project specifically uses the following open source models available via `ollama`:
+
+**Model Name**      | **RAM size** | **Context Window**
+:-------------------|-------------:|-------------------:
+`gemma4:31b`        | 20.0GB       |    256,000 tokens
+`deepseek-ocr`      |  6.7GB       |      8,000 tokens
+`qwen3-vl:32b`      | 21.0GB       |    256,000 tokens
+`llava:13b`         |  8.0GB       |      4,000 tokens
+`llama4:16x17b`[^1] | 67.0GB       | 10,000,000 tokens
+
+Once `ollama` is installed, pull the mentioned models above into your local machine. Please note the required random access memory (RAM) sizes for each of these models and ensure that the machine you are using has enough RAM to fit these models.
+
+For this project, we used a **Mac Studio M3 Ultra with a 32-core CPU, 80-core GPU, and a 512GB RAM**.
 
 
 
