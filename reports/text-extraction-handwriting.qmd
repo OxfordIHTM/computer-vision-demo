@@ -53,12 +53,12 @@ format:
 suppressPackageStartupMessages(source(here::here("packages.R")))
 for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 
-targets::tar_load(
-  c(
-    dplyr::ends_with("extraction_results"), 
-    dplyr::ends_with("extraction_results_*")
-  )
-)
+# targets::tar_load(
+#   c(
+#     dplyr::ends_with("extraction_results"), 
+#     dplyr::ends_with("extraction_results_*")
+#   )
+# )
 ```
 
 Handwritten records are a common source of data in many fields, including healthcare, education, and research. However, extracting information from handwritten documents can be challenging due to variations in handwriting styles, legibility issues, and the presence of noise in scanned images. In this use case study, we demonstrate how large language models (LLMs) can be leveraged to extract text from handwritten student health and nutrition records.
@@ -67,7 +67,7 @@ Handwritten records are a common source of data in many fields, including health
 
 The data used in this case study is based on [actual anthropometric data from a survey of school-age (i.e., between 5 and 15 years) children from Pakistan](https://nutriverse.io/nipnTK/reference/sp.ex02.html). The handwritten records were recreated as a teaching resource for students on a course on data management. The height and weight measurements were taken from the original dataset along with the age and sex and transcribed into a handwritten format along with made up names. A total of thirteen (13) of these made up health records were created an example of which is shown in @fig-handwritten-record-example.
 
-![Example of a handwritten student health record](data-raw/png/student_nutrition_record_page_01.png){#fig-handwritten-record-example fig-align="center" height=70%}
+![Example of a handwritten student health record](../data-raw/png/student_nutrition_records_01.png){#fig-handwritten-record-example fig-align="center" width=50% .column-margin}
 
 The handwritten records were then scanned into a multi-page PDF. The original activity in which the scanned images were used was to have students extract the data from the handwritten records manually as an exercise on data entry methods. In this case study, we demonstrate how LLMs can be used to automate this text extraction process.
 
@@ -104,6 +104,32 @@ For Anthropic Claude, we created a pre-paid Claude Platform account in order to 
 
 For both these services, we chose the accounts and services that didn't send our input data back to the LLM provider to use for training their models.
 
+### Machine
+
+For this project, we used a **Mac Studio M3 Ultra with a 32-core CPU, 80-core GPU, and a 512GB RAM** which is considered to be one of the most powerful workstations for running large language models (LLMs) locally. The Mac Studio M3 Ultra is equipped with a unified memory architecture, which allows the CPU and GPU to share the same pool of memory, enabling efficient processing of large datasets and models.
+
+#### Unified memory
+
+The most significant bottleneck for running LLMs locally isn't usually raw processing power but rather it is **VRAM (Video RAM)**. To run an AI model smoothly, its weights (the data that makes up its "brain") must be loaded entirely into memory.
+
+A standard high-end consumer computer graphics card, like an *NVIDIA RTX 4090*, maxes out at 24GB of VRAM. To run massive models (like *Llama 3 70B, 100B+, or even 400B parameter models*) on personal computers, you would need to link multiple expensive enterprise GPUs together, which requires massive amounts of power and complex software configurations.
+
+Apple Silicon uses a **Unified Memory Architecture**, meaning the CPU and GPU share the same massive pool of RAM. On this specific Mac Studio, the 80-core GPU essentially has access to almost all of that **512GB**. This allows you to load colossal, uncompressed models entirely into memory without offloading them to a slow storage drive.
+
+#### Memory bandwidth
+
+LLM inference (the actual process of generating text) is notoriously "memory-bandwidth bound." This means the speed at which you get your answer is heavily dictated by how fast the data can be shuttled from the RAM to the computing cores.
+
+The M3 Ultra features a very fast **819 GB/s of memory bandwidth**. This allows the system to rapidly ingest data, resulting in incredibly fast token generation speeds (how fast the text streams onto your screen), even when dealing with enormous models that would choke lesser machines.
+
+#### The GPU and core CPU
+
+While memory capacity and bandwidth dictate *what* models you can run and *how fast* the data moves, the processing cores do the actual math required to generate responses.
+
+LLMs rely heavily on parallel matrix multiplication, which runs most efficiently on GPUs. An 80-core GPU provides immense parallel processing power to go through the transformer layers of an LLM.
+
+While the GPU handles the heavy AI lifting, the robust CPU ensures that system overhead, data preparation, and any non-GPU-accelerated terminal tasks are handled adequately.
+
 ### System dependencies
 
 This project requires the following system dependencies:
@@ -118,7 +144,11 @@ This project uses v1.9.38 of [`quarto`](https://quarto.org/) open-source scienti
 
 * `ollama`
 
-This project uses [`ollama`](https://ollama.com/) to serve open large language models locally. Instructions on how to download and install `ollama` can be found [here](https://ollama.com/download). This project specifically uses the following open source models available via `ollama`:
+This project uses [`ollama`](https://ollama.com/) to serve open large language models locally. Instructions on how to download and install `ollama` can be found [here](https://ollama.com/download).
+
+### Open large language models
+
+ This project specifically tested and used the following open source models available via `ollama` shown in @tbl-open-llm-used:
 
 **Model Name**      | **RAM size** | **Context Window**
 :-------------------|-------------:|-------------------:
@@ -126,11 +156,26 @@ This project uses [`ollama`](https://ollama.com/) to serve open large language m
 `deepseek-ocr`      |  6.7GB       |      8,000 tokens
 `qwen3-vl:32b`      | 21.0GB       |    256,000 tokens
 `llava:13b`         |  8.0GB       |      4,000 tokens
-`llama4:16x17b`[^1] | 67.0GB       | 10,000,000 tokens
+`llama4:16x17b`     | 67.0GB       | 10,000,000 tokens
 
-Once `ollama` is installed, pull the mentioned models above into your local machine. Please note the required random access memory (RAM) sizes for each of these models and ensure that the machine you are using has enough RAM to fit these models.
+: Large language models tested and used in the project {#tbl-open-llm-used}
 
-For this project, we used a **Mac Studio M3 Ultra with a 32-core CPU, 80-core GPU, and a 512GB RAM**.
+### R and package dependencies
+
+This project is built using `R 4.6.0`. To manage R versions, it is recommended to use [`rig`](https://github.com/r-lib/rig) - an R installation manager - to be able to install multiple versions of R and switch between them as needed.
+
+We use the following R packages in this project as shown in @tbl-r-packages-used.
+
+**Package**  | **Version** | **Purpose**
+:------------|------------:|:-------------------------------
+`{targets}`  | 1.12.0      | To manage the workflow of the project
+`{renv}`     | 1.2.3       | To manage R package dependencies
+`{pdftools}` | 3.9.0       | To work with PDF files and covert them to image files
+`{ellmer}`   | 0.4.1       | To interface with various LLM services including Google Gemini and Anthropic Claude
+
+: R packages used in the project {#tbl-r-packages-used}
+
+## The workflow
 
 
 
