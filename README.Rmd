@@ -110,13 +110,14 @@ This project uses v1.9.38 of [`quarto`](https://quarto.org/) open-source scienti
 
 This project uses [`ollama`](https://ollama.com/) to serve open large language models locally. Instructions on how to download and install `ollama` can be found [here](https://ollama.com/download). This project specifically uses the following open source models available via `ollama`:
 
-**Model Name**      | **RAM size** | **Context Window**
-:-------------------|-------------:|-------------------:
-`gemma4:31b`        | 20.0GB       |    256,000 tokens
-`deepseek-ocr`      |  6.7GB       |      8,000 tokens
-`qwen3-vl:32b`      | 21.0GB       |    256,000 tokens
-`llava:13b`         |  8.0GB       |      4,000 tokens
-`llama4:16x17b`[^1] | 67.0GB       | 10,000,000 tokens
+**Model Name**            | **RAM size** | **Context Window**
+:-------------------------|-------------:|-------------------:
+`gemma4:31b`              | 20.0GB       | 256,000 tokens
+`deepseek-ocr`            |  6.7GB       |   8,000 tokens
+`qwen3-vl:32b`            | 21.0GB       | 256,000 tokens
+`llava:13b`               |  8.0GB       |   4,000 tokens
+`llama3.2-vision:90b`[^1] | 55.0GB       | 128,000 tokens
+`glm-ocr:bf16`            |  2.2GB       | 128,000 tokens
 
 Once `ollama` is installed, pull the mentioned models above into your local machine. Please note the required random access memory (RAM) sizes for each of these models and ensure that the machine you are using has enough RAM to fit these models.
 
@@ -221,7 +222,7 @@ All code in this project is released under a [GPL-3.0](https://www.gnu.org/licen
 If you use the code, text, and/or data provided in this repository in your work/research, please cite this work using the suggested appropriate citation provided in [CITATION.cff](https://github.com/OxfordIHTM/computer-vision-demo/blob/main/CITATION.cff).
 
 
- [^1]: The `llama4:16x17b` model was used and tested but the extraction step continually failed to complete successfully. The model was not used in the final workflow until we figure out how to resolve the issue.
+ [^1]: The `llama3.2-vision:90b` model was used and tested but the extraction step continually failed to complete successfully. On further investigation, it was found that the current version of Ollama didn't support this specific model yet. The model was not used in the final workflow until the next version of Ollama.
 
 
  
