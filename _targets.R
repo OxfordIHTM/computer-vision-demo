@@ -243,6 +243,28 @@ llama_targets <- tar_plan(
       model = local_llama_model,
       echo = "none"
     )
+  ),
+  tar_target(
+    name = llama_test_extraction,
+    command = llm_extract_data(
+      extractor = llama_extractor,
+      image = data_jpg_files,
+      type = extraction_output_type,
+      model = local_llama_model,
+      ollama = TRUE
+    ),
+    pattern = slice(data_jpg_files, 1:3)
+  ),
+  tar_target(
+    name = llama_extraction,
+    command = llm_extract_data(
+      extractor = llama_extractor,
+      image = data_jpg_files,
+      type = extraction_output_type,
+      model = local_llama_model,
+      ollama = TRUE
+    ),
+    pattern = map(data_jpg_files)
   )
 )
 
