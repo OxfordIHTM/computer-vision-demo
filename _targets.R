@@ -44,9 +44,10 @@ llm_targets <- tar_plan(
   tar_target(
     name = llm_parameters,
     command = ellmer::params(
-      temperature = 0.3,
+      temperature = 1.0,
       top_p = 0.95,
-      top_k = 64
+      top_k = 64,
+      reasoning_tokens = 1120
     )
   ),
   extraction_context_prompt_md = "prompts/task_context_prompt.md",
@@ -121,6 +122,7 @@ gemma_local_targets <- tar_plan(
     command = ellmer::chat_ollama(
       system_prompt = extraction_context_ollama_prompt, 
       model = local_gemma_model,
+      params = llm_parameters,
       echo = "none"
     )
   ),
@@ -233,7 +235,7 @@ llava_local_targets <- tar_plan(
 llama_targets <- tar_plan(
   tar_target(
     name = local_llama_model,
-    command = get_llm_name(src = "llama4"),
+    command = get_llm_name(src = "llama3.2-vision"),
     cue = tar_cue("always")
   ),
   tar_target(
@@ -243,6 +245,68 @@ llama_targets <- tar_plan(
       model = local_llama_model,
       echo = "none"
     )
+  ),
+  tar_target(
+    name = llama_test_extraction,
+    command = llm_extract_data(
+      extractor = llama_extractor,
+      image = data_jpg_files,
+      type = extraction_output_type,
+      model = local_llama_model,
+      ollama = TRUE
+    ),
+    pattern = slice(data_jpg_files, 1:3)
+  ),
+  tar_target(
+    name = llama_extraction,
+    command = llm_extract_data(
+      extractor = llama_extractor,
+      image = data_jpg_files,
+      type = extraction_output_type,
+      model = local_llama_model,
+      ollama = TRUE
+    ),
+    pattern = map(data_jpg_files)
+  )
+)
+
+
+## glm model targets ----
+glm_targets <- tar_plan(
+  tar_target(
+    name = local_glm_model,
+    command = get_llm_name(src = "glm-ocr:bf16"),
+    cue = tar_cue("always")
+  ),
+  tar_target(
+    name = glm_extractor,
+    command = ellmer::chat_ollama(
+      system_prompt = extraction_context_ollama_prompt, 
+      model = local_glm_model,
+      echo = "none"
+    )
+  ),
+  tar_target(
+    name = glm_test_extraction,
+    command = llm_extract_data(
+      extractor = glm_extractor,
+      image = data_jpg_files,
+      type = extraction_output_type,
+      model = local_glm_model,
+      ollama = TRUE
+    ),
+    pattern = slice(data_jpg_files, 1:3)
+  ),
+  tar_target(
+    name = glm_extraction,
+    command = llm_extract_data(
+      extractor = glm_extractor,
+      image = data_jpg_files,
+      type = extraction_output_type,
+      model = local_glm_model,
+      ollama = TRUE
+    ),
+    pattern = map(data_jpg_files)
   )
 )
 
@@ -346,6 +410,30 @@ processing_test_targets <- tar_plan(
     command = process_extraction_output(
       extract = llava_test_extraction, format = "wide"
     ) 
+  ),
+  tar_target(
+    name = llama_test_extraction_results_long,
+    command = process_extraction_output(
+      extract = llama_test_extraction, format = "long"
+    ) 
+  ),
+  tar_target(
+    name = llama_test_extraction_results_wide,
+    command = process_extraction_output(
+      extract = llama_test_extraction, format = "wide"
+    ) 
+  ),
+  tar_target(
+    name = glm_test_extraction_results_long,
+    command = process_extraction_output(
+      extract = glm_test_extraction, format = "long"
+    ) 
+  ),
+  tar_target(
+    name = glm_test_extraction_results_wide,
+    command = process_extraction_output(
+      extract = glm_test_extraction, format = "wide"
+    ) 
   )
 )
 
@@ -422,6 +510,30 @@ processing_production_targets <- tar_plan(
     command = process_extraction_output(
       extract = llava_extraction, format = "wide"
     ) 
+  ),
+  tar_target(
+    name = llama_extraction_results_long,
+    command = process_extraction_output(
+      extract = llama_extraction, format = "long"
+    ) 
+  ),
+  tar_target(
+    name = llama_extraction_results_wide,
+    command = process_extraction_output(
+      extract = llama_extraction, format = "wide"
+    ) 
+  ),
+  tar_target(
+    name = glm_extraction_results_long,
+    command = process_extraction_output(
+      extract = glm_extraction, format = "long"
+    ) 
+  ),
+  tar_target(
+    name = glm_extraction_results_wide,
+    command = process_extraction_output(
+      extract = glm_extraction, format = "wide"
+    ) 
   )
 )
 
@@ -495,6 +607,38 @@ output_test_targets <- tar_plan(
     command = output_to_csv(
       data = llava_test_extraction_results_wide,
       path = "tests/llava_test_extraction_results_wide.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = llama_test_extraction_results_long_csv,
+    command = output_to_csv(
+      data = llama_test_extraction_results_long,
+      path = "tests/llama_test_extraction_results_long.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = llama_test_extraction_results_wide_csv,
+    command = output_to_csv(
+      data = llama_test_extraction_results_wide,
+      path = "tests/llama_test_extraction_results_wide.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = glm_test_extraction_results_long_csv,
+    command = output_to_csv(
+      data = glm_test_extraction_results_long,
+      path = "tests/glm_test_extraction_results_long.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = glm_test_extraction_results_wide_csv,
+    command = output_to_csv(
+      data = glm_test_extraction_results_wide,
+      path = "tests/glm_test_extraction_results_wide.csv",
       overwrite = TRUE
     )
   )
@@ -596,6 +740,38 @@ output_production_targets <- tar_plan(
     command = output_to_csv(
       data = llava_extraction_results_wide,
       path = "data/llava_extraction_results_wide.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = llama_extraction_results_long_csv,
+    command = output_to_csv(
+      data = llama_extraction_results_long,
+      path = "data/llama_extraction_results_long.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = llama_extraction_results_wide_csv,
+    command = output_to_csv(
+      data = llama_extraction_results_wide,
+      path = "data/llama_extraction_results_wide.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = glm_extraction_results_long_csv,
+    command = output_to_csv(
+      data = glm_extraction_results_long,
+      path = "data/glm_extraction_results_long.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = glm_extraction_results_wide_csv,
+    command = output_to_csv(
+      data = glm_extraction_results_wide,
+      path = "data/glm_extraction_results_wide.csv",
       overwrite = TRUE
     )
   )
