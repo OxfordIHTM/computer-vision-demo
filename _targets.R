@@ -444,6 +444,18 @@ processing_production_targets <- tar_plan(
     command = process_extraction_output(
       extract = llava_extraction, format = "wide"
     ) 
+  ),
+  tar_target(
+    name = llama_extraction_results_long,
+    command = process_extraction_output(
+      extract = llama_extraction, format = "long"
+    ) 
+  ),
+  tar_target(
+    name = llama_extraction_results_wide,
+    command = process_extraction_output(
+      extract = llama_extraction, format = "wide"
+    ) 
   )
 )
 
@@ -517,6 +529,22 @@ output_test_targets <- tar_plan(
     command = output_to_csv(
       data = llava_test_extraction_results_wide,
       path = "tests/llava_test_extraction_results_wide.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = llama_test_extraction_results_long_csv,
+    command = output_to_csv(
+      data = llama_test_extraction_results_long,
+      path = "tests/llama_test_extraction_results_long.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = llama_test_extraction_results_wide_csv,
+    command = output_to_csv(
+      data = llama_test_extraction_results_wide,
+      path = "tests/llama_test_extraction_results_wide.csv",
       overwrite = TRUE
     )
   )
@@ -620,8 +648,25 @@ output_production_targets <- tar_plan(
       path = "data/llava_extraction_results_wide.csv",
       overwrite = TRUE
     )
+  ),
+  tar_target(
+    name = llama_extraction_results_long_csv,
+    command = output_to_csv(
+      data = llama_extraction_results_long,
+      path = "data/llama_extraction_results_long.csv",
+      overwrite = TRUE
+    )
+  ),
+  tar_target(
+    name = llama_extraction_results_wide_csv,
+    command = output_to_csv(
+      data = llama_extraction_results_wide,
+      path = "data/llama_extraction_results_wide.csv",
+      overwrite = TRUE
+    )
   )
 )
+
 
 
 ## Reporting targets ----
