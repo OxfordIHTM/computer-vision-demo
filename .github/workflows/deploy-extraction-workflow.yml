@@ -43,7 +43,9 @@ jobs:
               deepseek_extraction_results_long_csv,
               deepseek_extraction_results_wide_csv,
               llava_extraction_results_long_csv,
-              llava_extraction_results_wide_csv
+              llava_extraction_results_wide_csv,
+              glm_extraction_results_long_csv,
+              glm_extraction_results_wide_csv
             )
           )
         shell: Rscript {0}
