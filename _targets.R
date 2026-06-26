@@ -104,7 +104,7 @@ qwen_local_targets <- tar_plan(
       model = local_qwen_model,
       ollama = TRUE
     ),
-    pattern = data_jpg_files
+    pattern = map(data_jpg_files)
   )
 )
 
@@ -144,7 +144,7 @@ gemma_local_targets <- tar_plan(
       model = local_gemma_model,
       ollama = TRUE
     ),
-    pattern = data_jpg_files
+    pattern = map(data_jpg_files)
   )
 )
 
@@ -184,7 +184,7 @@ deepseek_local_targets <- tar_plan(
       model = local_deepseek_model,
       ollama = TRUE
     ),
-    pattern = data_jpg_files
+    pattern = map(data_jpg_files)
   )
 )
 
@@ -224,7 +224,7 @@ llava_local_targets <- tar_plan(
       model = local_llava_model,
       ollama = TRUE
     ),
-    pattern = data_jpg_files
+    pattern = map(data_jpg_files)
   )
 )
 
@@ -267,7 +267,7 @@ gemini_targets <- tar_plan(
       model = gemini_model,
       ollama = FALSE
     ),
-    pattern = data_jpg_files
+    pattern = map(data_jpg_files)
   )
 )
 
@@ -292,7 +292,7 @@ claude_targets <- tar_plan(
       model = claude_model,
       ollama = FALSE
     ),
-    pattern = data_jpg_files
+    pattern = map(data_jpg_files)
   )
 )
 
