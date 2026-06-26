@@ -44,9 +44,10 @@ llm_targets <- tar_plan(
   tar_target(
     name = llm_parameters,
     command = ellmer::params(
-      temperature = 0.3,
+      temperature = 1.0,
       top_p = 0.95,
-      top_k = 64
+      top_k = 64,
+      reasoning_tokens = 1120
     )
   ),
   extraction_context_prompt_md = "prompts/task_context_prompt.md",
@@ -121,6 +122,7 @@ gemma_local_targets <- tar_plan(
     command = ellmer::chat_ollama(
       system_prompt = extraction_context_ollama_prompt, 
       model = local_gemma_model,
+      params = llm_parameters,
       echo = "none"
     )
   ),
@@ -233,7 +235,7 @@ llava_local_targets <- tar_plan(
 llama_targets <- tar_plan(
   tar_target(
     name = local_llama_model,
-    command = get_llm_name(src = "llama4"),
+    command = get_llm_name(src = "llama3.2-vision"),
     cue = tar_cue("always")
   ),
   tar_target(
