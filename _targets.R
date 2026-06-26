@@ -368,6 +368,18 @@ processing_test_targets <- tar_plan(
     command = process_extraction_output(
       extract = llava_test_extraction, format = "wide"
     ) 
+  ),
+  tar_target(
+    name = llama_test_extraction_results_long,
+    command = process_extraction_output(
+      extract = llama_test_extraction, format = "long"
+    ) 
+  ),
+  tar_target(
+    name = llama_test_extraction_results_wide,
+    command = process_extraction_output(
+      extract = llama_test_extraction, format = "wide"
+    ) 
   )
 )
 
