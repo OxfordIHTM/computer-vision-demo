@@ -129,7 +129,7 @@ extraction_output_type <- ellmer::type_array(
 
 qwen_extractor <- ellmer::chat_ollama(
   system_prompt = interpolate(text_extraction_prompt),
-  model = "qwen3-vl:32b",
+  model = "qwen2.5vl:72b",
   echo = "none"
 )
 

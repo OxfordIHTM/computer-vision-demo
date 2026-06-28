@@ -64,8 +64,7 @@ jobs:
       - name: Copy reports to docs directory
         run: |
           mkdir docs
-          cp reports/preliminary_report.html docs
-          cp slides/update_slides_20260611.html docs
+          cp reports/text-extraction-handwriting.html docs
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
