@@ -3,7 +3,7 @@
 #'
 
 get_llm_name <- function(src) {
-  llm <- ollamar::list_models()
-
-  grepv(pattern = src, x = llm$name)
+  ellmer::models_ollama(Sys.getenv("OLLAMA_BASE_URL")) |>
+    dplyr::filter(grepl(pattern = src, x = id)) |>
+    dplyr::pull(id)
 }
