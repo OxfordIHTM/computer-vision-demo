@@ -53,12 +53,12 @@ format:
 suppressPackageStartupMessages(source(here::here("packages.R")))
 for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 
-# targets::tar_load(
-#   c(
-#     dplyr::ends_with("extraction_results"), 
-#     dplyr::ends_with("extraction_results_*")
-#   )
-# )
+targets::tar_load(
+  c(
+    dplyr::ends_with("extraction_results"), 
+    dplyr::ends_with("extraction_results_*")
+  )
+)
 ```
 
 Handwritten records are a common source of data in many fields, including healthcare, education, and research. However, extracting information from handwritten documents can be challenging due to variations in handwriting styles, legibility issues, and the presence of noise in scanned images. In this use case study, we demonstrate how large language models (LLMs) can be leveraged to extract text from handwritten student health and nutrition records.
@@ -154,7 +154,7 @@ This project uses [`ollama`](https://ollama.com/) to serve open large language m
 :-------------------|-------------:|-------------------:
 `gemma4:31b`        | 20.0GB       |    256,000 tokens
 `deepseek-ocr`      |  6.7GB       |      8,000 tokens
-`qwen3-vl:32b`      | 21.0GB       |    256,000 tokens
+`qwen2.5vl:72b`    | 49.0GB       |    125,000 tokens
 `llava:13b`         |  8.0GB       |      4,000 tokens
 `llama4:16x17b`     | 67.0GB       | 10,000,000 tokens
 
@@ -176,6 +176,26 @@ We use the following R packages in this project as shown in @tbl-r-packages-used
 : R packages used in the project {#tbl-r-packages-used}
 
 ## The workflow
+
+```{r}
+#| echo: false
+#| results: asis
+
+cat(
+  c(
+    "```mermaid",
+    "%%| label: fig-full-workflow",
+    "%%| fig-cap: Diagram of the text extraction from handwritten records workflow",
+    "%%| fig-height: 10",
+    targets::tar_mermaid(
+      targets_only = TRUE, outdated = FALSE, legend = FALSE, color = FALSE
+    ),
+    "```"
+  ),
+  sep = "\n"
+)
+```
+
 
 
 
