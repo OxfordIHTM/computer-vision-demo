@@ -60,29 +60,33 @@ text_extraction_prompt <- r"(
   *   `last_name` (String): **Required.** This field will contain extracted text on the line that contains the student's last name as a single string.
   *   `age` (Integer): **Required.** This field will contain the student's age as a single integer.
   *   `sex` (String): **Required.** This field will contain extracted text on the line that contains the student's sex as a single string.
-  *   `measurement_1_date` (String): **Required.** This field will contain extracted text on the line that contains the date of the first measurement as a single string.
-  *   `measurement_1_weight` (Number): **Required.** This field will contain the weight measurement from the first measurement as a floating-point number.
-  *   `measurement_1_height` (Number): **Required.** This field will contain the height measurement from the first measurement as a floating-point number.
-  *   `measurement_2_date` (String): **Required.** This field will contain extracted text on the line that contains the date of the second measurement as a single string.
-  *   `measurement_2_weight` (Number): **Required.** This field will contain the weight measurement from the second measurement as a floating-point number.
-  *   `measurement_2_height` (Number): **Required.** This field will contain the height measurement from the second measurement as a floating-point number.
+  *   `measurements@date` (String): **Required.** This field will contain extracted text from the line that contains the date of any measurement made in YYYY-MM-DD format as a single string.
+  *   `measurements@weight` (Number): **Required.** This field will contain the weight measurement from any measurement made as a floating-point number.
+  *   `measurements@height` (Number): **Required.** This field will contain the height measurement from any measurement made as a floating-point number.
 
-  ## Example Output (For structure reference ONLY)
-  ```json
+## Example Output (For structure reference ONLY)
+```json
+[
   {
     "first_name": "DINDO",
     "last_name": "HAGUPIT",
     "age": 143,
-    "sex": "Female",
-    "measurement_1_date": "2023-10-01",
-    "measurement_1_weight": 45.5,
-    "measurement_1_height": 150.0,
-    "measurement_2_date": "2023-11-01",
-    "measurement_2_weight": 47.0,
-    "measurement_2_height": 152.0
+    "sex": "female",
+    "measurements": [
+      {
+        "date": "2023-10-01",
+        "weight": 45.5,
+        "height": 150.0
+      },
+      {
+        "date": "2023-11-01",
+        "weight": 47.0,
+        "height": 152.0
+      }
+    ]
   }
-  ```
-
+]
+``` 
 )"
 
 

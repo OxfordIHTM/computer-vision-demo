@@ -3,6 +3,10 @@
 #' 
 
 process_extraction_output <- function(extract, format = c("long", "wide")) {
+  if (!is.data.frame(extract)) {
+    extract <- extract[[1]]
+  }
+
   if (format == "wide") {
     extract |>
       tidyr::unnest_wider(col = "measurements") |>

@@ -31,40 +31,11 @@ jobs:
         run: |
           renv::restore()
         shell: Rscript {0}
-        
-      - name: Run workflow
-        run: |
-          targets::tar_make(
-            c(
-              gemma_extraction_results_long_csv,
-              gemma_extraction_results_wide_csv,
-              qwen_extraction_results_long_csv,
-              qwen_extraction_results_wide_csv,
-              deepseek_extraction_results_long_csv,
-              deepseek_extraction_results_wide_csv,
-              llava_extraction_results_long_csv,
-              llava_extraction_results_wide_csv,
-              glm_extraction_results_long_csv,
-              glm_extraction_results_wide_csv
-            )
-          )
-        shell: Rscript {0}
 
-      - name: Archive test extraction results
-        uses: actions/upload-artifact@v7
-        with:
-          name: extraction-results
-          path: data/*_extraction_results_*.csv
-
-      - name: Render report/s
+      - name: Copy files to docs folder
         run: |
-          targets::tar_make(text_extraction_handwriting_report)
-        shell: Rscript {0}
-
-      - name: Copy reports to docs directory
-        run: |
-          mkdir docs
-          cp reports/text-extraction-handwriting.html docs
+          mkdir -p docs
+          cp -r text-extraction-handwriting.html docs/
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
