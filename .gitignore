@@ -17,3 +17,5 @@ data-raw/png
 
 tests
 !tests/.gitkeep
+
+reports/computer-vision-demo.qmd

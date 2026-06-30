@@ -48,5 +48,8 @@ llm_extract_data <- function(extractor,
     )
   }
   
+  out <- out |>
+    dplyr::mutate(image = basename(image))
+
   out
 }
