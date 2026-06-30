@@ -35,7 +35,7 @@ jobs:
       - name: Copy files to docs folder
         run: |
           mkdir -p docs
-          cp -r text-extraction-handwriting.html docs/
+          cp -r reports/text-extraction-handwriting.html docs/
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
