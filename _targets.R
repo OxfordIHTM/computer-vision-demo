@@ -129,7 +129,7 @@ qwen_local_targets <- tar_plan(
 gemma_local_targets <- tar_plan(
   tar_target(
     name = local_gemma_model,
-    command = get_llm_name(src = "gemma4:31b-it-bf16"),
+    command = get_llm_name(src = "gemma4:31b")[2],
     cue = tar_cue("always")
   ),
   tar_target(
@@ -341,7 +341,7 @@ gemini_targets <- tar_plan(
   tar_target(
     name = gemini_extractor,
     command = ellmer::chat_google_gemini(
-      system_prompt = extraction_context_prompt,
+      system_prompt = extraction_context_ollama_prompt,
       model = gemini_model,
       echo = "none"
     )
@@ -353,7 +353,8 @@ gemini_targets <- tar_plan(
       image = data_jpg_files,
       type = extraction_output_type,
       model = gemini_model,
-      ollama = FALSE
+      ollama = FALSE,
+      max_tries = 5L
     ),
     pattern = map(data_jpg_files)
   )
@@ -366,7 +367,7 @@ claude_targets <- tar_plan(
   tar_target(
     name = claude_extractor,
     command = ellmer::chat_claude(
-      system_prompt = extraction_context_prompt,
+      system_prompt = extraction_context_ollama_prompt,
       model = claude_model,
       echo = "none"
     )
@@ -378,7 +379,8 @@ claude_targets <- tar_plan(
       image = data_jpg_files,
       type = extraction_output_type,
       model = claude_model,
-      ollama = FALSE
+      ollama = FALSE,
+      max_tries = 5L
     ),
     pattern = map(data_jpg_files)
   )
@@ -423,10 +425,10 @@ processing_production_targets <- tar_plan(
       gemini = gemini_extraction,
       claude = claude_extraction,
       gemma = gemma_extraction,
-      qwen = qwen_extraction,
-      deepseek = deepseek_extraction,
-      llava = llava_extraction,
-      glm = glm_extraction
+      qwen = qwen_extraction#,
+      # deepseek = deepseek_extraction,
+      # llava = llava_extraction,
+      # glm = glm_extraction
     )
   ),
   tar_target(
@@ -511,10 +513,10 @@ output_production_targets <- tar_plan(
       "data/gemini_extraction_results_long.csv",
       "data/claude_extraction_results_long.csv",
       "data/gemma_extraction_results_long.csv",
-      "data/qwen_extraction_results_long.csv",
-      "data/deepseek_extraction_results_long.csv",
-      "data/llava_extraction_results_long.csv",
-      "data/glm_extraction_results_long.csv"
+      "data/qwen_extraction_results_long.csv"#,
+      # "data/deepseek_extraction_results_long.csv",
+      # "data/llava_extraction_results_long.csv",
+      # "data/glm_extraction_results_long.csv"
     )
   ),
   tar_target(
@@ -535,10 +537,10 @@ output_production_targets <- tar_plan(
       "data/gemini_extraction_results_wide.csv",
       "data/claude_extraction_results_wide.csv",
       "data/gemma_extraction_results_wide.csv",
-      "data/qwen_extraction_results_wide.csv",
-      "data/deepseek_extraction_results_wide.csv",
-      "data/llava_extraction_results_wide.csv",
-      "data/glm_extraction_results_wide.csv"
+      "data/qwen_extraction_results_wide.csv"#,
+      # "data/deepseek_extraction_results_wide.csv",
+      # "data/llava_extraction_results_wide.csv",
+      # "data/glm_extraction_results_wide.csv"
     )
   ),
   tar_target(
@@ -566,6 +568,14 @@ checks_targets <- tar_plan(
       test = TRUE
     ),
     pattern = map(test_extraction_results),
+    iteration = "list"
+  ),
+  tar_target(
+    name = output_checks,
+    command = check_output(
+      target = test_standards, current = extraction_results
+    ),
+    pattern = map(extraction_results),
     iteration = "list"
   )
 )

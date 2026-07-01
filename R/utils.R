@@ -93,7 +93,9 @@ cell_match <- function(a, b, tolerance = sqrt(.Machine$double.eps)) {
 #' fall through to the unmatched (missing/extra) buckets.
 #'
 
-align_rows <- function(m_target, m_current, match_fn, min_similarity = 0.5) {
+align_rows <- function(m_target, m_current, match_fn,
+                       key_target = NULL, key_current = NULL, 
+                       min_similarity = 0.5) {
   nt <- nrow(m_target); nc <- nrow(m_current)
 
   similarity <- matrix(0, nt, nc)
@@ -101,6 +103,12 @@ align_rows <- function(m_target, m_current, match_fn, min_similarity = 0.5) {
     for (j in seq_len(nc)) {
       similarity[i, j] <- mean(mapply(match_fn, m_target[i, ], m_current[j, ]))
     }
+  }
+
+  ## Only allow pairings between rows describing the same source record.
+  if (!is.null(key_target) && !is.null(key_current)) {
+    similarity[outer(key_target, key_current, FUN = "!=")] <- -Inf
+    min_similarity <- -Inf
   }
 
   used_t <- logical(nt); used_c <- logical(nc)

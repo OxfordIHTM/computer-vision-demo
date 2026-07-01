@@ -29,7 +29,8 @@ library(kuzco)
 library(magick)
 
 
-## Packages for Google integration ----
+## Packages for Google integration and authentication ----
 library(googledrive)
 library(googlesheets4)
 library(gargle)
+library(httpuv)

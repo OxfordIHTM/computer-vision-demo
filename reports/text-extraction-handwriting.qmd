@@ -1,5 +1,6 @@
 ---
-title: "Text Extraction from Handwritten Student Health and Nutrition Records: Use case study to demonstrate the use of large language models (LLMs) for text extraction"
+title: Text Extraction from Handwritten Student Health and Nutrition Records
+subtitle: Use case study to demonstrate the use of large language models (LLMs) for text extraction
 author:
   - name: Sylvie Pool
     email: sylvie.pool@ndm.ox.ac.uk
@@ -180,12 +181,12 @@ We use the following R packages in this project as shown in @tbl-r-packages-used
 ## The workflow
 
 ```{r}
-#| echo: false
 #| results: asis
+#| echo: false
 
 cat(
   c(
-    "```mermaid",
+    "```{mermaid}",
     "%%| label: fig-full-workflow",
     "%%| fig-cap: Diagram of the text extraction from handwritten records workflow",
     "%%| fig-height: 10",

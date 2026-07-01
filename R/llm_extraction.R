@@ -25,12 +25,14 @@ llm_extract_data <- function(extractor,
     }
   }
 
+  image_file <- eval(parse(text = image_upload))
+
   for (attempt in seq_len(max_tries)) {
     extractor <- extractor$set_turns(list())
     
     out <- tryCatch(
       extractor$chat_structured(
-        eval(parse(text = image_upload)),
+        image_file,
         type = type
       ),
       error = function(e) {
