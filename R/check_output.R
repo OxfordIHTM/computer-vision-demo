@@ -46,7 +46,10 @@ check_output <- function(target, current,
   mf <- function(a, b) cell_match(a, b, tolerance = tolerance)
 
   al <- align_rows(
-    m_target_n, m_current_n, mf, min_similarity = min_similarity
+    m_target_n, m_current_n, mf,
+    key_target  = m_target[, "image"],
+    key_current = m_current[, "image"],
+    min_similarity = min_similarity
   )
 
   ## cell mismatches within matched row pairs (report RAW values)

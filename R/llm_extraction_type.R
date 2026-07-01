@@ -13,7 +13,7 @@ llm_create_data_type <- function() {
         description = "Last name of the student", required = TRUE
       ),
       age = ellmer::type_integer(
-        description = "Age of the student in months", required = TRUE
+        description = "Age of the student", required = TRUE
       ),
       sex = ellmer::type_enum(
         values = c("male", "female"),
@@ -28,11 +28,11 @@ llm_create_data_type <- function() {
             required = TRUE
           ),
           weight = ellmer::type_number(
-            description = "Weight of the student in kilograms",
+            description = "Weight of the student",
             required = TRUE
           ),
           height = ellmer::type_number(
-            description = "Height of the student in centimetres", 
+            description = "Height of the student", 
             required = TRUE
           )
         ),
