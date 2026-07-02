@@ -59,7 +59,11 @@ for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 
 targets::tar_load(
   c(
-    test_extraction_results, extraction_results, test_standards, test_output_checks, output_checks
+    test_extraction_results, 
+    extraction_results,
+    test_standards, 
+    test_output_checks,
+    output_checks
   )
 )
 ```
@@ -88,7 +92,7 @@ For this demonstration, we used two frontier LLM service providers namely Google
 
 data.frame(
   provider = c("Google", "Anthropic"),
-  model_name = c("Gemini 3.1 Pro", "Claude Opus 4.8")
+  model_name = c("Gemini 2.5 Pro", "Claude Opus 4.8")
 ) |>
   knitr::kable(col.names = c("Provider", "Model Name")) |>
   kableExtra::kable_styling(
@@ -99,7 +103,7 @@ data.frame(
 
 The choice of these models were partly convenience as we already had paid access to one of them (Google Gemini) and Anthropic Claude had a relatively straightforward application programming interface (API) approach to interfacing with their models.
 
-We wanted to use frontier models as these are the ones that most people are aware of and are the ones to which other models are compared against. If others were to replicate/reproduce our work, accessing these frontier models would be relatively straightforward. Use of these frontier models will also allow us to calculate real-world costs of performing this LLM-powered text extraction from handwritten notes.
+We wanted to use frontier models as these are the ones that most people are aware of and are the ones to which other models are compared against. If others were to replicate/reproduce our work, accessing these frontier models would be relatively straightforward. Use of these frontier models will also allow us to calculate real-world costs of performing this LLM-powered text extraction from handwritten notes. Lastly, we wanted to compare the performance of these frontier models against open source models that can be run locally on a personal computer.
 
 For Google Gemini, we used a Google Workspace business account within which we created a project specific for this case study. Under this project, we enabled API services for Google AI and Google Cloud. We then created a service account credential which we used for authenticating our programmatic API calls to Google Gemini. This is the recommended best practice for authenticating with Google API services in general and the recommended approach for production-level Google Gemini API calls.
 
@@ -151,23 +155,64 @@ This project uses [`ollama`](https://ollama.com/) to serve open large language m
 
 ### Open large language models
 
+We used open large language models (LLMs) that can be run locally on the computing machine described above. We wanted to demonstrate that LLMs can be used for text extraction from handwritten records without the need for expensive cloud-based services. We also wanted to compare the performance of these open LLMs against the frontier models that we used in this project.
+
+Our selection of open LLMs was based on the following criteria:
+
+* The model was one that was available via `ollama`;
+* The model should be able to handle both text and image inputs; and,
+* The model was one that was reported to have good performance on text extraction tasks based on model benchmarks and user reports and feedback.
+
+These criteria led us to select five open LLMs for testing and use in this project. With regard to our selection of the model size, we wanted to use the largest model available for each of the open LLMs that we selected but still allow us to have all five models available for testing and use on the computing machine described above. This was based on the assumption that larger models would have better performance on text extraction tasks than smaller models and the logistical consideration that we wanted to have all five models available for testing and use on the same computing machine without having to remove and re-install models due to RAM limitations. The open models that we selected, along with their RAM sizes and their context windows, are shown in @tbl-open-llm-used.
+
  This project specifically tested and used the following open source models available via `ollama` shown in @tbl-open-llm-used:
 
-**Model Name**      | **RAM size** | **Context Window**
-:-------------------|-------------:|-------------------:
-`gemma4:31b-it-bf16`| 63.0GB       |    256,000 tokens
-`deepseek-ocr`      |  6.7GB       |      8,000 tokens
-`qwen2.5vl:72b`     | 49.0GB       |    125,000 tokens
-`llava:34b`         | 10.0GB       |      4,000 tokens
-`glm-ocr:bf16`      |  2.2GB       |    128,000 tokens
+**Model Name**               | **RAM size** | **Context Window**
+:----------------------------|-------------:|-------------------:
+`gemma4:31b`                 | 20.0GB       |    256,000 tokens
+`deepseek-ocr`               |  6.7GB       |      8,000 tokens
+`qwen2.5vl:72b`              | 49.0GB       |    125,000 tokens
+`llava:13b-v1.6-vicuna-fp16` | 27.0GB       |      4,000 tokens
+`glm-ocr:bf16`               |  2.2GB       |    128,000 tokens
 
 : Large language models tested and used in the project {#tbl-open-llm-used}
+
+#### gemma4:31b
+
+[Gemma 4](https://ollama.com/library/gemma4) is the latest generation of [Google DeepMind](https://deepmind.google/)'s open model family, accepting text and image input and producing text output. Its main advances are built-in reasoning with configurable thinking modes, flexible image handling (variable aspect ratios and resolutions), and both dense and Mixture-of-Experts architectures across a range of sizes.
+
+`gemma4:31b` is the largest model in the Gemma 4 family, with 31 billion parameters.
+
+#### `deepseek-ocr`
+
+[DeepSeek OCR](https://ollama.com/library/deepseek-ocr) is a specialized model designed for optical character recognition (OCR) tasks. It is optimized for extracting text from images, making it suitable for applications that require accurate text recognition from scanned documents or photographs.
+
+#### `qwen2.5vl:72b`
+
+[Qwen 2.5-VL](https://ollama.com/library/qwen2.5vl) is a vision-language model that can process both text and image inputs. It is designed to handle complex multimodal tasks, including text extraction from images, image captioning, and visual question answering.
+
+`qwen2.5vl:72b` is the largest model in the Qwen 2.5-VL family, with 72 billion 
+parameters.
+
+We considered using the `qwen3-vl:32b` model for this project. However, on testing, the model was too slow to be practical for our use case. This seems to be a known issue with the `qwen3-vl:32b` model as [reported by other users](https://www.reddit.com/r/ollama/comments/1okxpa3/10x_slower_qwen3_and_25_vl/).
+
+#### `llava:13b-v1.6-vicuna-fp16`
+
+[Large Language-and-Vision Assistant or LLaVA](https://llava-vl.github.io/)  connects pre-trained [CLIP ViT-L/14](https://openai.com/index/clip/) visual encoder and large language model [Vicuna](https://github.com/lm-sys/FastChat), using a simple projection matrix.
+
+`llava:13b-v1.6-vicuna-fp16` is a 13 billion parameter model that has been fine-tuned for multimodal tasks, including text extraction from images.
+
+#### `glm-ocr:bf16`
+
+GLM-OCR is a multimodal OCR model for complex document understanding, built on the GLM-V encoder–decoder architecture. The model integrates the CogViT visual encoder pre-trained on large-scale image–text data, a lightweight cross-modal connector with efficient token downsampling, and a GLM-0.5B language decoder.
+
+`glm-ocr:bf16` is a 0.5 billion parameter model that has been fine-tuned for multimodal tasks, including text extraction from images.
 
 ### R and package dependencies
 
 This project is built using `R 4.6.0`. To manage R versions, it is recommended to use [`rig`](https://github.com/r-lib/rig) - an R installation manager - to be able to install multiple versions of R and switch between them as needed.
 
-We use the following R packages in this project as shown in @tbl-r-packages-used.
+We use the following R packages in this project (shown in @tbl-r-packages-used) to build and maintain the project environment and the workflow, to handle and process image files prior to text extraction, and for interfacing with large language models.
 
 **Package**  | **Version** | **Purpose**
 :------------|------------:|:-------------------------------
@@ -177,6 +222,18 @@ We use the following R packages in this project as shown in @tbl-r-packages-used
 `{ellmer}`   | 0.4.1       | To interface with various LLM services including Google Gemini and Anthropic Claude
 
 : R packages used in the project {#tbl-r-packages-used}
+
+This project uses the `{renv}` framework to record R package dependencies and versions. Packages and versions used are recorded in `renv.lock` and code used to manage dependencies is in the `renv` directory and other files in the root project directory.
+
+On starting an R session in the working directory of this repository, first run 
+
+```R
+renv::restore()
+```
+
+to install R package dependencies. This is only done once when the project is being initiated for the first time by a user.
+
+The complete list of R packages used in this project are listed out in the `renv.lock` file in the root project directory. The `renv.lock` file is used by the `{renv}` package to manage R package dependencies and ensure reproducibility of the project environment.
 
 ## The workflow
 
@@ -198,6 +255,119 @@ cat(
   sep = "\n"
 )
 ```
+
+### Convert PDF to images
+
+We converted each of the 13 pages of the PDF file containing the handwritten records into individual JPEG image files using the `{pdftools}` and `{tesseract}` packages. The images were saved in the `data-raw/jpg` directory. We started with a resolution of 300 dpi but found that the text extraction workflow consistently errored out with the larger image files particularly for the models with smaller context windows. We then reduced the resolution to 150 dpi and found that the workflow ran more consistently with the smaller image files. The smaller image files also had the advantage of being faster to process.
+
+The JPEG image files were named using the following convention: **`student_nutrition_records_XX.jpg`** where **`XX`** is the page number of the original PDF file. The image files were then used as input to the text extraction workflow.
+
+The links to the JPEG image files are shown below:
+
+```{r}
+#| results: asis
+#| echo: false
+
+cat(
+  paste0(
+    "[", 
+    list.files("../data-raw/jpg"), 
+    "]",
+    "(../data-raw/jpg/",
+    list.files("../data-raw/jpg"),
+    "){target='_blank'}"
+  )
+)
+```
+
+### Text extraction from images using LLMs
+
+We then setup LLM text extraction steps for each of the five open LLMs and the two frontier LLMs that we used in this project.
+
+#### 1. Prompt design
+
+We needed to design a prompt that would be used to instruct the LLMs to extract the text from the handwritten records. Our approach to the prompt design was iterative such that outputs from every run of the text extraction steps were reviewed and the prompt was refined to get the outputs as close to what we needed/wanted.
+
+Given this, our initial prompt was meant to be a rough and ready one that will allow us to develop the text extraction steps of the workflow on a small number of images and then refine the prompt as we go along. The initial prompt that we used is shown below:
+
+> 
+
+
+#### 2. Interfacing with the LLMs via API
+
+We programmatically interfaced with the LLMs via their respective APIs using the `{ellmer}` package. The package provides functions to interface with various LLM services including Google Gemini and Anthropic Claude. The package also provides functions to interface with the local open LLMs that we've selected in Ollama.
+
+We instantiated a session with each of the LLMs and provided it the context prompt we designed (as described above) using the respective `ellmer::chat_*()` functions for each of the models. Within this session, we used the `chat_structured()` function to provide both the image file and the JSON schema to the LLM and requested it to extract structured text from the image based on the schema.
+
+We developed and used the following function to create the JSON schema that we provided to the LLMs for text extraction:
+
+```{r}
+#| execute: false
+
+
+#'
+#' Create LLM output type specification
+#' 
+
+llm_create_data_type <- function() {
+  ellmer::type_array(
+    ellmer::type_object(
+      "Specification of expected data structure to be extracted from the images of handwritten student records",
+      first_name = ellmer::type_string(
+        description = "First name of the student", required = TRUE
+      ),
+      last_name = ellmer::type_string(
+        description = "Last name of the student", required = TRUE
+      ),
+      age = ellmer::type_integer(
+        description = "Age of the student", required = TRUE
+      ),
+      sex = ellmer::type_enum(
+        values = c("male", "female"),
+        description = "Sex of the student. Can be either male or female",
+        required = TRUE
+      ),
+      measurements = ellmer::type_array(
+        ellmer::type_object(
+          .description = "Measurements of the student",
+          round = ellmer::type_enum(
+            values = c("1", "2"),
+            description = "Round at which measurement is taken. Each measurement is taken on a separate day.",
+            required = TRUE
+          ),
+          date = ellmer::type_string(
+            description = "Date of the measurement in YYYY-MM-DD format",
+            required = TRUE
+          ),
+          weight = ellmer::type_number(
+            description = "Weight of the student",
+            required = TRUE
+          ),
+          height = ellmer::type_number(
+            description = "Height of the student", 
+            required = TRUE
+          )
+        ),
+        description = "Measurements of the student. Each measurement is taken on a separate day."
+      )
+    )
+  )
+}
+```
+
+
+
+
+
+
+
+
+To be able to test both the infrastructure and the outputs of the text extraction steps of the workflow, we first created and ran a testing pipeline using only the first three images (out of the 13).
+
+
+
+The output from each of the LLMs was saved in a separate sub-directory under `data` with the name of the sub-directory corresponding to the name of the LLM used for text extraction.
+
 
 
 

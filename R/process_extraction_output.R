@@ -17,6 +17,8 @@ process_extraction_output <- function(extract, format = c("long", "wide")) {
   } else {
     extract |>
       tidyr::unnest_wider(col = "measurements") |>
-      tidyr::unnest_longer(col = c(date, weight, height))
+      tidyr::unnest_longer(
+        col = c(round, date, weight, height), keep_empty = TRUE
+      )
   }
 }

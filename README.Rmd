@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
-[![version](https://img.shields.io/badge/version-v0.0.0.9009-orange)](https://github.com/OxfordIHTM/computer-vision-demo/releases/tag/v0.0.0.9009)
+[![version](https://img.shields.io/badge/version-v0.0.0.9010-orange)](https://github.com/OxfordIHTM/computer-vision-demo/releases/tag/v0.0.0.9010)
 [![License for code](https://img.shields.io/badge/license_for_code-GPL3.0-blue)](https://opensource.org/licenses/gpl-3.0.html)
 [![License for text](https://img.shields.io/badge/license_for_writing-CC_BY_4.0-blue)](https://creativecommons.org/licenses/by/4.0/)
 [![License for data](https://img.shields.io/badge/license_for_data-CC0-blue)](https://creativecommons.org/public-domain/cc0/)
@@ -110,14 +110,14 @@ This project uses v1.9.38 of [`quarto`](https://quarto.org/) open-source scienti
 
 This project uses [`ollama`](https://ollama.com/) to serve open large language models locally. Instructions on how to download and install `ollama` can be found [here](https://ollama.com/download). This project specifically uses the following open source models available via `ollama`:
 
-**Model Name**            | **RAM size** | **Context Window**
-:-------------------------|-------------:|-------------------:
-`gemma4:31b`              | 20.0GB       | 256,000 tokens
-`deepseek-ocr`            |  6.7GB       |   8,000 tokens
-`qwen2.5vl:72b`           | 49.0GB       | 125,000 tokens
-`llava:13b`               |  8.0GB       |   4,000 tokens
-`llama3.2-vision:90b`[^1] | 55.0GB       | 128,000 tokens
-`glm-ocr:bf16`            |  2.2GB       | 128,000 tokens
+**Model Name**               | **RAM size** | **Context Window**
+:----------------------------|-------------:|-------------------:
+`gemma4:31b`                 | 20.0GB       | 256,000 tokens
+`deepseek-ocr`               |  6.7GB       |   8,000 tokens
+`qwen2.5vl:72b`              | 49.0GB       | 125,000 tokens
+`llava:13b-v1.6-vicuna-fp16` |  8.0GB       |   4,000 tokens
+`llama3.2-vision:90b`[^1]    | 55.0GB       | 128,000 tokens
+`glm-ocr:bf16`               |  2.2GB       | 128,000 tokens
 
 Once `ollama` is installed, pull the mentioned models above into your local machine. Please note the required random access memory (RAM) sizes for each of these models and ensure that the machine you are using has enough RAM to fit these models.
 
@@ -168,10 +168,10 @@ git-crypt unlock
 
 The encrypted components of the repository will now be decrypted and accessible for running the workflow (described below).
 
-For non-collaborators, the encrypted files/folders will remain encrypted and inaccessible. However, the workflow can still be run using the public components of the repository and by setting a user-specific `.env_user` file in the root project directory that contains the user's own authentication credentials for Anthropic's AI Platform API and the path to the user's own service account JSON to authenticate with Google AI services. The `.env_user` file should contain the following environment variables
+For non-collaborators, the encrypted files/folders will remain encrypted and inaccessible. However, the workflow can still be run using the public components of the repository and by setting a user-specific `.env_user` file in the root project directory that contains the user's own authentication credentials for [Anthropic's AI Platform](https://platform.claude.com) API and the path to the user's own service account JSON to authenticate with [Google AI Studio](https://aistudio.google.com) services. The `.env_user` file should contain the following environment variables
 
 ```
-GOOGLE_AUTH_FILE="PATH/TO/YOUR/GOOGLE/AUTHENTICATION/FILE.json"
+GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
 ANTHROPIC_API_KEY="YOUR_ANTHROPIC_API_KEY"
 ```
 
