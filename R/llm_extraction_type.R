@@ -23,6 +23,11 @@ llm_create_data_type <- function() {
       measurements = ellmer::type_array(
         ellmer::type_object(
           .description = "Measurements of the student",
+          round = ellmer::type_enum(
+            values = c("1", "2"),
+            description = "Round at which measurement is taken. Each measurement is taken on a separate day.",
+            required = TRUE
+          ),
           date = ellmer::type_string(
             description = "Date of the measurement in YYYY-MM-DD format",
             required = TRUE

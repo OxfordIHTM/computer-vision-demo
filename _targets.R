@@ -9,7 +9,7 @@ for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 ## Build options ----
 
 ### Set Google credentials ----
-gargle::credentials_service_account(path = Sys.getenv("GOOGLE_AUTH_FILE"))
+#gargle::credentials_service_account(path = Sys.getenv("GOOGLE_AUTH_FILE"))
 
 
 ## Data targets ----
@@ -129,7 +129,7 @@ qwen_local_targets <- tar_plan(
 gemma_local_targets <- tar_plan(
   tar_target(
     name = local_gemma_model,
-    command = get_llm_name(src = "gemma4:31b")[2],
+    command = get_llm_name(src = "gemma4:31b"),
     cue = tar_cue("always")
   ),
   tar_target(
@@ -213,7 +213,7 @@ deepseek_local_targets <- tar_plan(
 llava_local_targets <- tar_plan(
   tar_target(
     name = local_llava_model,
-    command = get_llm_name(src = "llava:34b"),
+    command = get_llm_name(src = "llava:13b-v1.6-vicuna-fp16"),
     cue = tar_cue("always")
   ),
   tar_target(
@@ -337,7 +337,8 @@ glm_targets <- tar_plan(
 
 ## gemini model targets ----
 gemini_targets <- tar_plan(
-  gemini_model = "gemini-pro-latest",
+  #gemini_model = "gemini-pro-latest",
+  gemini_model = "gemini-2.5-pro",
   tar_target(
     name = gemini_extractor,
     command = ellmer::chat_google_gemini(
@@ -425,10 +426,10 @@ processing_production_targets <- tar_plan(
       gemini = gemini_extraction,
       claude = claude_extraction,
       gemma = gemma_extraction,
-      qwen = qwen_extraction#,
-      # deepseek = deepseek_extraction,
-      # llava = llava_extraction,
-      # glm = glm_extraction
+      qwen = qwen_extraction,
+      deepseek = deepseek_extraction,
+      llava = llava_extraction,
+      glm = glm_extraction
     )
   ),
   tar_target(
@@ -513,10 +514,10 @@ output_production_targets <- tar_plan(
       "data/gemini_extraction_results_long.csv",
       "data/claude_extraction_results_long.csv",
       "data/gemma_extraction_results_long.csv",
-      "data/qwen_extraction_results_long.csv"#,
-      # "data/deepseek_extraction_results_long.csv",
-      # "data/llava_extraction_results_long.csv",
-      # "data/glm_extraction_results_long.csv"
+      "data/qwen_extraction_results_long.csv",
+      "data/deepseek_extraction_results_long.csv",
+      "data/llava_extraction_results_long.csv",
+      "data/glm_extraction_results_long.csv"
     )
   ),
   tar_target(
@@ -537,10 +538,10 @@ output_production_targets <- tar_plan(
       "data/gemini_extraction_results_wide.csv",
       "data/claude_extraction_results_wide.csv",
       "data/gemma_extraction_results_wide.csv",
-      "data/qwen_extraction_results_wide.csv"#,
-      # "data/deepseek_extraction_results_wide.csv",
-      # "data/llava_extraction_results_wide.csv",
-      # "data/glm_extraction_results_wide.csv"
+      "data/qwen_extraction_results_wide.csv",
+      "data/deepseek_extraction_results_wide.csv",
+      "data/llava_extraction_results_wide.csv",
+      "data/glm_extraction_results_wide.csv"
     )
   ),
   tar_target(

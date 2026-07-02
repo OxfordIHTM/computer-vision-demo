@@ -1,46 +1,94 @@
-"first_name","last_name","age","sex","date","weight","height"
-"DinDo","Hagupit",143,"female","2023-10-01",45.5,150
-"DinDo","Hagupit",143,"female","2023-11-01",41.5,152
-"DinDo","Hagupit",143,"female","2023-10-01",45.5,150
-"DinDo","Hagupit",143,"female","2023-11-01",44.8,152
-"DinDo ","Hagupit",143,"female","2023-10-01",45.5,150
-"DinDo ","Hagupit",143,"female","2023-11-01",46.2,152
-"DinDo ","Hagupit",143,"female","2023-10-01",45.5,150
-"DinDo ","Hagupit",143,"female","2023-11-01",46.1,152
-"DINDO","HAGUPIT",123,"female","2019/07/14",45.5,150
-"DINDO","HAGUPIT",123,"female","2219/07/1g",47,152
-"Samuel","Huguit",132,"female","My health",45.5,30.4
-"Samuel","Huguit",132,"female","Weight history",47.8,153
-"Usag","Sugit",134,"male","Weight history",45.9,141.5
-"Usag","Sugit",134,"male","Height",44.4,150
-"Usag","Sugit",137,"female","Height",43.5,146.7
-"Usag","Sugit",137,"female","Weight history",47.8,150
-"Usag","Sugit",140,"female","Weight history",45.5,148
-"Usag","Sugit",140,"female","Height",47.6,151
-"Usag","Sugit",142,"female","Weight history",43.8,147.7
-"Usag","Sugit",142,"female","Height",46.3,151
-"Usag","Sugit",145,"female","Weight history",46,146.4
-"Usag","Sugit",145,"female","Height",47.9,150.5
-"PRAPIROON","FLORITTA",124,"female","They gave me an orange, it was on the table.",47,150
-"PRAPIROON","FLORITTA",124,"female","It has been raining for a long time",48.5,152
-"Juliana","Hagupit",43,"male","2017-08-24",30.9,139.4
-"Juliana","Hagupit",43,"male","2018-06-30",30.7,138.4
-"Dino","Hagar",143,"male","2017-08-24",45.5,150
-"Dino","Hagar",143,"male","2017-10-01",47,152
-"TSEJNG","HANTOO",133,"female","2019-08-20",45.5,150
-"TSEJNG","HANTOO",133,"female","2019-11-01",47,152
-"DINDO","HAGUPIT",11,"female","So 2017-07-30",42.5,33.2
-"DINDO","HAGUPIT",11,"female","So 2016-08-05",40.4,36
-"LARAMINATU","ONOUNG",123,"male","2023-10-01",45.5,150
-"LARAMINATU","ONOUNG",123,"male","2023-11-01",47,152
-"LARAMINATU","ONOUNG",123,"male","2022-09-30",50,142
-"Aaron","",12,"male","2017-01-07",45.5,150
-"Aaron","",12,"male","2017-11-01",47,152
-"DINDO","HAGUPIT",143,"male","2023-03-02",45.5,150
-"DINDO","HAGUPIT",143,"male","2022-12-06",47,152
-"DINDO","HAGUPIT",143,"male","2023-03-02",45.5,150
-"DINDO","HAGUPIT",143,"male","2022-12-06",47,152
-"FABIAN","ROKE",126,"male","2017-07-22",137.3,30
-"FABIAN","ROKE",126,"male","2017-07-28",137.5,30.1
-"FABIAN","ROKE",126,"male","2017-07-22",137.3,30
-"FABIAN","ROKE",126,"male","2017-07-28",137.5,30.1
+"first_name","last_name","age","sex","round","date","weight","height","image"
+"DINDODO","HAGURIT",143,"female","1","2023-10-01",45.5,150,"student_nutrition_records_01.jpg"
+"DINDODO","HAGURIT",143,"female","2","2023-11-01",47,152,"student_nutrition_records_01.jpg"
+"DINDODO","HAGUPIT",143,"female","1","2023-10-01",45.5,150,"student_nutrition_records_01.jpg"
+"DINDODO","HAGUPIT",143,"female","2","2023-11-01",47,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-10-01",45.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-11-01",47,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-10-01",45.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-11-01",47,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-10-01",45.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-11-01",47,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-10-01",45.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-11-01",47,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-10-01",45.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-11-01",47,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-11-06",47,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-11-07",47,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-11-08",45.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-11-09",46.8,151.5,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-11-08",45.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-11-09",46.8,151.5,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-11-08",45.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-11-09",46.8,151.5,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-11-10",47,151.5,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-11-10",47,151.5,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-11-10",45.5,151,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-11-11",49,152.5,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-11-28",49,152.5,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-12-03",45.5,153,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-12-11",51.75,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-11-29",49,152.5,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2024-01-16",47,154,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-11-09",45.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-12-08",49,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2024-01-09",43.5,154.5,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-11-08",45.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-12-07",49,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2024-01-10",48.5,155.5,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-11-09",45.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-12-08",49,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2024-01-09",48.5,155.5,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-11-08",45.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-12-07",49,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2024-01-10",48.5,155.5,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-11-08",45.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-12-07",49,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2024-01-10",48.5,155.5,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-11-08",45.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-12-07",49,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2024-01-10",48.5,155.5,"student_nutrition_records_01.jpg"
+"HINDU","HAGUPIT",143,"female","1","2023-11-05",47.5,150,"student_nutrition_records_01.jpg"
+"HINDU","HAGUPIT",143,"female","2","2023-12-07",49,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-11-05",47.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-12-08",49,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-11-05",47.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-12-08",49,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-11-05",47.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-12-08",49,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-11-05",47.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-12-08",49,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-11-05",47.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-12-08",49,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-11-05",47.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2023-12-08",49,152,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-12-06",48,154,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-12-06",48,154,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","1","2023-11-06",45.5,150,"student_nutrition_records_01.jpg"
+"DINDO","HAGUPIT",143,"female","2","2024-01-05",48,156.5,"student_nutrition_records_01.jpg"
+"FALCON","HANAPIT",113,"male","1","2019/07/14",39.65,154.5,"student_nutrition_records_02.jpg"
+"FALCON","HANAPIT",113,"male","2","2020/06/12",34.85,155.6,"student_nutrition_records_02.jpg"
+"Dini","Sajag",134,"female","1","2018-11-18",46.6,151.5,"student_nutrition_records_03.jpg"
+"Dini","Sajag",134,"female","2","2019-10-04",47.7,150,"student_nutrition_records_03.jpg"
+"FLORITA","PAPIPRORN",124,"female","2","It is 28 June 2023",47.25,150.4,"student_nutrition_records_04.jpg"
+"FLORITA","PAPIPRORN",124,"female","1","15 May 2019",45,152.5,"student_nutrition_records_04.jpg"
+"FLORITA","PAPIPRORN",124,"female","1","09 January 2004",42.05,150.3,"student_nutrition_records_04.jpg"
+"JOLINTA","HABIITHAK",43,"female","1","2017-08-24",47.5,150,"student_nutrition_records_05.jpg"
+"JOLINTA","HABIITHAK",43,"female","2","2019-01-17 ",49,152.4,"student_nutrition_records_05.jpg"
+"JUANA","KINYARWA",23,"female","1","2023-10-01",45.5,180,"student_nutrition_records_06.jpg"
+"DINDO","HAGUPIT",133,"female",NA,NA,NA,NA,"student_nutrition_records_07.jpg"
+"Myra","MALIK",144,"male",NA,NA,NA,NA,"student_nutrition_records_07.jpg"
+"SHELLY","HUNTINGER",11,"female",NA,NA,NA,NA,"student_nutrition_records_08.jpg"
+"RANDALL","DUNCAN",143,"male","1","2017-07-31",49.8,149,"student_nutrition_records_08.jpg"
+"RANDALL","DUNCAN",143,"male","2","2018-01-09",45.5,151.6,"student_nutrition_records_08.jpg"
+"DINDO","HAGUPIT",144,"male","1","2023-10-01",45.4,150,"student_nutrition_records_09.jpg"
+"DINDO","HAGUPIT",144,"male","2","2023-11-01",47,152,"student_nutrition_records_09.jpg"
+"DINDO","HAGUPIT",143,"female","1","2-Jul-2017",45.5,150,"student_nutrition_records_10.jpg"
+"Rafael","",12,"male","1","2017-09-15",60.5,148,"student_nutrition_records_11.jpg"
+"Rafael","",12,"male","2","2023-10-01",64,150,"student_nutrition_records_11.jpg"
+"DANIEL","HUNGUTIT",13,"male",NA,NA,NA,NA,"student_nutrition_records_12.jpg"
+"MIUFA","NATAL",12,"female","1","2025-01-16",45,149,"student_nutrition_records_12.jpg"
+"MIUFA","NATAL",12,"female","2","2023-10-01",49.8,150,"student_nutrition_records_12.jpg"
+"MIUFA","MOHAMED",12,"male",NA,NA,NA,NA,"student_nutrition_records_12.jpg"
+"Kashmir","Rowe",20,"female","1","2017-07-22",30,137.3,"student_nutrition_records_13.jpg"
+"Kashmir","Rowe",20,"female","2","2017-07-28",31,130,"student_nutrition_records_13.jpg"
