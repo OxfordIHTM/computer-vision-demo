@@ -34,102 +34,51 @@ all_targets <- function(env = parent.env(environment()),
 }
 
 
-
 #'
-#' Normalisation helper
-#' 
-
-  
-normalise <- function(v,
-                      ignore_case  = TRUE,
-                      trim_ws      = TRUE,
-                      collapse_ws  = TRUE) {
-  v <- as.character(v)
-
-  ## strip leading/trailing space ----
-  if (trim_ws) v <- trimws(v)
-  
-  ## collapse runs of whitespace ----
-  if (collapse_ws) v <- gsub("[[:space:]]+", " ", v)  
-  
-  ## Ignore case ----
-  if (ignore_case) v <- tolower(v)
-  
-  ## treat "" as missing
-  v[!is.na(v) & v == ""] <- NA
-  
-  v
-}
-
-
-#'
-#' Compare two normalized scalars, with numeric tolerance when both look numeric
-#' 
-
-cell_match <- function(a, b, tolerance = sqrt(.Machine$double.eps)) {
-  ## NA == NA is a match
-  if (is.na(a) && is.na(b)) return(TRUE)
-
-  ## NA vs value is a miss
-  if (is.na(a) || is.na(b)) return(FALSE)
-  
-  na <- suppressWarnings(as.numeric(a))
-  nb <- suppressWarnings(as.numeric(b))
-  
-  ## both numeric -> tolerance
-  if (!is.na(na) && !is.na(nb)) {         
-    return(abs(na - nb) <= tolerance * max(1, abs(na), abs(nb)))
-  }
-  
-  ## otherwise exact string match ----
-  identical(a, b)                         
-}
-
-
-#'
-#' match_fn(a, b) -> TRUE/FALSE per normalized cell.
-#' min_similarity: a target/current row pair must agree on at least this
-#' fraction of cells to be considered the same record; otherwise both rows
-#' fall through to the unmatched (missing/extra) buckets.
+#' Turn a comparedf object into the extraction-scoring metrics
 #'
 
-align_rows <- function(m_target, m_current, match_fn,
-                       key_target = NULL, key_current = NULL, 
-                       min_similarity = 0.5) {
-  nt <- nrow(m_target); nc <- nrow(m_current)
+score_comparedf <- function(cd, target, current, by) {
+  s   <- summary(cd)
+  obs <- s$obs.summary
 
-  similarity <- matrix(0, nt, nc)
-  for (i in seq_len(nt)) {
-    for (j in seq_len(nc)) {
-      similarity[i, j] <- mean(mapply(match_fn, m_target[i, ], m_current[j, ]))
-    }
-  }
+  compared_vars <- setdiff(intersect(names(target), names(current)), by)
+  n_vars    <- length(compared_vars)
 
-  ## Only allow pairings between rows describing the same source record.
-  if (!is.null(key_target) && !is.null(key_current)) {
-    similarity[outer(key_target, key_current, FUN = "!=")] <- -Inf
-    min_similarity <- -Inf
-  }
+  n_missing <- sum(obs$version == "x")   # target rows the model missed
+  n_extra   <- sum(obs$version == "y")   # rows the model invented
+  n_matched <- nrow(target) - n_missing  # == nrow(current) - n_extra
 
-  used_t <- logical(nt); used_c <- logical(nc)
-  pairs  <- list()
+  n_celldiff <- arsenal::n.diffs(cd)
+  expected   <- nrow(target)  * n_vars
+  produced   <- nrow(current) * n_vars
+  tp         <- n_matched * n_vars - n_celldiff
 
-  repeat {
-    s <- similarity
-    s[used_t, ] <- -Inf
-    s[, used_c] <- -Inf
-    if (!any(is.finite(s))) break
-    best_val <- max(s)
-    if (best_val < min_similarity) break          # <-- threshold: stop pairing weak matches
-    best <- which(s == best_val, arr.ind = TRUE)[1, ]
-    pairs[[length(pairs) + 1L]] <- c(target = best[[1]], current = best[[2]])
-    used_t[best[[1]]] <- TRUE
-    used_c[best[[2]]] <- TRUE
-  }
+  recall    <- if (expected > 0) tp / expected else NA_real_
+  precision <- if (produced > 0) tp / produced else NA_real_
+  f1 <- if (isTRUE(precision + recall > 0))
+          2 * precision * recall / (precision + recall) else 0
+
+  per_field <- dplyr::mutate(
+    s$diffs.byvar.table,
+    column   = var.x,
+    n_diff   = n,
+    accuracy = (n_matched - n) / n_matched,
+    .keep = "none"
+  )
 
   list(
-    pairs              = pairs,
-    missing_in_current = which(!used_t),
-    extra_in_current   = which(!used_c)
+    precision       = precision,
+    recall          = recall,
+    f1              = f1,
+    tp              = tp,
+    expected        = expected,
+    produced        = produced,
+    n_matched_rows  = n_matched,
+    cell_mismatches = arsenal::diffs(cd),        # var.x, values.x/y, + keys
+    missing_rows    = obs[obs$version == "x", ], # hurt recall
+    extra_rows      = obs[obs$version == "y", ], # hurt precision
+    per_field       = per_field,                 # new: accuracy by field
+    comparedf       = cd                         # keep raw object for reporting
   )
 }
